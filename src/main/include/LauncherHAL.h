@@ -1,5 +1,5 @@
 
-struct LauncherHAL
+struct LauncherHALConfig
 {
 
 };
@@ -7,7 +7,7 @@ struct LauncherHAL
 class LauncherHAL
 {
     public:    
-        void Configure(LauncherHAL &config);
+        void Configure(LauncherHALConfig &config);
 
     
     private:

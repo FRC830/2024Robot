@@ -1,5 +1,5 @@
 
-struct IntakeHAL
+struct IntakeHALConfig
 {
 
 };
@@ -12,7 +12,7 @@ class IntakeHAL
         void ManualMovePivot(double speed);
         double GetAngle(); 
         double GetSpeed();
-        void Configure(IntakeHAL &config);
+        void Configure(IntakeHALConfig &config);
 
     
     private:

@@ -1,10 +1,10 @@
 #include "IntakeHAL.h"
 
-void Configure(IntakeHAL &config) {}
+void Configure(IntakeHALConfig &config) {}
 
 void IntakeHAL::RunIntake(double speed) {}
 
-void IntakeHAL::PeriodMoveToAngle(double angle) {}
+void IntakeHAL::ProfiledMoveToAngle(double angle) {}
 
 void IntakeHAL::ManualMovePivot(double speed) {}
 
