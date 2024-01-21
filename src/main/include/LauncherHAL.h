@@ -12,6 +12,7 @@ class LauncherHAL
     public:    
         void Configure(LauncherHALConfig &config);
         void SetFlywheelSpeed(double speed);
+        void SetIndexerSpeed(double speed);
         void ProfiledMoveToAngle(double angle);
         double GetAngle(); 
         double GetSpeed();
