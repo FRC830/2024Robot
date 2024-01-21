@@ -50,6 +50,11 @@ void IntakeHAL::ManualMovePivot(double speed) {
 
 }
 
+void IntakeHal::ResetProfiledMoveState()
+{
+    
+}
+
 void IntakeHAL::SetAngle(double angle) {
 
     //pid stuff go here

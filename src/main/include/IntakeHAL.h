@@ -26,6 +26,7 @@ class IntakeHAL
         double GetAngle(); 
         double GetSpeed();
         void Configure(IntakeHALConfig &config);
+        void ResetProfiledMoveState();
 
     
     private:
