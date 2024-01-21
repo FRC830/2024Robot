@@ -1,3 +1,6 @@
+#pragma once
+
+#include "SubSystemConfig.h"
 
 struct LauncherHALConfig
 {

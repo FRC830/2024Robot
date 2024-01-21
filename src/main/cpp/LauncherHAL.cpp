@@ -1,3 +1,3 @@
 #include "LauncherHAL.h"
 
-void Configure(LauncherHALConfig &config) {}
+void LauncherHAL::Configure(LauncherHALConfig &config) {}
