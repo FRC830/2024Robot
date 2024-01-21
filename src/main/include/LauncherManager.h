@@ -21,5 +21,5 @@ private:
     LauncherHAL m_launcher;
     bool m_goToStowPos;
     bool m_goToSubPos;
-    
+    bool m_visionResetProfiledMoveState = false;
 };
