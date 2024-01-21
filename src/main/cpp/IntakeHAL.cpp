@@ -27,18 +27,38 @@ void IntakeHAL::Configure(IntakeHALConfig &config) {
 
 void IntakeHAL::RunIntake(double speed) {
 
+    auto pid = m_RGTActMotor->GetPIDController();
+    auto pida = m_LFTActMotor->GetPIDController();
 
+    pid.SetReference(speed, rev::CANSparkMax::ControlType::kVelocity);
+    pida.SetReference(speed, rev::CANSparkMax::ControlType::kVelocity);
+}
+
+void IntakeHAL::ProfiledMoveToAngle(double angle) {
+
+    SetAngle(angle);
 
 }
 
-void IntakeHAL::ProfiledMoveToAngle(double angle) {}
+void IntakeHAL::ManualMovePivot(double speed) {
 
-void IntakeHAL::ManualMovePivot(double speed) {}
+    auto pid = m_LFTPvtMotor->GetPIDController();
+    auto pida = m_RGTPvtMotor->GetPIDController();
+
+    pid.SetReference(speed, rev::CANSparkMax::ControlType::kVelocity);
+    pida.SetReference(speed, rev::CANSparkMax::ControlType::kVelocity);
+
+}
 
 void IntakeHAL::SetAngle(double angle) {
 
+    //pid stuff go here
 
+    auto pid = m_LFTPvtMotor->GetPIDController();
+    auto pida = m_RGTPvtMotor->GetPIDController();
 
+    pid.SetReference(angle, rev::CANSparkMax::ControlType::kPosition);
+    pida.SetReference(angle, rev::CANSparkMax::ControlType::kPosition);
 }
 
 double IntakeHAL::GetAngle() {
