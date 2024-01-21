@@ -67,4 +67,8 @@ double IntakeHAL::GetAngle() {
 
 }
 
-double IntakeHAL::GetSpeed() {}
+double IntakeHAL::GetSpeed() {
+
+    return m_intakeSpeed;
+
+}
