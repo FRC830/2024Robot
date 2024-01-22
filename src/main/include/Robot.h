@@ -8,7 +8,7 @@
 
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
-#include "SubSystemConfig.h"
+#include "subsystems/SubSystemConfig.h"
 
 
 class Robot : public frc::TimedRobot {
