@@ -7,11 +7,7 @@
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
-void Robot::updateDashBoardValues() {
-
-
-  
-}
+void Robot::updateDashBoardValues() {};
 
 void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
