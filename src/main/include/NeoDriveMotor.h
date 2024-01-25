@@ -18,6 +18,7 @@ struct SwerveDriveMotorConfig {
     double ratio;
     units::velocity::meters_per_second_t maxSpeed;
     double correction_factor;
+    double drive_motor_current_limit;
 };
 
 class NeoDriveMotor : public SwerveDriveMotor {

@@ -14,7 +14,7 @@ void NeoTurnMotor::Configure(SwerveTurnMotorConfig &config){
     m_PID->SetD(config.d);
     m_PID->SetFF(config.ff);
     m_relative_Encoder->SetPositionConversionFactor(config.ratio);
-    m_turn_motor->SetSmartCurrentLimit(20);
+    m_turn_motor->SetSmartCurrentLimit(config.turn_motor_current_limit);
     SetInverted(config.inverted);
     m_turn_motor->BurnFlash();
 };    

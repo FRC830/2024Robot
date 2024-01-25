@@ -156,5 +156,8 @@ const frc::Rotation2d GYRO_ZERO_HEADING{units::degree_t{180.0f}};
 const double MAX_DRIVE_SPEED_FPS = 15.0;
 const double MAX_ANGULAR_VELOCITY_DEGPS = 360.0;
 const double CONTROLLER_DEADZONE = 0.05;
+const int TURN_MOTOR_CURRENT_LIMIT = 20;
+const int DRIVE_MOTOR_CURRENT_LIMIT = 20;
+const double SWERVE_VOLTAGE_COMPENSATION = 10.5;
 const bool IS_DRIVE_IN_COAST = false;
 const bool IS_ROBOT_ORIENTED_DRIVE = false;

@@ -16,6 +16,8 @@ struct SwerveTurnMotorConfig{
     double d;
     double ff;
     double ratio;
+    int turn_motor_current_limit;
+    double swerve_voltage_compensation;
 };
 
 class NeoTurnMotor : public SwerveTurnMotor {
