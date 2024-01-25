@@ -2,9 +2,16 @@
 
 
 #include "rev/CANSparkMax.h"
-#include <ctre/phoenix/sensors/CANCoder.h>
+#include <ctre/phoenix6/CANcoder.hpp>
 #include <ctre/phoenix6/TalonFX.hpp>
 #include <frc/motorcontrol/MotorControllerGroup.h>
+#include <units/acceleration.h>
+#include <units/length.h>
+#include <units/time.h>
+#include <units/velocity.h>
+#include <units/voltage.h>
+
+const double VOLT_COMP = 10.5;
 
 
 // ###########################################################
@@ -18,14 +25,18 @@ const int INTAKE_PVT_MTR_B = 3;
 
 const int INTAKE_PVT_ENCODER_ID = 8; 
 
-inline ctre::phoenix::sensors::CANCoder PVT_ENCODER{INTAKE_PVT_ENCODER_ID, "rio"};
+const double INTAKE_POS_TO_DEG = 1.0;
 
-inline rev::CANSparkMax RGT_ACT_MTR{RGT_INTAKE_ACT_MTR_ID, rev::CANSparkMax::MotorType::kBrushless};
-inline rev::CANSparkMax LFT_ACT_MTR{LFT_INTAKE_ACT_MTR_ID, rev::CANSparkMax::MotorType::kBrushless};
-inline rev::CANSparkMax RGT_PVT_MTR{INTAKE_PVT_MTR_A, rev::CANSparkMax::MotorType::kBrushless};
-inline rev::CANSparkMax LFT_PVT_MTR{INTAKE_PVT_MTR_B, rev::CANSparkMax::MotorType::kBrushless};
+const double INTAKE_INPUT_TO_DEG = 2.0;
 
 
+const double INTAKE_P = 1.0;
+const double INTAKE_I = 1.0;
+const double INTAKE_D = 1.0;
+
+
+const int INTAKE_PVT_CURRENT_LIMIT = 20;
+const int INTAKE_ACT_CURRENT_LIMIT = 20;
 
 
 // ###########################################################

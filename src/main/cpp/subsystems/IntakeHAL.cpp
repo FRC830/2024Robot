@@ -1,69 +1,124 @@
 #include "subsystems/IntakeHAL.h"
 
-void IntakeHAL::Configure(IntakeHALConfig &config) {
 
-    m_RGTActMotor = config.RGTActMotor;
-    m_LFTActMotor = config.LFTActMotor;
-    m_RGTPvtMotor = config.RGTPvtMotor;
-    m_LFTPvtMotor = config.LFTPvtMotor;
-    m_PVTEncoder = config.encoder;
-    m_intakeSpeed = config.intakeSpeed;
-    m_turningSpeed = config.turningspeed;
 
-    m_PVTCalibrate = config.PVTCalibrate; 
+IntakeHAL::IntakeHAL(){
 
+    m_RGTActMotor.Follow(m_LFTActMotor, true);
+    m_RGTPvtMotor.Follow(m_LFTPvtMotor, false);
+     
+    m_LFTActMotor.RestoreFactoryDefaults();
+    m_LFTPvtMotor.RestoreFactoryDefaults();
+
+    m_LFTActMotor.EnableVoltageCompensation(VOLT_COMP);
+    m_LFTPvtMotor.EnableVoltageCompensation(VOLT_COMP);
+
+    m_LFTPvtPID.SetP(INTAKE_P);
+    m_LFTPvtPID.SetI(INTAKE_I);
+    m_LFTPvtPID.SetD(INTAKE_D);
     
 
-    m_RGTActMotor->SetIdleMode(rev::CANSparkBase::IdleMode::kCoast);
-    m_LFTActMotor->SetIdleMode(rev::CANSparkBase::IdleMode::kCoast);
-    m_RGTPvtMotor->SetIdleMode(rev::CANSparkBase::IdleMode::kBrake);
-    m_LFTPvtMotor->SetIdleMode(rev::CANSparkBase::IdleMode::kBrake);
+    m_LFTActMotor.SetSmartCurrentLimit(INTAKE_ACT_CURRENT_LIMIT);
+    m_LFTPvtMotor.SetSmartCurrentLimit(INTAKE_PVT_CURRENT_LIMIT);
 
-    
+    m_LFTActMotor.BurnFlash();
+    m_LFTPvtMotor.BurnFlash();
 
-    // m_ActMotors = frc::MotorControllerGroup(m_RGTActMotor, m_LFTActMotor);
-    // m_PvtMotors = frc::SpeedControllerGroup(m_RGTPvtMotor, m_LFTPvtMotor);
+
+
 }
+
 
 void IntakeHAL::RunIntake(double speed) {
 
-    auto pid = m_RGTActMotor->GetPIDController();
-    auto pida = m_LFTActMotor->GetPIDController();
+    m_intakeSpeed = speed;
 
-    pid.SetReference(speed, rev::CANSparkMax::ControlType::kVelocity);
-    pida.SetReference(speed, rev::CANSparkMax::ControlType::kVelocity);
+    m_LFTActMotor.Set(m_intakeSpeed);
+
 }
 
 void IntakeHAL::ProfiledMoveToAngle(double angle) {
 
     SetAngle(angle);
 
+    switch (m_profileState) {
+
+        case 0: 
+        {
+            m_ProfileStartPos = GetAngle();
+            frc::TrapezoidProfile<units::meters> m_Profile{
+
+                frc::TrapezoidProfile<units::meters>::Constraints{0_mps, 0_mps_sq}
+                
+            };
+
+            m_Timer.Restart();
+
+            m_profileState++;
+
+            break;
+        }
+            
+
+        case 1:
+        {
+            auto setPoint = m_Profile.Calculate(m_Timer.Get(),    
+            frc::TrapezoidProfile<units::meters>::State{units::meter_t{m_ProfileStartPos}, 0_mps},  
+            frc::TrapezoidProfile<units::meters>::State{units::meter_t{angle}, 0_mps}
+            );
+
+            SetAngle(setPoint.position.to<double>());
+
+            if (m_Profile.IsFinished(m_Timer.Get())) {
+
+                m_profileState++;
+
+            }
+
+            break;
+        }
+
+        case 2: 
+        {
+
+            m_Timer.Stop();
+
+            m_profileState++;
+
+            break;
+        }
+        
+        default:
+            break; 
+
+
+    }
+
 }
 
 void IntakeHAL::ManualMovePivot(double speed) {
 
-    auto pid = m_LFTPvtMotor->GetPIDController();
-    auto pida = m_RGTPvtMotor->GetPIDController();
+    SetAngle(GetAngle() + (speed * INTAKE_INPUT_TO_DEG));
 
-    pid.SetReference(speed, rev::CANSparkMax::ControlType::kVelocity);
-    pida.SetReference(speed, rev::CANSparkMax::ControlType::kVelocity);
+}
+
+void IntakeHAL::ResetProfiledMoveState() {
+
+    m_profileState = 0;
 
 }
 
 void IntakeHAL::SetAngle(double angle) {
 
-    //pid stuff go here
+    auto setPoint = angle * (1.0 / INTAKE_POS_TO_DEG); 
 
-    auto pid = m_LFTPvtMotor->GetPIDController();
-    auto pida = m_RGTPvtMotor->GetPIDController();
+    m_LFTPvtPID.SetReference(setPoint, rev::CANSparkMax::ControlType::kPosition);
 
-    pid.SetReference(angle, rev::CANSparkMax::ControlType::kPosition);
-    pida.SetReference(angle, rev::CANSparkMax::ControlType::kPosition);
 }
 
 double IntakeHAL::GetAngle() {
 
-     return m_PVTEncoder->GetAbsolutePosition() * m_PVTCalibrate;
+     return m_LFTPvtEncoder.GetPosition() * INTAKE_POS_TO_DEG;
 
 }
 
