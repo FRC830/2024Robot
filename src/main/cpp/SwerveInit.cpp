@@ -82,6 +82,7 @@ void Robot::SwerveInit(){
   drive_config.ff = DRIVE_FF;
   drive_config.ratio = MOTOR_ROT_TO_FT / 60.0;
   drive_config.drive_motor_current_limit = DRIVE_MOTOR_CURRENT_LIMIT;
+  drive_config.swerve_voltage_compensation = SWERVE_VOLTAGE_COMPENSATION;
   
   drive_config.PID = &fl_drive_pid;
   drive_config.encoder = &fl_drive_enc;
