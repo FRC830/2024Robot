@@ -3,7 +3,6 @@
 #include <frc/AnalogEncoder.h>
 #include <frc/geometry/Rotation2d.h>
 #include <frc/geometry/Translation2d.h>
-// #include <AHRS.h>
 #include <ctre/phoenix6/CANcoder.hpp>
 #include "rev/CANSparkMax.h"
 
@@ -13,7 +12,7 @@
 // --------------------Absolute Encoder-----------------------
 const int FL_ABS_ENC_PORT = 1;
 const bool FL_ABS_ENC_INVERTED = false;
-const frc::Rotation2d FL_ZERO_HEADING{units::degree_t{221.7f}};
+const frc::Rotation2d FL_ZERO_HEADING{units::degree_t{0.0f}};
 
 ctre::phoenix6::hardware::CANcoder fl_abs_enc{FL_ABS_ENC_PORT};
 
@@ -40,7 +39,7 @@ rev::SparkMaxPIDController fl_drive_pid = fl_drive_mtr.GetPIDController();
 // --------------------Absolute Encoder-----------------------
 const int FR_ABS_ENC_PORT = 0;
 const bool FR_ABS_ENC_INVERTED = false;
-const frc::Rotation2d FR_ZERO_HEADING{units::degree_t{29.9f}};
+const frc::Rotation2d FR_ZERO_HEADING{units::degree_t{0.0f}};
 
 ctre::phoenix6::hardware::CANcoder fr_abs_enc{FR_ABS_ENC_PORT};
 
@@ -67,7 +66,7 @@ rev::SparkMaxPIDController fr_drive_pid = fr_drive_mtr.GetPIDController();
 // --------------------Absolute Encoder-----------------------
 const int BL_ABS_ENC_PORT = 2;
 const bool BL_ABS_ENC_INVERTED = false;
-const frc::Rotation2d BL_ZERO_HEADING{units::degree_t{121.1f}};
+const frc::Rotation2d BL_ZERO_HEADING{units::degree_t{0.0f}};
 
 ctre::phoenix6::hardware::CANcoder bl_abs_enc{BL_ABS_ENC_PORT};
 
@@ -95,7 +94,7 @@ rev::SparkMaxPIDController bl_drive_pid = bl_drive_mtr.GetPIDController();
 // --------------------Absolute Encoder-----------------------
 const int BR_ABS_ENC_PORT = 3;
 const bool BR_ABS_ENC_INVERTED = false;
-const frc::Rotation2d BR_ZERO_HEADING{units::degree_t{255.5f}};
+const frc::Rotation2d BR_ZERO_HEADING{units::degree_t{0.0f}};
 
 ctre::phoenix6::hardware::CANcoder br_abs_enc{BR_ABS_ENC_PORT};
 
@@ -148,16 +147,14 @@ const double DRIVE_FF = 0.0;
 
 // --------------------------Gyro-----------------------------
 const bool GYRO_INVERTED = true;
-const frc::Rotation2d GYRO_ZERO_HEADING{units::degree_t{180.0f}};
-
-// AHRS robot_gyro{frc::SPI::Port::kMXP};
+const frc::Rotation2d GYRO_ZERO_HEADING{units::degree_t{0.0f}};
 
 // --------------------------Swerve---------------------------
-const double MAX_DRIVE_SPEED_FPS = 15.0;
-const double MAX_ANGULAR_VELOCITY_DEGPS = 360.0;
+const double MAX_DRIVE_SPEED_FPS = 18.0;
+const double MAX_ANGULAR_VELOCITY_DEGPS = 540.0;
 const double CONTROLLER_DEADZONE = 0.05;
 const int TURN_MOTOR_CURRENT_LIMIT = 20;
-const int DRIVE_MOTOR_CURRENT_LIMIT = 20;
+const int DRIVE_MOTOR_CURRENT_LIMIT = 40;
 const double SWERVE_VOLTAGE_COMPENSATION = 10.5;
 const bool IS_DRIVE_IN_COAST = false;
 const bool IS_ROBOT_ORIENTED_DRIVE = false;
