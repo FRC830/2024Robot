@@ -39,6 +39,8 @@ void Robot::SwerveInit(){
   turn_config.d=TURN_D;
   turn_config.ff=TURN_FF;
   turn_config.ratio=MOTOR_ROT_TO_DEG;
+  turn_config.swerve_voltage_compensation = SWERVE_VOLTAGE_COMPENSATION;
+  turn_config.turn_motor_current_limit = TURN_MOTOR_CURRENT_LIMIT;
 
   turn_config.deviceID=FL_TURN_MTR_ID;
   turn_config.absouluteEncoder=&_abs_encoders[ModulePosition::FL];
@@ -79,6 +81,7 @@ void Robot::SwerveInit(){
   drive_config.d = DRIVE_D;
   drive_config.ff = DRIVE_FF;
   drive_config.ratio = MOTOR_ROT_TO_FT / 60.0;
+  drive_config.drive_motor_current_limit = DRIVE_MOTOR_CURRENT_LIMIT;
   
   drive_config.PID = &fl_drive_pid;
   drive_config.encoder = &fl_drive_enc;

@@ -14,6 +14,7 @@ void NeoDriveMotor::Configure(SwerveDriveMotorConfig &config){
     m_encoder->SetVelocityConversionFactor(config.ratio);
     m_encoder->SetPositionConversionFactor(config.ratio * 60);
     m_motor->SetSmartCurrentLimit(config.drive_motor_current_limit);
+    m_motor->EnableVoltageCompensation(config.swerve_voltage_compensation);
     m_motor->BurnFlash();
     m_MaxSpeed = config.maxSpeed;
     m_correction_factor = config.correction_factor;

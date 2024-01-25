@@ -16,6 +16,7 @@ void NeoTurnMotor::Configure(SwerveTurnMotorConfig &config){
     m_relative_Encoder->SetPositionConversionFactor(config.ratio);
     m_turn_motor->SetSmartCurrentLimit(config.turn_motor_current_limit);
     SetInverted(config.inverted);
+    m_turn_motor->EnableVoltageCompensation(config.swerve_voltage_compensation);
     m_turn_motor->BurnFlash();
 };    
 
