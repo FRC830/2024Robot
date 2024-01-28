@@ -39,6 +39,9 @@ const int INTAKE_PVT_CURRENT_LIMIT = 20;
 const int INTAKE_ACT_CURRENT_LIMIT = 20;
 
 
+const double INTAKE_MAX_VEL = 0.0;
+const double INTAKE_ACCEL = 0.0;
+
 // ###########################################################
 // #                        Flywheel                         #
 // ###########################################################

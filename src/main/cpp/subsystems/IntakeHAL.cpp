@@ -24,7 +24,7 @@ IntakeHAL::IntakeHAL(){
     m_LFTActMotor.BurnFlash();
     m_LFTPvtMotor.BurnFlash();
 
-
+    m_LFTPvtEncoder.SetPosition(m_PvtCanCoder.GetAbsolutePosition().GetValueAsDouble() * (1.0 / INTAKE_POS_TO_DEG));
 
 }
 
@@ -39,18 +39,11 @@ void IntakeHAL::RunIntake(double speed) {
 
 void IntakeHAL::ProfiledMoveToAngle(double angle) {
 
-    SetAngle(angle);
-
     switch (m_profileState) {
 
         case 0: 
         {
             m_ProfileStartPos = GetAngle();
-            frc::TrapezoidProfile<units::meters> m_Profile{
-
-                frc::TrapezoidProfile<units::meters>::Constraints{0_mps, 0_mps_sq}
-                
-            };
 
             m_Timer.Restart();
 
