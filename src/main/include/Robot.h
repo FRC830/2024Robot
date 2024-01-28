@@ -38,6 +38,8 @@ class Robot : public frc::TimedRobot {
   void updateDashBoardValues(); 
   void SwerveInit();
 
+  void PrintSwerveInfo();
+
  private:
   static const int NUM_MODULES = 4;
 

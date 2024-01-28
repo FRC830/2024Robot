@@ -144,3 +144,32 @@ void Robot::SwerveInit(){
   _swerve.Configure(swerveConfig);
   _swerve.SetFieldOriented();
 }
+
+void Robot::PrintSwerveInfo()
+{
+  frc::SmartDashboard::PutNumber("FL Drive Motor Rotations", fl_drive_enc.GetPosition());
+  frc::SmartDashboard::PutNumber("FR Drive Motor Rotations", fr_drive_enc.GetPosition());
+  frc::SmartDashboard::PutNumber("BR Drive Motor Rotations", br_drive_enc.GetPosition());
+  frc::SmartDashboard::PutNumber("BL Drive Motor Rotations", bl_drive_enc.GetPosition());
+
+// Raw heading of absolute encoders
+  frc::SmartDashboard::PutNumber("FL Raw Heading", double(_abs_encoders[0].GetRawHeading().Degrees()));
+  frc::SmartDashboard::PutNumber("FR Raw Heading", double(_abs_encoders[1].GetRawHeading().Degrees()));
+  frc::SmartDashboard::PutNumber("BL Raw Heading", double(_abs_encoders[2].GetRawHeading().Degrees()));
+  frc::SmartDashboard::PutNumber("BR Raw Heading", double(_abs_encoders[3].GetRawHeading().Degrees()));
+  frc::SmartDashboard::PutNumber("Gyro Raw Heading", _gyro.GetRawHeading().Degrees().to<double>());
+
+  // Heading of turn motors
+  frc::SmartDashboard::PutNumber("FL Heading", double(_abs_encoders[0].GetHeading().Degrees()));
+  frc::SmartDashboard::PutNumber("FR Heading", double(_abs_encoders[1].GetHeading().Degrees()));
+  frc::SmartDashboard::PutNumber("BL Heading", double(_abs_encoders[2].GetHeading().Degrees()));
+  frc::SmartDashboard::PutNumber("BR Heading", double(_abs_encoders[3].GetHeading().Degrees()));
+  frc::SmartDashboard::PutNumber("Gyro Heading", _gyro.GetHeading().Degrees().to<double>());
+
+  // Velocity of drive motors
+  frc::SmartDashboard::PutNumber("FL Velocity", fl_drive_enc.GetVelocity());
+  frc::SmartDashboard::PutNumber("FR Velocity", fr_drive_enc.GetVelocity());
+  frc::SmartDashboard::PutNumber("BL Velocity", bl_drive_enc.GetVelocity());
+  frc::SmartDashboard::PutNumber("BR Velocity", br_drive_enc.GetVelocity());
+
+}
