@@ -27,7 +27,7 @@ class IntakeHAL
         rev::CANSparkMax m_LFTPvtMotor{INTAKE_PVT_MTR_B, rev::CANSparkMax::MotorType::kBrushless};
         
         rev::SparkMaxRelativeEncoder m_LFTPvtEncoder = m_LFTPvtMotor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 42);
-        rev::SparkMaxPIDController m_LFTPvtPID = m_LFTPvtMotor.GetPIDController();
+        rev::SparkPIDController m_LFTPvtPID = m_LFTPvtMotor.GetPIDController();
 
         ctre::phoenix6::hardware::CANcoder m_PvtCanCoder{INTAKE_PVT_ENCODER_ID, "rio"};
 
