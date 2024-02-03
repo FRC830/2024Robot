@@ -1,7 +1,6 @@
 #include "subsystems/IntakeHAL.h"
 
 
-
 IntakeHAL::IntakeHAL(){
 
     m_RGTActMotor.Follow(m_LFTActMotor, true);
@@ -26,6 +25,12 @@ IntakeHAL::IntakeHAL(){
 
     m_LFTPvtEncoder.SetPosition(m_PvtCanCoder.GetAbsolutePosition().GetValueAsDouble() * (1.0 / INTAKE_POS_TO_DEG));
 
+    auto inst = nt::NetworkTableInstance::GetDefault();
+    std::shared_ptr<nt::NetworkTable> table = inst.GetTable("intake");
+    pub_intakeSpeed = table->GetDoubleTopic("intake").Publish();
+    pub_angle = table->GetDoubleTopic("intake").Publish();
+    pub_speed = table->GetDoubleTopic("intake").Publish();
+    pub_profileState = table->GetStringTopic("intake").Publish();
 }
 
 
@@ -83,8 +88,6 @@ void IntakeHAL::ProfiledMoveToAngle(double angle) {
         
         default:
             break; 
-
-
     }
 
 }
@@ -119,4 +122,18 @@ double IntakeHAL::GetSpeed() {
 
     return m_intakeSpeed;
 
+}
+
+void IntakeHAL::PublishDebugInfo()
+{
+    pub_intakeSpeed.Set(m_intakeSpeed);
+    pub_angle.Set(GetAngle());
+    pub_speed.Set(GetSpeed());
+
+    std::string profileStateString;
+    if(m_profileState == 0) profileStateString="ABOUT TO MOVE";
+    if(m_profileState == 1) profileStateString="CURRENTLY MOVING";
+    if(m_profileState == 2) profileStateString="FINISHED MOVE";
+    if(m_profileState == 3) profileStateString="NOT MOVING";
+    pub_profileState.Set(profileStateString);
 }
