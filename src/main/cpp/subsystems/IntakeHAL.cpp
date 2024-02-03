@@ -3,14 +3,19 @@
 
 IntakeHAL::IntakeHAL(){
 
-    m_RGTActMotor.Follow(m_LFTActMotor, true);
-    m_RGTPvtMotor.Follow(m_LFTPvtMotor, false);
      
     m_LFTActMotor.RestoreFactoryDefaults();
     m_LFTPvtMotor.RestoreFactoryDefaults();
+    m_RGTActMotor.RestoreFactoryDefaults();
+    m_RGTPvtMotor.RestoreFactoryDefaults();
+
+    m_RGTActMotor.Follow(m_LFTActMotor, true);
+    m_RGTPvtMotor.Follow(m_LFTPvtMotor, false);
 
     m_LFTActMotor.EnableVoltageCompensation(VOLT_COMP);
     m_LFTPvtMotor.EnableVoltageCompensation(VOLT_COMP);
+    m_RGTActMotor.EnableVoltageCompensation(VOLT_COMP);
+    m_RGTPvtMotor.EnableVoltageCompensation(VOLT_COMP);
 
     m_LFTPvtPID.SetP(INTAKE_P);
     m_LFTPvtPID.SetI(INTAKE_I);
@@ -19,9 +24,13 @@ IntakeHAL::IntakeHAL(){
 
     m_LFTActMotor.SetSmartCurrentLimit(INTAKE_ACT_CURRENT_LIMIT);
     m_LFTPvtMotor.SetSmartCurrentLimit(INTAKE_PVT_CURRENT_LIMIT);
+    m_RGTActMotor.SetSmartCurrentLimit(INTAKE_ACT_CURRENT_LIMIT);
+    m_RGTPvtMotor.SetSmartCurrentLimit(INTAKE_PVT_CURRENT_LIMIT);
 
     m_LFTActMotor.BurnFlash();
     m_LFTPvtMotor.BurnFlash();
+    m_RGTActMotor.BurnFlash();
+    m_RGTPvtMotor.BurnFlash();
 
     m_LFTPvtEncoder.SetPosition(m_PvtCanCoder.GetAbsolutePosition().GetValueAsDouble() * (1.0 / INTAKE_POS_TO_DEG));
 
