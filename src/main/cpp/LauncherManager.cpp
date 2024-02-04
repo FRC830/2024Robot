@@ -33,4 +33,5 @@ void LauncherManager::HandleInput(LauncherInput &input)
             m_goToSubPos = true;
             m_launcher.ResetProfiledMoveState();
         }
+    }
 }

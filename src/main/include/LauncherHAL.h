@@ -38,7 +38,6 @@ class LauncherHAL
 
 
         frc::Timer m_Timer;
-        //FIXME: This section appears to be broken
         
         frc::TrapezoidProfile<units::meter> m_Profile{
 
