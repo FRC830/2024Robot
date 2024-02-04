@@ -9,7 +9,7 @@ struct IntakeHALConfig
     rev::CANSparkMax *LFTActMotor;
     rev::CANSparkMax *RGTPvtMotor;
     rev::CANSparkMax *LFTPvtMotor;
-    ctre::phoenix::sensors::CANCoder *encoder;
+    ctre::phoenix6::hardware::CANcoder *encoder;
 
 
     double PVTCalibrate;
@@ -34,11 +34,8 @@ class IntakeHAL
         rev::CANSparkMax *m_LFTActMotor;
         rev::CANSparkMax *m_RGTPvtMotor;
         rev::CANSparkMax *m_LFTPvtMotor;
-
-        frc::MotorControllerGroup *m_ActMotors;
-        frc::MotorControllerGroup *m_PvtMotors;
         
-        ctre::phoenix::sensors::CANCoder *m_PVTEncoder; 
+        ctre::phoenix6::hardware::CANcoder *m_PVTEncoder; 
 
 
         double m_PVTCalibrate;
