@@ -9,8 +9,8 @@ struct SwerveTurnMotorConfig{
     int deviceID;
     bool inverted; 
     rev::CANSparkMax *turn_motor; 
-    rev::SparkMaxRelativeEncoder *relative_Encoder;
-    rev::SparkMaxPIDController *PID;
+    rev::SparkRelativeEncoder *relative_Encoder;
+    rev::SparkPIDController *PID;
     double p;
     double i;
     double d;
@@ -36,7 +36,7 @@ class NeoTurnMotor : public SwerveTurnMotor {
     private: 
        SwerveAbsoluteEncoder *m_AbsouluteEncoder;
        rev::CANSparkMax *m_turn_motor; 
-       rev::SparkMaxRelativeEncoder *m_relative_Encoder;
-       rev::SparkMaxPIDController *m_PID; 
+       rev::SparkRelativeEncoder *m_relative_Encoder;
+       rev::SparkPIDController *m_PID; 
        double m_pastCommandAngle;
 };
