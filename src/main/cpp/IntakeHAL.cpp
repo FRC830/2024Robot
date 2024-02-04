@@ -68,7 +68,8 @@ void IntakeHAL::SetAngle(double angle) {
 
 double IntakeHAL::GetAngle() {
 
-     return m_PVTEncoder->GetAbsolutePosition().GetValueAsDouble()  *m_PVTCalibrate;
+     return m_PVTEncoder->GetAbsolutePosition().GetValueAsDouble() *m_PVTCalibrate;
+
 
 }
 
