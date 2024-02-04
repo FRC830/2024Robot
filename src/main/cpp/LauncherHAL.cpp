@@ -42,7 +42,7 @@ void LauncherHAL::ProfiledMoveToAngle(double angle)
         case 1:
         {
             //FIXME: This section appears to be broken
-            /*
+            
             auto setPoint = m_Profile.Calculate(m_Timer.Get(),    
             frc::TrapezoidProfile<units::meters>::State{units::meter_t{m_ProfileStartPos}, 0_mps},  
             frc::TrapezoidProfile<units::meters>::State{units::meter_t{angle}, 0_mps}
@@ -56,7 +56,7 @@ void LauncherHAL::ProfiledMoveToAngle(double angle)
 
             }
             
-            */
+            
 
             break;
         }

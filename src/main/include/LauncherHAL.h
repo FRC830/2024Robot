@@ -3,6 +3,10 @@
 #include "SubSystemConfig.h"
 #include <frc/Timer.h>
 #include <frc/trajectory/TrapezoidProfile.h>
+#include <units/length.h>
+#include <units/velocity.h>
+#include <units/angle.h>
+#include <units/acceleration.h>
 
 struct LauncherHALConfig
 {
@@ -35,13 +39,13 @@ class LauncherHAL
 
         frc::Timer m_Timer;
         //FIXME: This section appears to be broken
-        /*
-        frc::TrapezoidProfile<units::meters> m_Profile{
+        
+        frc::TrapezoidProfile<units::meter> m_Profile{
 
-                frc::TrapezoidProfile<units::meters>::Constraints{0_mps, 0_mps_sq}  
+                frc::TrapezoidProfile<units::meter>::Constraints{0_mps, 0_mps_sq}  
                 
             };
-        */
+        
         
         double m_ProfileStartPos; 
         double m_indexerSpeed;
