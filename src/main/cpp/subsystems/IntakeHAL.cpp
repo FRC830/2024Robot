@@ -3,7 +3,6 @@
 
 
 IntakeHAL::IntakeHAL(){
-
     m_RGTActMotor.Follow(m_LFTActMotor, true);
     m_RGTPvtMotor.Follow(m_LFTPvtMotor, false);
      
@@ -22,9 +21,6 @@ IntakeHAL::IntakeHAL(){
 
     m_LFTActMotor.BurnFlash();
     m_LFTPvtMotor.BurnFlash();
-
-
-
 }
 
 

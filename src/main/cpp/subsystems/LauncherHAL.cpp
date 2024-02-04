@@ -1,9 +1,7 @@
 #include "subsystems/LauncherHAL.h"
+
 LauncherHAL::LauncherHAL()
 {
-
-    m_FlywheelActMotorB.SetControl(m_FlywheelActMtrBFollower);
-
     m_PvtMotor.RestoreFactoryDefaults();
     m_IndMotor.RestoreFactoryDefaults();
     m_PvtMotor.EnableVoltageCompensation(VOLT_COMP);
@@ -16,18 +14,18 @@ LauncherHAL::LauncherHAL()
     m_PvtMotor.SetSmartCurrentLimit(LAUNCHER_PVT_CURRENT_LIMIT);
     m_IndMotor.SetSmartCurrentLimit(LAUNCHER_IND_CURRENT_LIMIT);
 
+    m_PvtMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+
     ctre::phoenix6::configs::TalonFXConfiguration configs{};
 
     configs.Slot0.kP = FLYWHEEL_P;
     configs.Slot0.kI = FLYWHEEL_I;
     configs.Slot0.kD = FLYWHEEL_D;
 
-    // Need to implement voltage compensation for flywheel actuator motors
-    /* ctre::phoenix6::controls::VoltageOut m_request{units::volt_t(VOLT_COMP)};
-    m_FlywheelActMotorA.SetControl(m_request.WithOutput(units::volt_t(VOLT_COMP)));
-    m_FlywheelActMotorB.SetControl(m_request.WithOutput(units::volt_t(VOLT_COMP))); */
-
     m_FlywheelActMotorA.GetConfigurator().Apply(configs);
+    m_FlywheelActMotorB.GetConfigurator().Apply(configs);
+
+    m_FlywheelActMotorB.SetControl(m_FlywheelActMtrBFollower);
 
     m_PvtMotor.BurnFlash();
     m_IndMotor.BurnFlash();
@@ -36,9 +34,8 @@ LauncherHAL::LauncherHAL()
 void LauncherHAL::SetFlywheelSpeed(double speed)
 {   
     units::angular_velocity::turns_per_second_t speed_tps = units::angular_velocity::turns_per_second_t(speed);
-    ctre::phoenix6::controls::VelocityDutyCycle m_request{speed_tps};
+    ctre::phoenix6::controls::VelocityVoltage m_request{speed_tps};
     m_FlywheelActMotorA.SetControl(m_request.WithVelocity(speed_tps));
-    m_FlywheelActMotorB.SetControl(m_request.WithVelocity(speed_tps));
 }
 
 void LauncherHAL::SetIndexerSpeed(double speed)
@@ -57,8 +54,6 @@ void LauncherHAL::SetAngle(double angle)
 
 void LauncherHAL::ProfiledMoveToAngle(double angle)
 {
-    SetAngle(angle);
-
     switch(m_profileState)
     {
      case 0: 
@@ -111,9 +106,9 @@ double LauncherHAL::GetAngle()
     return m_PvtEncoder.GetPosition() * LAUNCHER_PVT_POS_TO_DEG;
 }
 
-double LauncherHAL::GetSpeed()
+double LauncherHAL::GetFlywheelSpeed()
 {
-    return m_indexerSpeed;
+    return m_FlywheelActMotorA.GetVelocity().GetValueAsDouble();
 }
 
 void LauncherHAL::ResetProfiledMoveState()

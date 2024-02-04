@@ -13,7 +13,7 @@ class LauncherHAL
         void SetIndexerSpeed(double speed);
         void ProfiledMoveToAngle(double angle);
         double GetAngle(); 
-        double GetSpeed();
+        double GetFlywheelSpeed();
         void ResetProfiledMoveState();
 
     private:
