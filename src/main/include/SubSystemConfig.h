@@ -2,8 +2,9 @@
 
 
 #include "rev/CANSparkMax.h"
-#include <ctre/phoenix6/CANcoder.hpp>
-#include "ctre/phoenix6/TalonFX.hpp"
+
+#include <ctre/phoenix6/CANCoder.hpp>
+#include <ctre/phoenix6/TalonFX.hpp>
 #include <frc/motorcontrol/MotorControllerGroup.h>
 
 
