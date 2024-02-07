@@ -6,58 +6,70 @@
 
 struct VisionConsumerConfig {
     nt::DoubleTopic aprilTagCoords;
+    nt::BooleanTopic aprilTagVisible;
 };
 
 class VisionConsumer {
 
     public:
         void Configure(VisionConsumerConfig &config);
-        void GetVisionInfoFromNetworkTabe();
 
         explicit VisionConsumer() {
-            
-            AprilTag5X = aprilTagCoords.Subscribe(0.0);
-            AprilTag5Y = aprilTagCoords.Subscribe(0.0);
-            AprilTag5Z = aprilTagCoords.Subscribe(0.0);
 
-            AprilTag6X = aprilTagCoords.Subscribe(0.0);
-            AprilTag6Y = aprilTagCoords.Subscribe(0.0);
-            AprilTag6Z = aprilTagCoords.Subscribe(0.0);
+            Apriltag5X = aprilTagCoords.Subscribe(0.0);
+            Apriltag5Y = aprilTagCoords.Subscribe(0.0);
+            Apriltag5Z = aprilTagCoords.Subscribe(0.0);
 
-            AprilTag7X = aprilTagCoords.Subscribe(0.0);
-            AprilTag7Y = aprilTagCoords.Subscribe(0.0);
-            AprilTag7Z = aprilTagCoords.Subscribe(0.0);
+            Apriltag6X = aprilTagCoords.Subscribe(0.0);
+            Apriltag6Y = aprilTagCoords.Subscribe(0.0);
+            Apriltag6Z = aprilTagCoords.Subscribe(0.0);
+
+            Apriltag7X = aprilTagCoords.Subscribe(0.0);
+            Apriltag7Y = aprilTagCoords.Subscribe(0.0);
+            Apriltag7Z = aprilTagCoords.Subscribe(0.0);
+
+            Apriltag5 = aprilTagVisible.Subscribe(false);            
+            Apriltag6 = aprilTagVisible.Subscribe(false);
+            Apriltag7 = aprilTagVisible.Subscribe(false);            
         } 
 
         void Periodic() {
-            AprilTag5X.Get(-1.0);
-            AprilTag5Y.Get(-1.0);
-            AprilTag5Z.Get(-1.0);
+            Apriltag5X.Get(-1.0);
+            Apriltag5Y.Get(-1.0);
+            Apriltag5Z.Get(-1.0);
 
-            AprilTag6X.Get(-1.0);
-            AprilTag6Y.Get(-1.0);
-            AprilTag6Z.Get(-1.0);
+            Apriltag6X.Get(-1.0);
+            Apriltag6Y.Get(-1.0);
+            Apriltag6Z.Get(-1.0);
 
-            AprilTag7X.Get(-1.0);
-            AprilTag7Y.Get(-1.0);
-            AprilTag7Z.Get(-1.0);
+            Apriltag7X.Get(-1.0);
+            Apriltag7Y.Get(-1.0);
+            Apriltag7Z.Get(-1.0);
+
+            Apriltag5.Get();
+            Apriltag6.Get();
+            Apriltag7.Get();
         }
 
         private:            
             std::shared_ptr<nt::NetworkTable> table;
             nt::DoubleTopic aprilTagCoords = table->GetDoubleTopic("vision");
+            nt::BooleanTopic aprilTagVisible = table->GetBooleanTopic("vision");
 
-            nt::DoubleSubscriber AprilTag5X;
-            nt::DoubleSubscriber AprilTag5Y;
-            nt::DoubleSubscriber AprilTag5Z;
+            nt::DoubleSubscriber Apriltag5X;
+            nt::DoubleSubscriber Apriltag5Y;
+            nt::DoubleSubscriber Apriltag5Z;
 
-            nt::DoubleSubscriber AprilTag6X;
-            nt::DoubleSubscriber AprilTag6Y;
-            nt::DoubleSubscriber AprilTag6Z;
+            nt::DoubleSubscriber Apriltag6X;
+            nt::DoubleSubscriber Apriltag6Y;
+            nt::DoubleSubscriber Apriltag6Z;
 
-            nt::DoubleSubscriber AprilTag7X;
-            nt::DoubleSubscriber AprilTag7Y;
-            nt::DoubleSubscriber AprilTag7Z;
+            nt::DoubleSubscriber Apriltag7X;
+            nt::DoubleSubscriber Apriltag7Y;
+            nt::DoubleSubscriber Apriltag7Z;
 
+            nt::BooleanSubscriber Apriltag5;
+            nt::BooleanSubscriber Apriltag6;
+            nt::BooleanSubscriber Apriltag7;
 
 };
