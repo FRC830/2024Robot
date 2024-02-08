@@ -118,8 +118,8 @@ rev::SparkPIDController br_drive_pid = br_drive_mtr.GetPIDController();
 // ###########################################################
 // #                     Swerve Drive                        #
 // ###########################################################
-const double ROBOT_WIDTH_M = 0.63;
-const double ROBOT_LENGTH_M = 0.63;
+const double ROBOT_WIDTH_M = 0.56515;
+const double ROBOT_LENGTH_M = 0.5715;
 
 const frc::Translation2d fl_position(units::meter_t{ROBOT_LENGTH_M / 2.0}, units::meter_t{ROBOT_WIDTH_M / 2.0});
 const frc::Translation2d fr_position(units::meter_t{ROBOT_LENGTH_M / 2.0}, units::meter_t{-ROBOT_WIDTH_M / 2.0});
@@ -152,7 +152,7 @@ const frc::Rotation2d GYRO_ZERO_HEADING{units::degree_t{0.0f}};
 // --------------------------Swerve---------------------------
 const double MAX_DRIVE_SPEED_FPS = 18.0;
 const double MAX_ANGULAR_VELOCITY_DEGPS = 540.0;
-const double CONTROLLER_DEADZONE = 0.05;
+const double CONTROLLER_DEADZONE = 0.1;
 const int TURN_MOTOR_CURRENT_LIMIT = 20;
 const int DRIVE_MOTOR_CURRENT_LIMIT = 40;
 const double SWERVE_VOLTAGE_COMPENSATION = 10.5;
