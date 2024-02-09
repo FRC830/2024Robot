@@ -27,12 +27,12 @@ IntakeHAL::IntakeHAL(){
     m_RGTActMotor.SetSmartCurrentLimit(INTAKE_ACT_CURRENT_LIMIT);
     m_RGTPvtMotor.SetSmartCurrentLimit(INTAKE_PVT_CURRENT_LIMIT);
 
+    m_LFTPvtPID.SetFeedbackDevice(m_LFTPvtAbsEncoder);
+
     m_LFTActMotor.BurnFlash();
     m_LFTPvtMotor.BurnFlash();
     m_RGTActMotor.BurnFlash();
     m_RGTPvtMotor.BurnFlash();
-
-    m_LFTPvtEncoder.SetPosition(m_PvtCanCoder.GetAbsolutePosition().GetValueAsDouble() * (1.0 / INTAKE_POS_TO_DEG));
 
     auto inst = nt::NetworkTableInstance::GetDefault();
     std::shared_ptr<nt::NetworkTable> table = inst.GetTable("intake");
@@ -123,7 +123,7 @@ void IntakeHAL::SetAngle(double angle) {
 
 double IntakeHAL::GetAngle() {
 
-     return m_LFTPvtEncoder.GetPosition() * INTAKE_POS_TO_DEG;
+     return m_LFTPvtAbsEncoder.GetPosition() * INTAKE_POS_TO_DEG;
 
 }
 

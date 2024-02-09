@@ -8,7 +8,7 @@ struct SwerveDriveMotorConfig {
     int motorID;
     bool inverted;
     rev::CANSparkMax *motor;
-    rev::SparkMaxRelativeEncoder *encoder;
+    rev::SparkRelativeEncoder *encoder;
     rev::SparkPIDController *PID;
     rev::CANSparkMax::IdleMode idleMode; 
     double p;
@@ -40,7 +40,7 @@ class NeoDriveMotor : public SwerveDriveMotor {
         int m_motorID;
         bool m_inverted;
         rev::CANSparkMax *m_motor;
-        rev::SparkMaxRelativeEncoder *m_encoder;
+        rev::SparkRelativeEncoder *m_encoder;
         rev::SparkPIDController *m_PID;
         units::velocity::meters_per_second_t m_MaxSpeed;
         double m_correction_factor;

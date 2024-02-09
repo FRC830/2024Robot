@@ -21,7 +21,7 @@ const int FL_TURN_MTR_ID = 11;
 const bool FL_TURN_MTR_INVERTED = true;
 
 rev::CANSparkMax fl_turn_mtr{FL_TURN_MTR_ID, rev::CANSparkMax::MotorType::kBrushless};
-rev::SparkMaxRelativeEncoder fl_turn_enc = fl_turn_mtr.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 42);
+rev::SparkRelativeEncoder fl_turn_enc = fl_turn_mtr.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 42);
 rev::SparkPIDController fl_turn_pid = fl_turn_mtr.GetPIDController();
 
 // -----------------------Drive Motor-------------------------
@@ -29,7 +29,7 @@ const int FL_DRIVE_MTR_ID = 10;
 const double FL_POSITION_CORRECTION_FACTOR = 1.0;
 
 rev::CANSparkMax fl_drive_mtr{FL_DRIVE_MTR_ID, rev::CANSparkMax::MotorType::kBrushless};
-rev::SparkMaxRelativeEncoder fl_drive_enc = fl_drive_mtr.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 42);
+rev::SparkRelativeEncoder fl_drive_enc = fl_drive_mtr.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 42);
 rev::SparkPIDController fl_drive_pid = fl_drive_mtr.GetPIDController();
 
 
@@ -48,7 +48,7 @@ const int FR_TURN_MTR_ID = 8;
 const bool FR_TURN_MTR_INVERTED = true;
 
 rev::CANSparkMax fr_turn_mtr{FR_TURN_MTR_ID, rev::CANSparkMax::MotorType::kBrushless};
-rev::SparkMaxRelativeEncoder fr_turn_enc = fr_turn_mtr.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 42);
+rev::SparkRelativeEncoder fr_turn_enc = fr_turn_mtr.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 42);
 rev::SparkPIDController fr_turn_pid = fr_turn_mtr.GetPIDController();
 
 // -----------------------Drive Motor-------------------------
@@ -56,7 +56,7 @@ const int FR_DRIVE_MTR_ID = 7;
 const double FR_POSITION_CORRECTION_FACTOR = 1.0;
 
 rev::CANSparkMax fr_drive_mtr{FR_DRIVE_MTR_ID, rev::CANSparkMax::MotorType::kBrushless};
-rev::SparkMaxRelativeEncoder fr_drive_enc = fr_drive_mtr.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 42);
+rev::SparkRelativeEncoder fr_drive_enc = fr_drive_mtr.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 42);
 rev::SparkPIDController fr_drive_pid = fr_drive_mtr.GetPIDController(); 
 
 
@@ -76,7 +76,7 @@ const int BL_TURN_MTR_ID = 5;
 const bool BL_TURN_MTR_INVERTED = true;
 
 rev::CANSparkMax bl_turn_mtr{BL_TURN_MTR_ID, rev::CANSparkMax::MotorType::kBrushless};
-rev::SparkMaxRelativeEncoder bl_turn_enc = bl_turn_mtr.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 42);
+rev::SparkRelativeEncoder bl_turn_enc = bl_turn_mtr.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 42);
 rev::SparkPIDController bl_turn_pid = bl_turn_mtr.GetPIDController();
 
 // -----------------------Drive Motor-------------------------
@@ -84,7 +84,7 @@ const int BL_DRIVE_MTR_ID = 4;
 const double BL_POSITION_CORRECTION_FACTOR = 1.0;
 
 rev::CANSparkMax bl_drive_mtr{BL_DRIVE_MTR_ID, rev::CANSparkMax::MotorType::kBrushless};
-rev::SparkMaxRelativeEncoder bl_drive_enc = bl_drive_mtr.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 42);
+rev::SparkRelativeEncoder bl_drive_enc = bl_drive_mtr.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 42);
 rev::SparkPIDController bl_drive_pid = bl_drive_mtr.GetPIDController();
 
 
@@ -103,7 +103,7 @@ const int BR_TURN_MTR_ID = 1;
 const bool BR_TURN_MTR_INVERTED = true;
 
 rev::CANSparkMax br_turn_mtr{BR_TURN_MTR_ID, rev::CANSparkMax::MotorType::kBrushless};
-rev::SparkMaxRelativeEncoder br_turn_enc = br_turn_mtr.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 42);
+rev::SparkRelativeEncoder br_turn_enc = br_turn_mtr.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 42);
 rev::SparkPIDController br_turn_pid = br_turn_mtr.GetPIDController();
 
 // -----------------------Drive Motor-------------------------
@@ -111,7 +111,7 @@ const int BR_DRIVE_MTR_ID = 2;
 const double BR_POSITION_CORRECTION_FACTOR = 1.0;
 
 rev::CANSparkMax br_drive_mtr{BR_DRIVE_MTR_ID, rev::CANSparkMax::MotorType::kBrushless};
-rev::SparkMaxRelativeEncoder br_drive_enc = br_drive_mtr.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 42);
+rev::SparkRelativeEncoder br_drive_enc = br_drive_mtr.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 42);
 rev::SparkPIDController br_drive_pid = br_drive_mtr.GetPIDController(); 
 
 
