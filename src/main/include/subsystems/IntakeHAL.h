@@ -37,9 +37,9 @@ class IntakeHAL
 
         frc::Timer m_Timer; 
 
-        frc::TrapezoidProfile<units::meters> m_Profile{
+        frc::TrapezoidProfile<units::degrees> m_Profile{
 
-                frc::TrapezoidProfile<units::meters>::Constraints{60_mps, 30_mps_sq}  
+                frc::TrapezoidProfile<units::degrees>::Constraints{60_deg_per_s, 30_deg_per_s_sq}  
                 
             };
 
