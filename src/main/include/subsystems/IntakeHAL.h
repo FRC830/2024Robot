@@ -39,7 +39,7 @@ class IntakeHAL
 
         frc::TrapezoidProfile<units::meters> m_Profile{
 
-                frc::TrapezoidProfile<units::meters>::Constraints{0_mps, 0_mps_sq}  
+                frc::TrapezoidProfile<units::meters>::Constraints{60_mps, 30_mps_sq}  
                 
             };
 

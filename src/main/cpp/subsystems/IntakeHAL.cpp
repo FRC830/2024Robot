@@ -20,7 +20,6 @@ IntakeHAL::IntakeHAL(){
     m_LFTPvtPID.SetP(INTAKE_P);
     m_LFTPvtPID.SetI(INTAKE_I);
     m_LFTPvtPID.SetD(INTAKE_D);
-    
 
     m_LFTActMotor.SetSmartCurrentLimit(INTAKE_ACT_CURRENT_LIMIT);
     m_LFTPvtMotor.SetSmartCurrentLimit(INTAKE_PVT_CURRENT_LIMIT);
@@ -28,6 +27,11 @@ IntakeHAL::IntakeHAL(){
     m_RGTPvtMotor.SetSmartCurrentLimit(INTAKE_PVT_CURRENT_LIMIT);
 
     m_LFTPvtPID.SetFeedbackDevice(m_LFTPvtAbsEncoder);
+    
+    m_LFTPvtAbsEncoder.SetInverted(LFT_PVT_ABS_ENC_INVERTED);
+    m_LFTPvtAbsEncoder.SetPositionConversionFactor(LFT_PVT_ABS_ENC_CONVERSION_FACTOR);
+
+    m_LFTPvtMotor.SetInverted(LFT_PVT_MTR_INVERTED);
 
     m_LFTActMotor.BurnFlash();
     m_LFTPvtMotor.BurnFlash();
