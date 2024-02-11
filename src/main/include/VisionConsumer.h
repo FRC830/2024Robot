@@ -11,20 +11,10 @@ struct PolarCoords {
     double theta;
 };
 
-struct XYZCoords {
+struct CartCoords {
+
     double x;
     double y;
-    double z;
-    double xCorrected;
-    double yCorrected;
-    double zCorrected;
-    double id;
-    std::vector<nt::DoubleSubscriber> GetXYZCoords;
-
-    XYZCoords GetXYZ(int id) {
-        
-      
-    }
 
 };
 
@@ -34,7 +24,11 @@ class VisionConsumer {
         VisionConsumer();
         void Periodic();
         void Subscribe();
-        struct PolarCoords toPolar(double x, double y);
+
+        PolarCoords GetPolarCoordForTagX(int tagId);
+        PolarCoords toPolar(double x, double y);
+        PolarCoords GetRobotToSpeaker(PolarCoords a, PolarCoords b, double rot);
+        
     
     private:            
         std::shared_ptr<nt::NetworkTable> table;
@@ -52,5 +46,4 @@ class VisionConsumer {
         std::vector<bool> v;
         double fps;
 
-        std::map<int, XYZCoords> GetXYZCoords;
 };

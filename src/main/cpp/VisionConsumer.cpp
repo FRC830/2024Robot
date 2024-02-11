@@ -37,7 +37,7 @@ void VisionConsumer::Periodic() {
 
 }
 
-struct PolarCoords toPolar(double x, double y) {
+PolarCoords VisionConsumer::toPolar(double x, double y) {
     double r = sqrt(pow(x, 2) + pow(y, 2));
     double theta = atan2(y, x);
 
@@ -45,4 +45,38 @@ struct PolarCoords toPolar(double x, double y) {
     currentCoords.r = r;
     currentCoords.theta = theta;
     return currentCoords; 
+}
+
+PolarCoords VisionConsumer::GetPolarCoordForTagX(int id) {
+
+    return toPolar(x.at(id), y.at(id));
+
+}
+
+PolarCoords VisionConsumer::GetRobotToSpeaker(PolarCoords a, PolarCoords b, double rot) {
+
+    double dist = .43;
+
+    auto A = PolarCoords{a.r, a.theta - rot};
+    auto B = PolarCoords{b.r, b.theta - rot};
+    double By = B.r * cos(B.theta);
+    double Ay = A.r * cos(A.theta);
+    double Bx = B.r * sin(B.theta);
+    double Ax = A.r * sin(A.theta);
+
+    double Bya = (a.r * cos(a.theta)) - (B.r * cos(B.theta));
+    double Bxa = ((a.r * sin(a.theta)) - (B.r * sin(B.theta))) - dist;
+    CartCoords Ba = CartCoords{Ax + dist, Ay};
+    CartCoords err = CartCoords(Ba.x - Bx, Ba.y - By);
+    CartCoords corr = CartCoords(err.x/2, err.y/2);
+
+    PolarCoords ret = toPolar(Ax + corr.x, By = err.y);
+    ret = PolarCoords{ret.r, ret.theta + rot};
+
+
+    return ret;
+
+
+
+
 }
