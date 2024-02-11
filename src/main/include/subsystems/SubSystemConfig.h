@@ -20,8 +20,8 @@ const double VOLT_COMP = 10.5;
 const int LFT_INTAKE_ACT_MTR_ID = 0;
 const int RGT_INTAKE_ACT_MTR_ID = 1;
 
-const int INTAKE_PVT_MTR_A = 2;
-const int INTAKE_PVT_MTR_B = 3;
+const int RGT_INTAKE_PVT_MTR_ID = 11;
+const int LFT_INTAKE_PVT_MTR_ID = 4;
 
 const int INTAKE_PVT_ENCODER_ID = 8; 
 

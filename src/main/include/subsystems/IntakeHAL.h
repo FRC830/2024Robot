@@ -26,8 +26,8 @@ class IntakeHAL
     private:
         rev::CANSparkMax m_RGTActMotor{RGT_INTAKE_ACT_MTR_ID, rev::CANSparkMax::MotorType::kBrushless};
         rev::CANSparkMax m_LFTActMotor{LFT_INTAKE_ACT_MTR_ID, rev::CANSparkMax::MotorType::kBrushless};
-        rev::CANSparkMax m_RGTPvtMotor{INTAKE_PVT_MTR_A, rev::CANSparkMax::MotorType::kBrushless};
-        rev::CANSparkMax m_LFTPvtMotor{INTAKE_PVT_MTR_B, rev::CANSparkMax::MotorType::kBrushless};
+        rev::CANSparkMax m_RGTPvtMotor{RGT_INTAKE_PVT_MTR_ID, rev::CANSparkMax::MotorType::kBrushless};
+        rev::CANSparkMax m_LFTPvtMotor{LFT_INTAKE_PVT_MTR_ID, rev::CANSparkMax::MotorType::kBrushless};
     
         rev::SparkRelativeEncoder m_LFTPvtRelEncoder = m_LFTPvtMotor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 42);
         rev::SparkAbsoluteEncoder m_LFTPvtAbsEncoder = m_LFTPvtMotor.GetAbsoluteEncoder(rev::SparkAbsoluteEncoder::Type::kDutyCycle);
