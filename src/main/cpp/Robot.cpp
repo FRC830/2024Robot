@@ -3,16 +3,18 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "Robot.h"
-
+#include "VisionConsumer.h"
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
 void Robot::updateDashBoardValues() {};
 
 void Robot::RobotInit() {
-  m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
-  m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
-  frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+  // m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
+  // m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
+  // frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+
+  vision = VisionConsumer();
 
 
 
@@ -26,7 +28,17 @@ void Robot::RobotInit() {
  * <p> This runs after the mode specific periodic functions, but before
  * LiveWindow and SmartDashboard integrated updating.
  */
-void Robot::RobotPeriodic() {}
+void Robot::RobotPeriodic() {
+
+  vision.Periodic();
+  auto a = vision.GetPolarCoordForTagX(11);
+  auto b = vision.GetPolarCoordForTagX(15);
+
+  auto temp = vision.GetRobotToSpeaker(a, b, 6.9);
+  frc::SmartDashboard::PutNumber("Weird r", temp.r);
+  frc::SmartDashboard::PutNumber("Weird Theta", temp.theta);
+
+}
 
 /**
  * This autonomous (along with the chooser code above) shows how to select
@@ -40,10 +52,9 @@ void Robot::RobotPeriodic() {}
  * make sure to add them to the chooser code above as well.
  */
 void Robot::AutonomousInit() {
-  m_autoSelected = m_chooser.GetSelected();
-  // m_autoSelected = SmartDashboard::GetString("Auto Selector",
-  //     kAutoNameDefault);
-  fmt::print("Auto selected: {}\n", m_autoSelected);
+  // m_autoSelected = m_chooser.GetSelected();
+  // m_autoSelected = frc::SmartDashboard::GetString("Auto Selector", kAutoNameDefault);
+  // fmt::print("Auto selected: {}\n", m_autoSelected);
 
   if (m_autoSelected == kAutoNameCustom) {
     // Custom Auto goes here
@@ -63,7 +74,6 @@ void Robot::AutonomousPeriodic() {
 void Robot::TeleopInit() {}
 
 void Robot::TeleopPeriodic() {
-  PrintSwerveInfo();
 }
 
 void Robot::DisabledInit() {}

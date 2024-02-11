@@ -23,7 +23,6 @@ class VisionConsumer {
     public:
         VisionConsumer();
         void Periodic();
-        void Subscribe();
 
         PolarCoords GetPolarCoordForTagX(int tagId);
         PolarCoords toPolar(double x, double y);
