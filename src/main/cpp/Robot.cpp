@@ -7,13 +7,13 @@
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
+void Robot::updateDashBoardValues() {};
+
 void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
-
-
-
+  SwerveInit();
 }
 
 /**
@@ -60,7 +60,10 @@ void Robot::AutonomousPeriodic() {
 
 void Robot::TeleopInit() {}
 
-void Robot::TeleopPeriodic() {}
+void Robot::TeleopPeriodic() {
+  PrintSwerveInfo();
+  _swerve.Drive(_controller.GetLeftY(), _controller.GetLeftX(), -_controller.GetRightX());
+}
 
 void Robot::DisabledInit() {}
 

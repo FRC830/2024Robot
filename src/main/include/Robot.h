@@ -4,12 +4,22 @@
 
 #pragma once
 
+#include "subsystems/SubSystemConfig.h"
 #include <string>
-
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
-#include "SubSystemConfig.h"
-
+#include "AnalogAbsoluteEncoder.h"
+#include "NeoTurnMotor.h"
+#include "NeoDriveMotor.h"
+#include "WPISwerveModule.h"
+#include "WPISwerveDrive.h"
+#include <iostream>
+#include "NavXGyro.h"
+#include <array>
+#include <frc/XboxController.h>
+#include <frc2/command/CommandPtr.h>
+#include <memory>
+#include <pathplanner/lib/commands/PathPlannerAuto.h>
 
 class Robot : public frc::TimedRobot {
  public:
@@ -25,13 +35,25 @@ class Robot : public frc::TimedRobot {
   void TestPeriodic() override;
   void SimulationInit() override;
   void SimulationPeriodic() override;
+  void updateDashBoardValues(); 
+  void SwerveInit();
+
+  void PrintSwerveInfo();
 
  private:
+  static const int NUM_MODULES = 4;
+
   frc::SendableChooser<std::string> m_chooser;
   const std::string kAutoNameDefault = "Default";
   const std::string kAutoNameCustom = "My Auto";
   std::string m_autoSelected;
 
+  std::array<AnalogAbsoluteEncoder, NUM_MODULES> _abs_encoders;
+  std::array<NeoTurnMotor, NUM_MODULES> _turn_motors;
+  std::array<NeoDriveMotor, NUM_MODULES> _drive_motors;
+  std::array<WPISwerveModule, NUM_MODULES> _modules;
+  WPISwerveDrive _swerve;
 
-
+  NavXGyro _gyro;
+  frc::XboxController _controller{0};
 };

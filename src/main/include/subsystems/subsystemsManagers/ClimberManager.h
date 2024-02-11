@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ClimberHAL.h"
+#include "subsystems/ClimberHAL.h"
 
 
 struct ClimberInput
@@ -17,7 +17,7 @@ public:
 private:
     ClimberHAL m_climber;
     double m_deadzone = 0.05;
-    double m_multplier = 0.8;
+    double m_multiplier = 0.8;
     
 };
 
