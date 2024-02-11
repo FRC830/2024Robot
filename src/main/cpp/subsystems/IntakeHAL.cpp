@@ -1,8 +1,12 @@
 #include "subsystems/IntakeHAL.h"
 
+<<<<<<< HEAD
 
 IntakeHAL::IntakeHAL(){
 
+    m_RGTActMotor.Follow(m_LFTActMotor, true);
+    m_RGTPvtMotor.Follow(m_LFTPvtMotor, false);
+>>>>>>> launcherHAL
      
     m_LFTActMotor.RestoreFactoryDefaults();
     m_LFTPvtMotor.RestoreFactoryDefaults();
@@ -35,6 +39,7 @@ IntakeHAL::IntakeHAL(){
 
     m_LFTActMotor.BurnFlash();
     m_LFTPvtMotor.BurnFlash();
+<<<<<<< HEAD
     m_RGTActMotor.BurnFlash();
     m_RGTPvtMotor.BurnFlash();
 

@@ -17,11 +17,16 @@ class LauncherHAL
 {
     public:    
         void Configure(LauncherHALConfig &config);
+        LauncherHAL();
+        ~LauncherHAL();
+>>>>>>> launcherHAL
         void SetFlywheelSpeed(double speed);
         void SetIndexerSpeed(double speed);
         void ProfiledMoveToAngle(double angle);
         double GetAngle(); 
         double GetSpeed();
+        double GetFlywheelSpeed();
+>>>>>>> launcherHAL
         void ResetProfiledMoveState();
 
     private:
@@ -46,6 +51,14 @@ class LauncherHAL
             };
         
         
+
+        frc::TrapezoidProfile<units::meters> m_Profile{
+
+                frc::TrapezoidProfile<units::meters>::Constraints{0_mps, 0_mps_sq}  
+                
+            };
+        
+>>>>>>> launcherHAL
         double m_ProfileStartPos; 
         double m_indexerSpeed;
         int m_profileState = 0;

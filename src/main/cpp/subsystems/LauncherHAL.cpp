@@ -1,6 +1,39 @@
 #include "subsystems/LauncherHAL.h"
 
+<<<<<<< HEAD
 void LauncherHAL::Configure(LauncherHALConfig &config) {}
+=======
+LauncherHAL::LauncherHAL()
+{
+    m_PvtMotor.RestoreFactoryDefaults();
+    m_IndMotor.RestoreFactoryDefaults();
+    m_PvtMotor.EnableVoltageCompensation(VOLT_COMP);
+    m_IndMotor.EnableVoltageCompensation(VOLT_COMP);
+
+    m_PvtPID.SetP(PVT_P);
+    m_PvtPID.SetP(PVT_I);
+    m_PvtPID.SetP(PVT_D);
+
+    m_PvtMotor.SetSmartCurrentLimit(LAUNCHER_PVT_CURRENT_LIMIT);
+    m_IndMotor.SetSmartCurrentLimit(LAUNCHER_IND_CURRENT_LIMIT);
+
+    m_PvtMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+
+    ctre::phoenix6::configs::TalonFXConfiguration configs{};
+
+    configs.Slot0.kP = FLYWHEEL_P;
+    configs.Slot0.kI = FLYWHEEL_I;
+    configs.Slot0.kD = FLYWHEEL_D;
+
+    m_FlywheelActMotorA.GetConfigurator().Apply(configs);
+    m_FlywheelActMotorB.GetConfigurator().Apply(configs);
+
+    m_FlywheelActMotorB.SetControl(m_FlywheelActMtrBFollower);
+
+    m_PvtMotor.BurnFlash();
+    m_IndMotor.BurnFlash();
+}
+>>>>>>> launcherHAL
 
 void LauncherHAL::SetFlywheelSpeed(double speed)
 {   
@@ -81,6 +114,8 @@ double LauncherHAL::GetAngle()
 }
 
 double LauncherHAL::GetSpeed()
+double LauncherHAL::GetFlywheelSpeed()
+>>>>>>> launcherHAL
 {
     return m_FlywheelActMotorA.GetVelocity().GetValueAsDouble();
 }
