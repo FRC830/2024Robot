@@ -25,5 +25,4 @@ private:
     bool m_goToStowPos;
     bool m_goToAmpPos;
     bool m_goToPseudoStowPos;
-
 };
