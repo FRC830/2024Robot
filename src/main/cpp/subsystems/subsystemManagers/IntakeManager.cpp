@@ -3,9 +3,10 @@
 namespace
 {
     const double NORMAL_INTAKE_SPEED = 0.8;
-    const double AMP_POS = 0.0;
-    const double GROUND_POS = 0.0;
-    const double STOW_POS = 0.0;
+    const double AMP_POS = 72.686;
+    const double GROUND_POS = 181.915;
+    const double STOW_POS = 119.375;
+    const double PSEUDO_STOW_POS = 153.105;
 }
 
 void IntakeManager::HandleInput(IntakeInput &input)
@@ -29,6 +30,7 @@ void IntakeManager::HandleInput(IntakeInput &input)
         m_goToAmpPos = false;
         m_goToGroundPos = false;
         m_goToStowPos = false;
+        m_goToPseudoStowPos = false;
     }
     else if (input.goToStowPos)
     {
@@ -36,6 +38,7 @@ void IntakeManager::HandleInput(IntakeInput &input)
         m_goToAmpPos = false;
         m_goToGroundPos = false;
         m_goToStowPos = true;
+        m_goToPseudoStowPos = false;
     } 
     else if (input.goToGroundPos)
     {
@@ -43,6 +46,7 @@ void IntakeManager::HandleInput(IntakeInput &input)
         m_goToAmpPos = false;
         m_goToGroundPos = true;
         m_goToStowPos = false;
+        m_goToPseudoStowPos = false;
     }
     else if (input.goToAmpPos)
     {
@@ -50,6 +54,15 @@ void IntakeManager::HandleInput(IntakeInput &input)
         m_goToAmpPos = true;
         m_goToGroundPos = false;
         m_goToStowPos = false;
+        m_goToPseudoStowPos = false;
+    }
+    else if (input.goToPseudoStowPos)
+    {
+        m_intake.ResetProfiledMoveState();
+        m_goToAmpPos = false;
+        m_goToGroundPos = false;
+        m_goToStowPos = false;
+        m_goToPseudoStowPos = true;
     }
    
     if (m_goToAmpPos)
@@ -63,5 +76,9 @@ void IntakeManager::HandleInput(IntakeInput &input)
     if (m_goToStowPos)
     {
         m_intake.ProfiledMoveToAngle(STOW_POS);
+    }
+    if (m_goToPseudoStowPos)
+    {
+        m_intake.ProfiledMoveToAngle(PSEUDO_STOW_POS);
     }
 }

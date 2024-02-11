@@ -9,6 +9,7 @@ struct IntakeInput
     bool goToGroundPos;
     bool goToStowPos;
     bool goToAmpPos;
+    bool goToPseudoStowPos;
     double manualMove;
 };
 
@@ -23,5 +24,6 @@ private:
     bool m_goToGroundPos;
     bool m_goToStowPos;
     bool m_goToAmpPos;
+    bool m_goToPseudoStowPos;
 
 };
