@@ -70,11 +70,18 @@ void LauncherHAL::ProfiledMoveToAngle(double angle)
 
             break;
         }
+<<<<<<< HEAD
 
 
         case 1:
         {
 
+=======
+            
+
+        case 1:
+        {
+>>>>>>> launcherHAL
             auto setPoint = m_Profile.Calculate(m_Timer.Get(),    
             frc::TrapezoidProfile<units::meters>::State{units::meter_t{m_ProfileStartPos}, 0_mps},  
             frc::TrapezoidProfile<units::meters>::State{units::meter_t{angle}, 0_mps}
@@ -88,8 +95,11 @@ void LauncherHAL::ProfiledMoveToAngle(double angle)
 
             }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> launcherHAL
             break;
         }
 
@@ -102,7 +112,11 @@ void LauncherHAL::ProfiledMoveToAngle(double angle)
 
             break;
         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> launcherHAL
         default:
             break; 
     }
@@ -113,7 +127,9 @@ double LauncherHAL::GetAngle()
     return m_PvtEncoder.GetPosition() * LAUNCHER_PVT_POS_TO_DEG;
 }
 
+<<<<<<< HEAD
 double LauncherHAL::GetSpeed()
+=======
 double LauncherHAL::GetFlywheelSpeed()
 >>>>>>> launcherHAL
 {

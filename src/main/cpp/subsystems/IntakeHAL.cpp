@@ -4,6 +4,8 @@
 
 IntakeHAL::IntakeHAL(){
 
+=======
+IntakeHAL::IntakeHAL(){
     m_RGTActMotor.Follow(m_LFTActMotor, true);
     m_RGTPvtMotor.Follow(m_LFTPvtMotor, false);
 >>>>>>> launcherHAL
@@ -24,7 +26,11 @@ IntakeHAL::IntakeHAL(){
     m_LFTPvtPID.SetP(INTAKE_P);
     m_LFTPvtPID.SetI(INTAKE_I);
     m_LFTPvtPID.SetD(INTAKE_D);
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> launcherHAL
     m_LFTActMotor.SetSmartCurrentLimit(INTAKE_ACT_CURRENT_LIMIT);
     m_LFTPvtMotor.SetSmartCurrentLimit(INTAKE_PVT_CURRENT_LIMIT);
     m_RGTActMotor.SetSmartCurrentLimit(INTAKE_ACT_CURRENT_LIMIT);
@@ -49,6 +55,8 @@ IntakeHAL::IntakeHAL(){
     pub_angle = table->GetDoubleTopic("intake").Publish();
     pub_speed = table->GetDoubleTopic("intake").Publish();
     pub_profileState = table->GetStringTopic("intake").Publish();
+=======
+>>>>>>> launcherHAL
 }
 
 

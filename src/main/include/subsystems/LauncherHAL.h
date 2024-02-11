@@ -3,6 +3,7 @@
 #include "SubSystemConfig.h"
 #include <frc/Timer.h>
 #include <frc/trajectory/TrapezoidProfile.h>
+<<<<<<< HEAD
 #include <units/length.h>
 #include <units/velocity.h>
 #include <units/angle.h>
@@ -12,11 +13,15 @@ struct LauncherHALConfig
 {
 
 };
+=======
+>>>>>>> launcherHAL
 
 class LauncherHAL
 {
     public:    
+<<<<<<< HEAD
         void Configure(LauncherHALConfig &config);
+=======
         LauncherHAL();
         ~LauncherHAL();
 >>>>>>> launcherHAL
@@ -24,7 +29,9 @@ class LauncherHAL
         void SetIndexerSpeed(double speed);
         void ProfiledMoveToAngle(double angle);
         double GetAngle(); 
+<<<<<<< HEAD
         double GetSpeed();
+=======
         double GetFlywheelSpeed();
 >>>>>>> launcherHAL
         void ResetProfiledMoveState();
@@ -43,6 +50,7 @@ class LauncherHAL
 
 
         frc::Timer m_Timer;
+<<<<<<< HEAD
         
         frc::TrapezoidProfile<units::meter> m_Profile{
 
@@ -51,6 +59,7 @@ class LauncherHAL
             };
         
         
+=======
 
         frc::TrapezoidProfile<units::meters> m_Profile{
 

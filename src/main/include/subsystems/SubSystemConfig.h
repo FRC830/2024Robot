@@ -48,6 +48,10 @@ const bool LFT_PVT_MTR_INVERTED = true;
 // ###########################################################
 const int FLYWHEEL_ACT_MTR_A_ID = 4;
 const int FLYWHEEL_ACT_MTR_B_ID = 5;
+<<<<<<< HEAD
+=======
+
+>>>>>>> launcherHAL
 const int LAUNCHER_PVT_MTR_ID = 6;
 const int LAUNCHER_IND_MTR_ID = 7;
 
