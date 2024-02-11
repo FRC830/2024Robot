@@ -62,7 +62,9 @@ void Robot::TeleopInit() {}
 
 void Robot::TeleopPeriodic() {
   PrintSwerveInfo();
-  _swerve.Drive(_controller.GetLeftY(), _controller.GetLeftX(), -_controller.GetRightX());
+  // _swerve.Drive(_controller.GetLeftY(), _controller.GetLeftX(), -_controller.GetRightX());
+  _controller_interface.UpdateRobotControlData(_robot_control_data);
+  _intake_manager.HandleInput(_robot_control_data.intakeInput);
 }
 
 void Robot::DisabledInit() {}

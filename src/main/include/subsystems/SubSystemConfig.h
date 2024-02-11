@@ -17,8 +17,8 @@ const double VOLT_COMP = 10.5;
 // ###########################################################
 // #                         Intake                          #
 // ###########################################################
-const int LFT_INTAKE_ACT_MTR_ID = 0;
-const int RGT_INTAKE_ACT_MTR_ID = 1;
+const int LFT_INTAKE_ACT_MTR_ID = 19;
+const int RGT_INTAKE_ACT_MTR_ID = 18;
 
 const int RGT_INTAKE_PVT_MTR_ID = 11;
 const int LFT_INTAKE_PVT_MTR_ID = 4;

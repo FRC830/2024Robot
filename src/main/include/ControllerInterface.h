@@ -5,8 +5,8 @@
 class ControllerInterface
 {
     public:
-        ControllerInterface();
-        ~ControllerInterface();
+        ControllerInterface() = default;
+        ~ControllerInterface() = default;
         void UpdateRobotControlData(RobotControlData &controlData);
         void UpdateSwerveInput(RobotControlData &controlData);
     private:

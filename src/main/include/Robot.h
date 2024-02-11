@@ -20,6 +20,9 @@
 #include <frc2/command/CommandPtr.h>
 #include <memory>
 #include <pathplanner/lib/commands/PathPlannerAuto.h>
+#include "ControllerInterface.h"
+#include "RobotControlData.h"
+#include "subsystems/subsystemsManagers/IntakeManager.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -55,5 +58,7 @@ class Robot : public frc::TimedRobot {
   WPISwerveDrive _swerve;
 
   NavXGyro _gyro;
-  frc::XboxController _controller{0};
-};
+  ControllerInterface _controller_interface;
+  RobotControlData _robot_control_data;
+  IntakeManager _intake_manager;
+}; 

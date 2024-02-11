@@ -13,7 +13,7 @@ class IntakeHAL
 {
     public: 
         IntakeHAL(); 
-        ~IntakeHAL();
+        ~IntakeHAL() = default;
         void RunIntake(double speed);
         void ProfiledMoveToAngle(double angle);
         void ManualMovePivot(double speed);
