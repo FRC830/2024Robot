@@ -1,6 +1,6 @@
 #pragma once
 
-#include <rev/CANSparkMAX.h>
+#include <rev/CANSparkMax.h>
 #include "Interfaces/SwerveDriveMotor.h"
 #include "units/velocity.h"
 
