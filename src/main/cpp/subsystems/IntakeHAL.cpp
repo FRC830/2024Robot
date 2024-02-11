@@ -2,7 +2,6 @@
 
 
 IntakeHAL::IntakeHAL(){
-
      
     m_LFTActMotor.RestoreFactoryDefaults();
     m_LFTPvtMotor.RestoreFactoryDefaults();
@@ -21,6 +20,7 @@ IntakeHAL::IntakeHAL(){
     m_LFTPvtPID.SetI(INTAKE_I);
     m_LFTPvtPID.SetD(INTAKE_D);
 
+    
     m_LFTActMotor.SetSmartCurrentLimit(INTAKE_ACT_CURRENT_LIMIT);
     m_LFTPvtMotor.SetSmartCurrentLimit(INTAKE_PVT_CURRENT_LIMIT);
     m_RGTActMotor.SetSmartCurrentLimit(INTAKE_ACT_CURRENT_LIMIT);
