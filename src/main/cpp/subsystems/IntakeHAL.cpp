@@ -27,6 +27,9 @@ IntakeHAL::IntakeHAL(){
     m_RGTPvtMotor.SetSmartCurrentLimit(INTAKE_PVT_CURRENT_LIMIT);
 
     m_LFTPvtPID.SetFeedbackDevice(m_LFTPvtAbsEncoder);
+
+    m_LFTPvtMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+    m_RGTPvtMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
     
     m_LFTPvtAbsEncoder.SetInverted(LFT_PVT_ABS_ENC_INVERTED);
     m_LFTPvtAbsEncoder.SetPositionConversionFactor(LFT_PVT_ABS_ENC_CONVERSION_FACTOR);
@@ -119,15 +122,13 @@ void IntakeHAL::ResetProfiledMoveState() {
 
 void IntakeHAL::SetAngle(double angle) {
 
-    auto setPoint = angle * (1.0 / INTAKE_POS_TO_DEG); 
-
-    m_LFTPvtPID.SetReference(setPoint, rev::CANSparkMax::ControlType::kPosition);
+    m_LFTPvtPID.SetReference(angle, rev::CANSparkMax::ControlType::kPosition);
 
 }
 
 double IntakeHAL::GetAngle() {
 
-     return m_LFTPvtAbsEncoder.GetPosition() * INTAKE_POS_TO_DEG;
+     return m_LFTPvtAbsEncoder.GetPosition();
 
 }
 

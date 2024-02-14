@@ -25,16 +25,14 @@ const int LFT_INTAKE_PVT_MTR_ID = 4;
 
 const int INTAKE_PVT_ENCODER_ID = 8; 
 
-const double INTAKE_POS_TO_DEG = 1.0;
-
 const double INTAKE_INPUT_TO_DEG = 2.0;
 
 const double INTAKE_P = 0.05;
 const double INTAKE_I = 0.0;
 const double INTAKE_D = 0.0;
 
-const int INTAKE_PVT_CURRENT_LIMIT = 20;
-const int INTAKE_ACT_CURRENT_LIMIT = 20;
+const int INTAKE_PVT_CURRENT_LIMIT = 30;
+const int INTAKE_ACT_CURRENT_LIMIT = 40;
 
 const double INTAKE_MAX_VEL = 60.0;
 const double INTAKE_ACCEL = 30.0;
