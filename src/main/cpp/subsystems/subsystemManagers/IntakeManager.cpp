@@ -9,7 +9,7 @@ namespace
     const double PSEUDO_STOW_POS = 153.105;
 }
 
-void IntakeManager::HandleInput(IntakeInput &input)
+void IntakeManager::HandleInput(IntakeInput &input, IntakeOutput &output)
 {
     if (input.runIntakeIn && !input.runIntakeOut)
     {
@@ -80,5 +80,24 @@ void IntakeManager::HandleInput(IntakeInput &input)
     if (m_goToPseudoStowPos)
     {
         m_intake.ProfiledMoveToAngle(PSEUDO_STOW_POS);
+    }
+
+    output.intakePos = IntakePos::UNKNOWN;
+    double tolerance = 0.5;
+    if (std::fabs(m_intake.GetAngle() - GROUND_POS) < tolerance)
+    {
+        output.intakePos = IntakePos::GROUND;
+    }
+    else if (std::fabs(m_intake.GetAngle() - AMP_POS) < tolerance)
+    {
+        output.intakePos = IntakePos::AMP;
+    }
+    else if (std::fabs(m_intake.GetAngle() - PSEUDO_STOW_POS) < tolerance)
+    {
+        output.intakePos = IntakePos::PSEUDO_STOW;
+    }
+    else if (std::fabs(m_intake.GetAngle() - STOW_POS) < tolerance)
+    {
+        output.intakePos = IntakePos::STOW;
     }
 }

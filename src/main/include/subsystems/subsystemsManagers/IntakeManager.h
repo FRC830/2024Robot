@@ -13,11 +13,25 @@ struct IntakeInput
     double manualMove;
 };
 
+enum class IntakePos
+{
+    AMP,
+    GROUND,
+    STOW,
+    PSEUDO_STOW,
+    UNKNOWN
+};
+
+struct IntakeOutput
+{
+    IntakePos intakePos;
+};
+
 class IntakeManager
 {
 
 public:
-    void HandleInput(IntakeInput &input);
+    void HandleInput(IntakeInput &input, IntakeOutput &output);
     
 private:
     IntakeHAL m_intake;
