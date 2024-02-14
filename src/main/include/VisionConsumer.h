@@ -44,5 +44,6 @@ class VisionConsumer {
         std::vector<double> z; 
         std::vector<bool> v;
         double fps;
+        double dist = 0.43; 
 
 };
