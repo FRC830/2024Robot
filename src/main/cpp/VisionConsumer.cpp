@@ -55,16 +55,18 @@ PolarCoords VisionConsumer::GetPolarCoordForTagX(int id) {
 
 PolarCoords VisionConsumer::GetRobotToSpeaker(PolarCoords a, PolarCoords b, double rot) {
 
-    rot = rot * ( 3.14159265358979323846 / 180);
+    // measured in inches
+    double dist = 22.25;
+
+    rot = rot * ( 3.14159265358979323846 / 180.0);
 
     struct PolarCoords A = {a.r, a.theta - rot};
     struct PolarCoords B = {b.r, b.theta - rot};
 
-
-    double By = B.r * cos(B.theta);
-    double Ay = A.r * cos(A.theta);
-    double Bx = B.r * sin(B.theta);
-    double Ax = A.r * sin(A.theta);
+    double Ax = A.r * cos(A.theta);
+    double Ay = A.r * sin(A.theta);
+    double Bx = B.r * cos(B.theta);
+    double By = B.r * sin(B.theta);
 
     double Bxa = Ax;
     double Bya = Ay - dist; 
@@ -72,7 +74,9 @@ PolarCoords VisionConsumer::GetRobotToSpeaker(PolarCoords a, PolarCoords b, doub
     struct CartCoords error = {Bxa - Bx, Bya - By};
     struct CartCoords correction = {error.x / 2, error.y / 2};
 
-    struct PolarCoords ret = toPolar(Ax = correction.x, (Ay + correction.y + rot) * (180 / 3.14159265358979323846));
+    struct PolarCoords ret = toPolar(Ax + correction.x, Ay + correction.y);
+    ret.theta += rot;
+    ret.theta *= (180.0 / 3.14159265358979323846);
     
     return ret;
 }
