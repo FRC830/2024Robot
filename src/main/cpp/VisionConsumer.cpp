@@ -1,52 +1,43 @@
 #include "VisionConsumer.h"
-
-
 #include <iostream>
 
 VisionConsumer::VisionConsumer() {
 
-
-
     for (int i = 0; i < 16; i++){
 
-        std::cout << "Apriltag " + std::to_string(i+1) + " X:" << std::endl;
-
-        x.emplace_back(frc::SmartDashboard::GetNumber("Apriltag " + std::to_string(i+1) + " X: ", 0.0));
-        y.emplace_back(frc::SmartDashboard::GetNumber("Apriltag " + std::to_string(i+1) + " Y: ", 0.0));
-        z.emplace_back(frc::SmartDashboard::GetNumber("Apriltag " + std::to_string(i+1) + " Z: ", 0.0));
-        v.emplace_back(frc::SmartDashboard::GetBoolean("Apriltag " + std::to_string(i+1) + " Detected", false));
+        x.emplace_back(frc::SmartDashboard::GetNumber("vision/Apriltag " + std::to_string(i + 1) + " X: ", 0.0));
+        y.emplace_back(frc::SmartDashboard::GetNumber("vision/Apriltag " + std::to_string(i + 1) + " Y: ", 0.0));
+        z.emplace_back(frc::SmartDashboard::GetNumber("vision/Apriltag " + std::to_string(i + 1) + " Z: ", 0.0));
+        v.emplace_back(frc::SmartDashboard::GetBoolean("vision/Apriltag " + std::to_string(i + 1) + "Detected", false));
 
     }
 
-    fps = frc::SmartDashboard::GetNumber("FPS", 0.0);
+    fps = frc::SmartDashboard::GetNumber("vision/FPS", 0.0);
+
 }
 
 void VisionConsumer::Periodic() {
 
     for (int i = 0; i<16; i++){
 
-
-        std::cout << "Apriltag " + std::to_string(i+1) + " X:" << std::endl;
-
-        x.at(i) = frc::SmartDashboard::GetNumber("Apriltag " + std::to_string(i + 1) + " X: ", 0.0);
-        x.at(i) = frc::SmartDashboard::GetNumber("Apriltag " + std::to_string(i + 1) + " Y: ", 0.0);
-        x.at(i) = frc::SmartDashboard::GetNumber("Apriltag " + std::to_string(i + 1) + " Z: ", 0.0);
-        x.at(i) = frc::SmartDashboard::GetNumber("Apriltag " + std::to_string(i + 1) + " Detected", false);
+        x.at(i) = frc::SmartDashboard::GetNumber("vision/Apriltag " + std::to_string(i + 1) + " X: ", 0.0);
+        x.at(i) = frc::SmartDashboard::GetNumber("vision/Apriltag " + std::to_string(i + 1) + " Y: ", 0.0);
+        x.at(i) = frc::SmartDashboard::GetNumber("vision/Apriltag " + std::to_string(i + 1) + " Z: ", 0.0);
+        x.at(i) = frc::SmartDashboard::GetBoolean("vision/Apriltag " + std::to_string(i + 1) + "Detected", false);
 
     }
 
-    fps = FPS.Get();
+    fps = frc::SmartDashboard::GetNumber("FPS", 0.0);
 
 }
 
 PolarCoords VisionConsumer::toPolar(double x, double y) {
+
     double r = sqrt(pow(x, 2) + pow(y, 2));
     double theta = atan2(y, x);
-
-    struct PolarCoords currentCoords;
-    currentCoords.r = r;
-    currentCoords.theta = theta;
+    struct PolarCoords currentCoords = {r, theta};
     return currentCoords;
+
 }
 
 PolarCoords VisionConsumer::GetPolarCoordForTagX(int id) {
@@ -55,16 +46,10 @@ PolarCoords VisionConsumer::GetPolarCoordForTagX(int id) {
 
 }
 
-PolarCoords VisionConsumer::GetRobotToSpeaker(PolarCoords a, PolarCoords b, double rot, bool side) {
-
-    a = toPolar(frc::SmartDashboard::GetNumber("Apriltag 11 X: ", 0.0), frc::SmartDashboard::GetNumber("Apriltag 11 Y: ", 0.0));
-
-    b = toPolar(frc::SmartDashboard::GetNumber("Apriltag 14 X: ", 0.0), frc::SmartDashboard::GetNumber("Apriltag 14 Y: ", 0.0));
-
-
+PolarCoords VisionConsumer::GetRobotToSpeaker(PolarCoords a, PolarCoords b, double rot) {
 
     // measured in inches
-    double dist = side ? 22.25 : -22.25;
+    double dist = frc::DriverStation::GetAlliance().value() == frc::DriverStation::Alliance::kRed ? 22.25 : -22.25;
 
     rot = rot * ( 3.14159265358979323846 / 180.0);
 

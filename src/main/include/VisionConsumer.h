@@ -1,14 +1,17 @@
 #pragma once
 
-#include <networktables/NetworkTableInstance.h>
-#include <networktables/DoubleTopic.h>
-#include <networktables/BooleanTopic.h>
+#include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/DriverStation.h>
+#include <cmath>
 #include <vector>
 #include <map>
 
+
 struct PolarCoords {
+
     double r;
     double theta;
+
 };
 
 struct CartCoords {
@@ -30,15 +33,7 @@ class VisionConsumer {
         
     
     private:            
-        std::shared_ptr<nt::NetworkTable> table;
-        nt::DoubleTopic aprilTagCoords = table->GetDoubleTopic("vision");
-        nt::BooleanTopic aprilTagVisible = table->GetBooleanTopic("vision");
 
-        nt::DoubleSubscriber FPS;
-        std::vector<nt::DoubleSubscriber> xSub; 
-        std::vector<nt::DoubleSubscriber> ySub; 
-        std::vector<nt::DoubleSubscriber> zSub;
-        std::vector<nt::BooleanSubscriber> vSub; 
         std::vector<double> x; 
         std::vector<double> y; 
         std::vector<double> z; 
