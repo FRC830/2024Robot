@@ -62,8 +62,8 @@ void Robot::TeleopInit() {}
 
 void Robot::TeleopPeriodic() {
   PrintSwerveInfo();
-  // _swerve.Drive(_controller.GetLeftY(), _controller.GetLeftX(), -_controller.GetRightX());
   _controller_interface.UpdateRobotControlData(_robot_control_data);
+  _swerve.Drive(_robot_control_data.swerveInput.xTranslation, _robot_control_data.swerveInput.yTranslation, _robot_control_data.swerveInput.rotation);
   _smart_intake.HandleInput(_robot_control_data);
   _intake_manager.HandleInput(_robot_control_data.intakeInput, _robot_control_data.intakeOutput);
 }
