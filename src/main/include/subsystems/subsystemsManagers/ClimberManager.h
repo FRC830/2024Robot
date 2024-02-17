@@ -6,6 +6,7 @@
 struct ClimberInput
 {
     double manualMove;
+    double controllerSpeed;
 };
 
 class ClimberManager
