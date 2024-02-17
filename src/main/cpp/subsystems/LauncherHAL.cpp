@@ -108,7 +108,7 @@ void LauncherHAL::ProfiledMoveToAngle(double angle)
 
 double LauncherHAL::GetAngle()
 {
-    return m_PvtRelEncoder.GetPosition();
+    return m_PvtAbsEncoder.GetPosition();
 }
 
 double LauncherHAL::GetFlywheelSpeed()
