@@ -62,7 +62,5 @@ const double PVT_D = 0.0;
 const int LAUNCHER_PVT_CURRENT_LIMIT = 20;
 const int FLYWHEEL_ACT_CURRENT_LIMIT = 20;
 const int LAUNCHER_IND_CURRENT_LIMIT = 20;
-
-const double LAUNCHER_PVT_POS_TO_DEG = 1.0;
 // do we need cancoders for the falcons? 
 

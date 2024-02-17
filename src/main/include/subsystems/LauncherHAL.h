@@ -10,17 +10,11 @@
 #include <frc/Timer.h>
 #include <frc/trajectory/TrapezoidProfile.h>
 
-struct LauncherHALConfig
-{
-
-};
-
 class LauncherHAL
 {
     public:    
         LauncherHAL();
-        ~LauncherHAL();
-        void Configure(LauncherHALConfig &config);
+        ~LauncherHAL() = default;
         void SetFlywheelSpeed(double speed);
         void SetIndexerSpeed(double speed);
         void ProfiledMoveToAngle(double angle);
@@ -34,12 +28,11 @@ class LauncherHAL
         ctre::phoenix6::hardware::TalonFX m_FlywheelActMotorA{FLYWHEEL_ACT_MTR_A_ID};
         ctre::phoenix6::hardware::TalonFX m_FlywheelActMotorB{FLYWHEEL_ACT_MTR_B_ID};
         
-        rev::SparkRelativeEncoder m_PvtEncoder = m_PvtMotor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 42);
+        rev::SparkRelativeEncoder m_PvtRelEncoder = m_PvtMotor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 42);
         rev::SparkPIDController m_PvtPID = m_PvtMotor.GetPIDController();
-        ctre::phoenix6::hardware::CANcoder m_PvtCanCoder{LAUNCHER_PVT_ENCODER_ID};
+        rev::SparkAbsoluteEncoder m_PvtAbsEncoder= m_PvtMotor.GetAbsoluteEncoder(rev::SparkAbsoluteEncoder::Type::kDutyCycle);
 
         ctre::phoenix6::controls::Follower m_FlywheelActMtrBFollower = ctre::phoenix6::controls::Follower(FLYWHEEL_ACT_MTR_B_ID, true);
-
 
         frc::Timer m_Timer;
 

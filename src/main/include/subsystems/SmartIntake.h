@@ -1,4 +1,4 @@
-#pragma once;
+#pragma once
 #include "RobotControlData.h"
 
 class SmartIntake{
@@ -7,7 +7,6 @@ public:
     ~SmartIntake() = default;
     void HandleInput(RobotControlData& input);
     
-
 private:
     bool m_SmartIntakeFlag;
     bool m_prevSmartIntake;

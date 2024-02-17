@@ -1,7 +1,5 @@
 #include "subsystems/LauncherHAL.h"
 
-void LauncherHAL::Configure(LauncherHALConfig &config) {}
-
 LauncherHAL::LauncherHAL()
 {
     m_PvtMotor.RestoreFactoryDefaults();
@@ -12,6 +10,10 @@ LauncherHAL::LauncherHAL()
     m_PvtPID.SetP(PVT_P);
     m_PvtPID.SetP(PVT_I);
     m_PvtPID.SetP(PVT_D);
+
+    m_PvtPID.SetPositionPIDWrappingEnabled(false);
+
+    m_PvtPID.SetFeedbackDevice(m_PvtAbsEncoder);
 
     m_PvtMotor.SetSmartCurrentLimit(LAUNCHER_PVT_CURRENT_LIMIT);
     m_IndMotor.SetSmartCurrentLimit(LAUNCHER_IND_CURRENT_LIMIT);
@@ -49,9 +51,7 @@ void LauncherHAL::SetIndexerSpeed(double speed)
 
 void LauncherHAL::SetAngle(double angle)
 {
-    auto setPoint = angle * (1.0 / LAUNCHER_PVT_POS_TO_DEG); 
-
-    m_PvtPID.SetReference(setPoint, rev::CANSparkMax::ControlType::kPosition);
+    m_PvtPID.SetReference(angle, rev::CANSparkMax::ControlType::kPosition);
 }
 
 void LauncherHAL::ProfiledMoveToAngle(double angle)
@@ -108,7 +108,7 @@ void LauncherHAL::ProfiledMoveToAngle(double angle)
 
 double LauncherHAL::GetAngle()
 {
-    return m_PvtEncoder.GetPosition() * LAUNCHER_PVT_POS_TO_DEG;
+    return m_PvtRelEncoder.GetPosition();
 }
 
 double LauncherHAL::GetFlywheelSpeed()

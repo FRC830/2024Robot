@@ -20,6 +20,7 @@ struct RobotControlData {
     IntakeInput intakeInput;
     IntakeOutput intakeOutput;
     LauncherInput launcherInput;
+    LauncherOutput launcherOutput;
     SwerveInput swerveInput;
     SmartIntakeInput smartIntakeInput;
 };
