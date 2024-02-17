@@ -37,9 +37,17 @@ LauncherHAL::LauncherHAL()
 
 void LauncherHAL::SetFlywheelSpeed(double speed)
 {   
-    units::angular_velocity::turns_per_second_t speed_tps = units::angular_velocity::turns_per_second_t(speed);
-    ctre::phoenix6::controls::VelocityVoltage m_request{speed_tps};
-    m_FlywheelActMotorA.SetControl(m_request.WithVelocity(speed_tps));
+    if (speed > 1.0)
+    {
+        units::angular_velocity::turns_per_second_t speed_tps = units::angular_velocity::turns_per_second_t(speed);
+        ctre::phoenix6::controls::VelocityVoltage m_request{speed_tps};
+        m_FlywheelActMotorA.SetControl(m_request.WithVelocity(speed_tps));
+    }
+    else
+    {
+        ctre::phoenix6::controls::DutyCycleOut m_request{0.0};
+        m_FlywheelActMotorA.SetControl(m_request.WithOutput(0.0));
+    }
 }
 
 void LauncherHAL::SetIndexerSpeed(double speed)

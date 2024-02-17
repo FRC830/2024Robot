@@ -51,7 +51,7 @@ const int LAUNCHER_IND_MTR_ID = 7;
 
 const int LAUNCHER_PVT_ENCODER_ID = 9;
 
-const double FLYWHEEL_P = 1.0;
+const double FLYWHEEL_P = 0.25;
 const double FLYWHEEL_I = 0.0;
 const double FLYWHEEL_D = 0.0;
 
