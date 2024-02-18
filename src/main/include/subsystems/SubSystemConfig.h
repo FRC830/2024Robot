@@ -46,7 +46,7 @@ const bool LFT_PVT_MTR_INVERTED = true;
 // ###########################################################
 const int FLYWHEEL_TOP_ID = 22;
 const int FLYWHEEL_BOTTOM_ID = 23;
-const int LAUNCHER_PVT_MTR_ID = 6;
+const int LAUNCHER_PVT_MTR_ID = 21;
 const int LAUNCHER_IND_MTR_ID = 7;
 
 const int LAUNCHER_PVT_ENCODER_ID = 9;
@@ -64,3 +64,9 @@ const int FLYWHEEL_ACT_CURRENT_LIMIT = 20;
 const int LAUNCHER_IND_CURRENT_LIMIT = 20;
 
 const bool INVERT_FLYWHEEL = true;
+
+const double LAUNCHER_PVT_ABS_ENC_CONVERSION_FACTOR = 80.0;
+const double ZERO_OFFSET = 36.221;
+
+const double MAX_PIVOT_ANGLE = 75.0;
+const double MIN_PIVOT_ANGLE = 5.0;

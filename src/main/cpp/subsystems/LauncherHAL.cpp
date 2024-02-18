@@ -13,6 +13,10 @@ LauncherHAL::LauncherHAL()
 
     m_PvtPID.SetPositionPIDWrappingEnabled(false);
 
+    m_PvtAbsEncoder.SetInverted(true);
+    m_PvtAbsEncoder.SetPositionConversionFactor(LAUNCHER_PVT_ABS_ENC_CONVERSION_FACTOR);
+    m_PvtAbsEncoder.SetZeroOffset(ZERO_OFFSET);
+
     m_PvtPID.SetFeedbackDevice(m_PvtAbsEncoder);
 
     m_PvtMotor.SetSmartCurrentLimit(LAUNCHER_PVT_CURRENT_LIMIT);
@@ -61,6 +65,15 @@ void LauncherHAL::SetIndexerSpeed(double speed)
 
 void LauncherHAL::SetAngle(double angle)
 {
+    if (angle > MAX_PIVOT_ANGLE)
+    {
+        angle = MAX_PIVOT_ANGLE;
+    }
+    else if (angle < MIN_PIVOT_ANGLE)
+    {
+        angle = MIN_PIVOT_ANGLE;
+    }
+
     m_PvtPID.SetReference(angle, rev::CANSparkMax::ControlType::kPosition);
 }
 
