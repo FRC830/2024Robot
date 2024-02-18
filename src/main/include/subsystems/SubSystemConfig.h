@@ -68,3 +68,10 @@ const int LAUNCHER_IND_CURRENT_LIMIT = 20;
 const double LAUNCHER_PVT_POS_TO_DEG = 1.0;
 // do we need cancoders for the falcons? 
 
+
+// ###########################################################
+// #                         Climber                         #
+// ###########################################################
+
+const int CLIMBER_MOTOR_LEFT = 24; 
+const int CLIMBER_MOTOR_RIGHT = 25;
