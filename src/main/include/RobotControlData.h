@@ -10,9 +10,19 @@ struct SwerveInput{
     bool slowMode;
 };
 
+struct SmartIntakeInput{
+    bool smartIntake;
+    bool smartOutTake;
+    bool switchMode;
+    bool laser;
+};
+
 struct RobotControlData {
     IntakeInput intakeInput;
+    IntakeOutput intakeOutput;
     LauncherInput launcherInput;
+    LauncherOutput launcherOutput;
     SwerveInput swerveInput;
+    SmartIntakeInput smartIntakeInput;
     ClimberInput climberInput;
 };

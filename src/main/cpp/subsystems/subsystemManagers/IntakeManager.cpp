@@ -2,14 +2,22 @@
 
 namespace
 {
-    const double NORMAL_INTAKE_SPEED = 0.8;
+    const double NORMAL_INTAKE_SPEED = 0.95;
     const double AMP_POS = 72.686;
-    const double GROUND_POS = 181.915;
+    const double GROUND_POS = 182.953;
     const double STOW_POS = 119.375;
     const double PSEUDO_STOW_POS = 153.105;
 }
 
-void IntakeManager::HandleInput(IntakeInput &input)
+void IntakeManager::ResetIntake()
+{
+    m_goToGroundPos = false;
+    m_goToStowPos = false;
+    m_goToAmpPos = false;
+    m_goToPseudoStowPos = false;
+}
+
+void IntakeManager::HandleInput(IntakeInput &input, IntakeOutput &output)
 {
     if (input.runIntakeIn && !input.runIntakeOut)
     {
@@ -23,6 +31,7 @@ void IntakeManager::HandleInput(IntakeInput &input)
     {
         m_intake.RunIntake(0.0);
     }
+
     if (input.manualMove > 0.001)
     {
         m_intake.ManualMovePivot(input.manualMove);
@@ -80,5 +89,24 @@ void IntakeManager::HandleInput(IntakeInput &input)
     if (m_goToPseudoStowPos)
     {
         m_intake.ProfiledMoveToAngle(PSEUDO_STOW_POS);
+    }
+
+    output.intakePos = IntakePos::UNKNOWN;
+    double tolerance = 0.5;
+    if (std::fabs(m_intake.GetAngle() - GROUND_POS) < tolerance)
+    {
+        output.intakePos = IntakePos::GROUND;
+    }
+    else if (std::fabs(m_intake.GetAngle() - AMP_POS) < tolerance)
+    {
+        output.intakePos = IntakePos::AMP;
+    }
+    else if (std::fabs(m_intake.GetAngle() - PSEUDO_STOW_POS) < tolerance)
+    {
+        output.intakePos = IntakePos::PSEUDO_STOW;
+    }
+    else if (std::fabs(m_intake.GetAngle() - STOW_POS) < tolerance)
+    {
+        output.intakePos = IntakePos::STOW;
     }
 }

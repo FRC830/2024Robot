@@ -8,7 +8,14 @@ namespace
     const double INDEXER_SPEED = 0.0;
 }
 
-void LauncherManager::HandleInput(LauncherInput &input)
+void LauncherManager::ResetLauncher()
+{
+    m_goToStowPos = false;
+    m_goToSubPos = false;
+    m_visionResetProfiledMoveState = false;
+}
+
+void LauncherManager::HandleInput(LauncherInput &input, LauncherOutput &output)
 {
     if (input.useVisionControl)
     {
@@ -16,13 +23,17 @@ void LauncherManager::HandleInput(LauncherInput &input)
         {
             m_launcher.ResetProfiledMoveState();
             m_visionResetProfiledMoveState = true;
+            m_goToStowPos = false;
+            m_goToSubPos = false;
         }
+
         m_launcher.SetFlywheelSpeed(input.visionSpeedSetpoint);
         m_launcher.ProfiledMoveToAngle(input.visionAngleSetpoint);
     }
     else 
     {
         m_visionResetProfiledMoveState = false;
+
         if(input.goToStowPos){
             m_goToStowPos = true;
             m_goToSubPos = false;
@@ -46,12 +57,19 @@ void LauncherManager::HandleInput(LauncherInput &input)
         }
     }
 
-    if (input.runIndexer)
+    if (input.runIndexerForward && !input.runIndexerBackward)
     {
         m_launcher.SetIndexerSpeed(INDEXER_SPEED);
     } 
-    else 
+    else if (input.runIndexerBackward && !input.runIndexerForward) 
+    {
+        m_launcher.SetIndexerSpeed(-INDEXER_SPEED);
+    }
+    else
     {
         m_launcher.SetIndexerSpeed(0.0);
     }
+
+    output.flywheelSpeed = m_launcher.GetFlywheelSpeed();
+    output.launcherAngle = m_launcher.GetAngle();
 }

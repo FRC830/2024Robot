@@ -13,7 +13,7 @@ class IntakeHAL
 {
     public: 
         IntakeHAL(); 
-        ~IntakeHAL();
+        ~IntakeHAL() = default;
         void RunIntake(double speed);
         void ProfiledMoveToAngle(double angle);
         void ManualMovePivot(double speed);
@@ -39,7 +39,7 @@ class IntakeHAL
 
         frc::TrapezoidProfile<units::degrees> m_Profile{
 
-                frc::TrapezoidProfile<units::degrees>::Constraints{60_deg_per_s, 30_deg_per_s_sq}  
+                frc::TrapezoidProfile<units::degrees>::Constraints{180_deg_per_s, 90_deg_per_s_sq}  
                 
             };
 
