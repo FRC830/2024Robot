@@ -7,11 +7,11 @@ LauncherHAL::LauncherHAL()
     m_PvtMotor.EnableVoltageCompensation(VOLT_COMP);
     m_IndMotor.EnableVoltageCompensation(VOLT_COMP);
 
-    m_PvtPID.SetP(PVT_P);
-    m_PvtPID.SetP(PVT_I);
-    m_PvtPID.SetP(PVT_D);
-
     m_PvtPID.SetPositionPIDWrappingEnabled(false);
+
+    m_PvtPID.SetP(PVT_P);
+    m_PvtPID.SetI(PVT_I);
+    m_PvtPID.SetD(PVT_D);
 
     m_PvtAbsEncoder.SetInverted(true);
     m_PvtAbsEncoder.SetPositionConversionFactor(LAUNCHER_PVT_ABS_ENC_CONVERSION_FACTOR);
@@ -23,6 +23,7 @@ LauncherHAL::LauncherHAL()
     m_IndMotor.SetSmartCurrentLimit(LAUNCHER_IND_CURRENT_LIMIT);
 
     m_PvtMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+    m_PvtMotor.SetInverted(true);
 
     ctre::phoenix6::configs::TalonFXConfiguration configs{};
 
@@ -31,8 +32,6 @@ LauncherHAL::LauncherHAL()
     configs.Slot0.kD = FLYWHEEL_D;
 
     m_FlywheelBottom.SetControl(m_FlywheelTopFollower);
-
-    m_FlywheelTop.SetInverted(INVERT_FLYWHEEL);
     
     m_FlywheelTop.GetConfigurator().Apply(configs);
     m_FlywheelBottom.GetConfigurator().Apply(configs);
@@ -47,7 +46,15 @@ void LauncherHAL::SetFlywheelSpeed(double speed)
     {
         units::angular_velocity::turns_per_second_t speed_tps = units::angular_velocity::turns_per_second_t(speed);
         ctre::phoenix6::controls::VelocityVoltage m_request{speed_tps};
-        m_FlywheelTop.SetControl(m_request.WithVelocity(speed_tps));
+        if (INVERT_FLYWHEEL)
+        {
+            m_FlywheelTop.SetControl(m_request.WithVelocity(-speed_tps));
+        }
+        else
+        {
+            m_FlywheelTop.SetControl(m_request.WithVelocity(speed_tps));
+        }
+        
     }
     else
     {
@@ -96,8 +103,8 @@ void LauncherHAL::ProfiledMoveToAngle(double angle)
         case 1:
         {
             auto setPoint = m_Profile.Calculate(m_Timer.Get(),    
-            frc::TrapezoidProfile<units::meters>::State{units::meter_t{m_ProfileStartPos}, 0_mps},  
-            frc::TrapezoidProfile<units::meters>::State{units::meter_t{angle}, 0_mps}
+            frc::TrapezoidProfile<units::degrees>::State{units::degree_t{m_ProfileStartPos}, 0_deg_per_s},  
+            frc::TrapezoidProfile<units::degrees>::State{units::degree_t{angle}, 0_deg_per_s}
             );
 
             SetAngle(setPoint.position.to<double>());

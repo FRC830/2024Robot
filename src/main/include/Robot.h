@@ -24,6 +24,7 @@
 #include "RobotControlData.h"
 #include "subsystems/subsystemsManagers/IntakeManager.h"
 #include "subsystems/SmartIntake.h"
+#include "subsystems/subsystemsManagers/LauncherManager.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -63,4 +64,5 @@ class Robot : public frc::TimedRobot {
   RobotControlData _robot_control_data;
   IntakeManager _intake_manager;
   SmartIntake _smart_intake;
+  LauncherManager _launcher_manager;
 }; 

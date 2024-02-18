@@ -47,15 +47,13 @@ const bool LFT_PVT_MTR_INVERTED = true;
 const int FLYWHEEL_TOP_ID = 22;
 const int FLYWHEEL_BOTTOM_ID = 23;
 const int LAUNCHER_PVT_MTR_ID = 21;
-const int LAUNCHER_IND_MTR_ID = 7;
-
-const int LAUNCHER_PVT_ENCODER_ID = 9;
+const int LAUNCHER_IND_MTR_ID = 20;
 
 const double FLYWHEEL_P = 0.25;
 const double FLYWHEEL_I = 0.0;
 const double FLYWHEEL_D = 0.0;
 
-const double PVT_P = 1.0;
+const double PVT_P = 0.1;
 const double PVT_I = 0.0;
 const double PVT_D = 0.0;
 

@@ -2,9 +2,9 @@
 
 namespace
 {
-    const double SUB_ANGLE = 0.0;
-    const double STOW_ANGLE = 0.0;
-    const double SUB_SPEED = 0.0;
+    const double SUB_ANGLE = 19.0;
+    const double STOW_ANGLE = 10.0;
+    const double SUB_SPEED = 350.0;
     const double INDEXER_SPEED = 0.0;
 }
 
@@ -15,8 +15,10 @@ void LauncherManager::ResetLauncher()
     m_visionResetProfiledMoveState = false;
 }
 
+#include <iostream>
 void LauncherManager::HandleInput(LauncherInput &input, LauncherOutput &output)
 {
+
     if (input.useVisionControl)
     {
         if (!m_visionResetProfiledMoveState)

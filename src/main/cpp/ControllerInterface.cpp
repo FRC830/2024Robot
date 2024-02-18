@@ -4,7 +4,7 @@ void ControllerInterface::UpdateRobotControlData(RobotControlData &controlData)
 {
     UpdateIntakeInput(controlData);
     UpdateLauncherInput(controlData);
-    UpdateSwerveInput(controlData);
+    //UpdateSwerveInput(controlData);
 };
 
 void ControllerInterface::UpdateIntakeInput(RobotControlData &controlData)
@@ -22,10 +22,10 @@ void ControllerInterface::UpdateIntakeInput(RobotControlData &controlData)
 
 void ControllerInterface::UpdateLauncherInput(RobotControlData &controlData)
 {
-    controlData.launcherInput.goToStowPos = m_copilot.GetBackButton();
-    controlData.launcherInput.goToSubPos = m_copilot.GetStartButton();
-    controlData.launcherInput.runIndexerForward = m_copilot.GetXButton();
-    controlData.launcherInput.runIndexerBackward = m_copilot.GetBButton();
+    controlData.launcherInput.goToStowPos = m_copilot.GetXButton();
+    controlData.launcherInput.goToSubPos = m_copilot.GetBButton();
+    //controlData.launcherInput.runIndexerForward = m_copilot.GetXButton();
+    //controlData.launcherInput.runIndexerBackward = m_copilot.GetBButton();
     //controlData.launcherInput.useVisionControl = m_copilot.GetYButton();
 };
 
