@@ -48,7 +48,6 @@ PolarCoords VisionConsumer::GetPolarCoordForTagX(int id) {
 
 PolarCoords VisionConsumer::GetRobotToSpeaker(PolarCoords a, PolarCoords b, double rot) {
 
-    // measured in inches
     double dist = frc::DriverStation::GetAlliance().value() == frc::DriverStation::Alliance::kRed ? 22.25 : -22.25;
 
     rot = rot * ( 3.14159265358979323846 / 180.0);
