@@ -61,6 +61,7 @@ void Robot::AutonomousPeriodic() {
 void Robot::TeleopInit() 
 {
   _intake_manager.ResetIntake();
+  _launcher_manager.ResetLauncher();
 }
 
 void Robot::TeleopPeriodic() {
