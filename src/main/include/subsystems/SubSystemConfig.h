@@ -44,8 +44,8 @@ const bool LFT_PVT_MTR_INVERTED = true;
 // ###########################################################
 // #                        Flywheel                         #
 // ###########################################################
-const int FLYWHEEL_ACT_MTR_A_ID = 4;
-const int FLYWHEEL_ACT_MTR_B_ID = 5;
+const int FLYWHEEL_TOP_ID = 22;
+const int FLYWHEEL_BOTTOM_ID = 23;
 const int LAUNCHER_PVT_MTR_ID = 6;
 const int LAUNCHER_IND_MTR_ID = 7;
 
@@ -62,5 +62,5 @@ const double PVT_D = 0.0;
 const int LAUNCHER_PVT_CURRENT_LIMIT = 20;
 const int FLYWHEEL_ACT_CURRENT_LIMIT = 20;
 const int LAUNCHER_IND_CURRENT_LIMIT = 20;
-// do we need cancoders for the falcons? 
 
+const bool INVERT_FLYWHEEL = true;

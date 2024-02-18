@@ -26,10 +26,12 @@ LauncherHAL::LauncherHAL()
     configs.Slot0.kI = FLYWHEEL_I;
     configs.Slot0.kD = FLYWHEEL_D;
 
-    m_FlywheelActMotorA.GetConfigurator().Apply(configs);
-    m_FlywheelActMotorB.GetConfigurator().Apply(configs);
+    m_FlywheelBottom.SetControl(m_FlywheelTopFollower);
 
-    m_FlywheelActMotorB.SetControl(m_FlywheelActMtrBFollower);
+    m_FlywheelTop.SetInverted(INVERT_FLYWHEEL);
+    
+    m_FlywheelTop.GetConfigurator().Apply(configs);
+    m_FlywheelBottom.GetConfigurator().Apply(configs);
 
     m_PvtMotor.BurnFlash();
     m_IndMotor.BurnFlash();
@@ -37,16 +39,16 @@ LauncherHAL::LauncherHAL()
 
 void LauncherHAL::SetFlywheelSpeed(double speed)
 {   
-    if (speed > 1.0)
+    if (std::fabs(speed) > 1.0)
     {
         units::angular_velocity::turns_per_second_t speed_tps = units::angular_velocity::turns_per_second_t(speed);
         ctre::phoenix6::controls::VelocityVoltage m_request{speed_tps};
-        m_FlywheelActMotorA.SetControl(m_request.WithVelocity(speed_tps));
+        m_FlywheelTop.SetControl(m_request.WithVelocity(speed_tps));
     }
     else
     {
         ctre::phoenix6::controls::DutyCycleOut m_request{0.0};
-        m_FlywheelActMotorA.SetControl(m_request.WithOutput(0.0));
+        m_FlywheelTop.SetControl(m_request.WithOutput(0.0));
     }
 }
 
@@ -121,7 +123,7 @@ double LauncherHAL::GetAngle()
 
 double LauncherHAL::GetFlywheelSpeed()
 {
-    return m_FlywheelActMotorA.GetVelocity().GetValueAsDouble();
+    return m_FlywheelTop.GetVelocity().GetValueAsDouble();
 }
 
 void LauncherHAL::ResetProfiledMoveState()
