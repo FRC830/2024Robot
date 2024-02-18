@@ -18,7 +18,7 @@ double ClimberHAL::getRotations() {
 }
 double ClimberHAL::getCurrentHeight(double rotations) {
     return rotations * getChangeInHeight(rotations);
-}
+}  
 bool ClimberHAL::isNextRotationTooHigh(double height) {
     return height+wheel_circumference>maxHeight;
 }

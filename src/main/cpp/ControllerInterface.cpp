@@ -5,6 +5,7 @@ void ControllerInterface::UpdateRobotControlData(RobotControlData &controlData)
     UpdateIntakeInput(controlData);
     UpdateLauncherInput(controlData);
     UpdateSwerveInput(controlData);
+    UpdateClimberInput(controlData);
 };
 
 void ControllerInterface::UpdateIntakeInput(RobotControlData &controlData)
@@ -43,4 +44,10 @@ void ControllerInterface::UpdateSwerveInput(RobotControlData &controlData)
         controlData.swerveInput.yTranslation *= m_slowmodefactor;
         controlData.swerveInput.rotation *= m_slowmodefactor;
     }
+};
+
+void ControllerInterface::UpdateClimberInput(RobotControlData &controlData)
+{
+    controlData.climberInput.controllerSpeed = m_pilot.GetLeftTriggerAxis();
+    
 };
