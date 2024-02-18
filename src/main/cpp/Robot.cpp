@@ -58,7 +58,10 @@ void Robot::AutonomousPeriodic() {
   }
 }
 
-void Robot::TeleopInit() {}
+void Robot::TeleopInit() 
+{
+  _intake_manager.ResetIntake();
+}
 
 void Robot::TeleopPeriodic() {
   PrintSwerveInfo();

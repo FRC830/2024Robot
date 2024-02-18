@@ -8,6 +8,13 @@ namespace
     const double INDEXER_SPEED = 0.0;
 }
 
+void LauncherManager::ResetLauncher()
+{
+    m_goToStowPos = false;
+    m_goToSubPos = false;
+    m_visionResetProfiledMoveState = false;
+}
+
 void LauncherManager::HandleInput(LauncherInput &input, LauncherOutput &output)
 {
     if (input.useVisionControl)

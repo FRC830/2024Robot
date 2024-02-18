@@ -32,7 +32,8 @@ class IntakeManager
 
 public:
     void HandleInput(IntakeInput &input, IntakeOutput &output);
-    
+    void ResetIntake();
+
 private:
     IntakeHAL m_intake;
     bool m_goToGroundPos;

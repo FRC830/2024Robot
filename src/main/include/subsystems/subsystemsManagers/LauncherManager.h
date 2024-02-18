@@ -21,12 +21,13 @@ struct LauncherOutput
 
 class LauncherManager
 {
-public:
-    void HandleInput(LauncherInput &input, LauncherOutput &output);
-
-private:
-    LauncherHAL m_launcher;
-    bool m_goToStowPos;
-    bool m_goToSubPos;
-    bool m_visionResetProfiledMoveState = false;
+    public:
+        void HandleInput(LauncherInput &input, LauncherOutput &output);
+        void ResetLauncher();
+        
+    private:
+        LauncherHAL m_launcher;
+        bool m_goToStowPos;
+        bool m_goToSubPos;
+        bool m_visionResetProfiledMoveState = false;
 };

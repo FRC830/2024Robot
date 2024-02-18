@@ -9,6 +9,14 @@ namespace
     const double PSEUDO_STOW_POS = 153.105;
 }
 
+void IntakeManager::ResetIntake()
+{
+    m_goToGroundPos = false;
+    m_goToStowPos = false;
+    m_goToAmpPos = false;
+    m_goToPseudoStowPos = false;
+}
+
 void IntakeManager::HandleInput(IntakeInput &input, IntakeOutput &output)
 {
     if (input.runIntakeIn && !input.runIntakeOut)
@@ -23,6 +31,7 @@ void IntakeManager::HandleInput(IntakeInput &input, IntakeOutput &output)
     {
         m_intake.RunIntake(0.0);
     }
+
     if (input.manualMove > 0.001)
     {
         m_intake.ManualMovePivot(input.manualMove);
