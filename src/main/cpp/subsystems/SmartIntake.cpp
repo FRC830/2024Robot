@@ -59,6 +59,16 @@ void SmartIntake::HandleInput(RobotControlData& input){
             }
         }
             break;
+        
+        default:
+            m_SmartIntakeFlag = false;
+            break;
+        }
+    }
+    else
+    {
+        switch (m_IntakeState)
+        {
         case 2:
         {
             input.intakeInput.runIntakeIn = true;
@@ -71,31 +81,6 @@ void SmartIntake::HandleInput(RobotControlData& input){
         }
             break;
         case 3:
-        {
-            input.intakeInput.goToPseudoStowPos = false;
-            if (input.intakeOutput.intakePos == IntakePos::PSEUDO_STOW)
-            {
-                ++m_IntakeState;
-            }
-        }
-            break;
-        default:
-            break;
-        }
-    }
-    else
-    {
-        switch (m_IntakeState)
-        {
-        case 0:
-        {
-                /* code */
-                input.intakeInput.runIntakeIn = false;
-                input.intakeInput.goToPseudoStowPos = true;
-                ++m_IntakeState;
-        }
-            break;
-        case 1:
         {
             input.intakeInput.goToPseudoStowPos = false;
             if (input.intakeOutput.intakePos == IntakePos::PSEUDO_STOW)
@@ -130,6 +115,16 @@ void SmartIntake::HandleInput(RobotControlData& input){
             }
         }
             break;
+        default:
+            m_SmartOutTakeFlag = false;
+            break;        
+        }
+    }
+    else
+    {
+        
+        switch (m_OutTakeState)
+        {
         case 2:
         {
             input.intakeInput.runIntakeOut = true;
@@ -142,32 +137,6 @@ void SmartIntake::HandleInput(RobotControlData& input){
         }
             break;
         case 3:
-        {
-            input.intakeInput.goToPseudoStowPos = false;
-            if (input.intakeOutput.intakePos == IntakePos::PSEUDO_STOW)
-            {
-                ++m_OutTakeState;
-            }
-        }
-            break;
-        default:
-            break;        
-        }
-    }
-    else
-    {
-        
-        switch (m_OutTakeState)
-        {
-        case 0:
-        {
-                /* code */
-                input.intakeInput.runIntakeOut = false;
-                input.intakeInput.goToPseudoStowPos = true;
-                ++m_OutTakeState;
-        }
-            break;
-        case 1:
         {
             input.intakeInput.goToPseudoStowPos = false;
             if (input.intakeOutput.intakePos == IntakePos::PSEUDO_STOW)
