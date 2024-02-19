@@ -59,12 +59,12 @@ const double PVT_D = 0.0;
 
 const int LAUNCHER_PVT_CURRENT_LIMIT = 20;
 const int FLYWHEEL_ACT_CURRENT_LIMIT = 20;
-const int LAUNCHER_IND_CURRENT_LIMIT = 20;
+const int LAUNCHER_IND_CURRENT_LIMIT = 28;
 
 const bool INVERT_FLYWHEEL = true;
 
 const double LAUNCHER_PVT_ABS_ENC_CONVERSION_FACTOR = 80.0;
-const double ZERO_OFFSET = 36.221;
+const double ZERO_OFFSET = 13.501;
 
 const double MAX_PIVOT_ANGLE = 75.0;
 const double MIN_PIVOT_ANGLE = 5.0;

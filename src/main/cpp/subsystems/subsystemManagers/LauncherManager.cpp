@@ -2,10 +2,10 @@
 
 namespace
 {
-    const double SUB_ANGLE = 55.0;
+    const double SUB_ANGLE = 19.0;
     const double STOW_ANGLE = 10.0;
-    const double SUB_SPEED = 150.0;
-    const double INDEXER_SPEED = 0.0;
+    const double SUB_SPEED = 350.0;
+    const double INDEXER_SPEED = 1.0;
 }
 
 void LauncherManager::ResetLauncher()
