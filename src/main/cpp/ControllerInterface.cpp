@@ -4,7 +4,7 @@ void ControllerInterface::UpdateRobotControlData(RobotControlData &controlData)
 {
     UpdateIntakeInput(controlData);
     UpdateLauncherInput(controlData);
-    //UpdateSwerveInput(controlData);
+    // UpdateSwerveInput(controlData);
 };
 
 void ControllerInterface::UpdateIntakeInput(RobotControlData &controlData)
@@ -14,7 +14,8 @@ void ControllerInterface::UpdateIntakeInput(RobotControlData &controlData)
     controlData.smartIntakeInput.smartIntake = m_copilot.GetLeftBumper();
     controlData.smartIntakeInput.smartOutTake = m_copilot.GetRightBumper();
     controlData.intakeInput.runIntakeIn = m_copilot.GetLeftTriggerAxis() >= 0.2;
-    controlData.intakeInput.runIntakeOut = m_copilot.GetRightTriggerAxis() >= 0.2;
+    // controlData.intakeInput.runIntakeOut = m_copilot.GetRightTriggerAxis() >= 0.2;
+    controlData.launcherInput.runIndexerForward = m_copilot.GetRightTriggerAxis() >= 0.2;
 
     // This for debug purposes only
     controlData.smartIntakeInput.laser = m_copilot.GetLeftStickButton();
