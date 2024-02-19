@@ -42,7 +42,7 @@ const double LFT_PVT_ABS_ENC_CONVERSION_FACTOR = 360.0;
 const bool LFT_PVT_MTR_INVERTED = true;
 
 // ###########################################################
-// #                        Flywheel                         #
+// #                        LAUNCHER                         #
 // ###########################################################
 const int FLYWHEEL_TOP_ID = 22;
 const int FLYWHEEL_BOTTOM_ID = 23;
@@ -68,3 +68,5 @@ const double ZERO_OFFSET = 36.221;
 
 const double MAX_PIVOT_ANGLE = 75.0;
 const double MIN_PIVOT_ANGLE = 5.0;
+
+const bool INVERT_INDEXER = false;

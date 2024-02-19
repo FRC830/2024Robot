@@ -65,7 +65,14 @@ void LauncherHAL::SetFlywheelSpeed(double speed)
 
 void LauncherHAL::SetIndexerSpeed(double speed)
 {
-    m_indexerSpeed = speed;
+    if (INVERT_INDEXER)
+    {
+        m_indexerSpeed = -speed;
+    }
+    else
+    {
+        m_indexerSpeed = speed;
+    }
 
     m_IndMotor.Set(m_indexerSpeed);
 }
