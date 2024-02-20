@@ -59,9 +59,17 @@ void SmartIntake::HandleInput(RobotControlData& input){
             }
         }
             break;
-        
+        case 2:
+        {
+            input.intakeInput.runIntakeIn = true;
+            if (input.smartIntakeInput.laser)
+            {
+                m_SmartIntakeFlag = false;
+                m_IntakeState = 0;
+            }
+        }
+            break;
         default:
-            m_SmartIntakeFlag = false;
             break;
         }
     }
@@ -69,18 +77,14 @@ void SmartIntake::HandleInput(RobotControlData& input){
     {
         switch (m_IntakeState)
         {
-        case 2:
+        case 0:
         {
-            input.intakeInput.runIntakeIn = true;
-            if (input.smartIntakeInput.laser){
-                input.intakeInput.runIntakeIn = false;
-                input.intakeInput.goToPseudoStowPos = true;
-                ++m_IntakeState;
-            }
-            
+            input.intakeInput.runIntakeIn = false;
+            input.intakeInput.goToPseudoStowPos = true;
+            ++m_IntakeState;
         }
             break;
-        case 3:
+        case 1:
         {
             input.intakeInput.goToPseudoStowPos = false;
             if (input.intakeOutput.intakePos == IntakePos::PSEUDO_STOW)
@@ -115,8 +119,17 @@ void SmartIntake::HandleInput(RobotControlData& input){
             }
         }
             break;
+        case 2:
+        {
+            input.intakeInput.runIntakeOut = true;
+            if (input.smartIntakeInput.laser)
+            {
+                m_SmartOutTakeFlag = false;
+                m_OutTakeState = 0;
+            }
+        }
+            break;
         default:
-            m_SmartOutTakeFlag = false;
             break;        
         }
     }
@@ -125,18 +138,14 @@ void SmartIntake::HandleInput(RobotControlData& input){
         
         switch (m_OutTakeState)
         {
-        case 2:
-        {
-            input.intakeInput.runIntakeOut = true;
-            if (input.smartIntakeInput.laser){
-                input.intakeInput.runIntakeOut = false;
-                input.intakeInput.goToPseudoStowPos = true;
-                ++m_OutTakeState;
-            }
-            
+        case 0:
+        {    
+            input.intakeInput.runIntakeOut = false;
+            input.intakeInput.goToPseudoStowPos = true;
+            ++m_OutTakeState;
         }
             break;
-        case 3:
+        case 1:
         {
             input.intakeInput.goToPseudoStowPos = false;
             if (input.intakeOutput.intakePos == IntakePos::PSEUDO_STOW)
@@ -150,7 +159,7 @@ void SmartIntake::HandleInput(RobotControlData& input){
         }
     }
     
-        // needs to go at the bottom
+    // needs to go at the bottom
     m_prevSmartIntake = input.smartIntakeInput.smartIntake;
     m_prevSmartOutTake = input.smartIntakeInput.smartOutTake;
     m_prevSwitchMode = input.smartIntakeInput.switchMode;
