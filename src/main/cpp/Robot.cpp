@@ -13,6 +13,18 @@ void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+
+  m_autos_directory = frc::filesystem::GetDeployDirectory();
+  m_autos_directory = m_autos_directory / "pathplanner" / "autos";
+  m_auto_chooser.SetDefaultOption("None", "None");
+
+  for (auto i : std::filesystem::directory_iterator(m_autos_directory))
+  {
+    m_auto_chooser.AddOption(std::filesystem::path(i.path().string()).filename().string(), std::filesystem::path(i.path().string()).filename().string());
+  }
+
+  frc::SmartDashboard::PutData("Pathplanner Autos", &m_auto_chooser);
+
   SwerveInit();
 }
 
@@ -48,6 +60,9 @@ void Robot::AutonomousInit() {
   } else {
     // Default Auto goes here
   }
+
+  m_state = 0;
+  m_auto = std::make_unique<frc2::CommandPtr>(pathplanner::PathPlannerAuto(m_auto_chooser.GetSelected()).ToPtr());
 }
 
 void Robot::AutonomousPeriodic() {
@@ -55,6 +70,25 @@ void Robot::AutonomousPeriodic() {
     // Custom Auto goes here
   } else {
     // Default Auto goes here
+  }
+
+  switch(m_state)
+  {
+    case 0:
+      m_auto.get()->get()->Initialize();
+      m_state++;
+      break;
+    case 1:
+      m_auto.get()->get()->Execute();
+      m_auto.get()->get()->IsFinished();
+      m_state++;
+      break;
+    case 2:
+      m_auto.get()->get()->End(false);
+      m_state++;
+      break;
+    default:
+      break;
   }
 }
 

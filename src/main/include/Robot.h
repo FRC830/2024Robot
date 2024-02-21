@@ -25,6 +25,10 @@
 #include "subsystems/subsystemsManagers/IntakeManager.h"
 #include "subsystems/SmartIntake.h"
 #include "subsystems/subsystemsManagers/LauncherManager.h"
+#include <frc2/command/CommandPtr.h>
+#include <pathplanner/lib/commands/PathPlannerAuto.h>
+#include <filesystem>
+#include <frc/Filesystem.h>
 
 class Robot : public frc::TimedRobot {
  public:
@@ -42,7 +46,6 @@ class Robot : public frc::TimedRobot {
   void SimulationPeriodic() override;
   void updateDashBoardValues(); 
   void SwerveInit();
-
   void PrintSwerveInfo();
 
  private:
@@ -65,4 +68,9 @@ class Robot : public frc::TimedRobot {
   IntakeManager _intake_manager;
   SmartIntake _smart_intake;
   LauncherManager _launcher_manager;
+
+  int m_state;
+  std::unique_ptr<frc2::CommandPtr> m_auto;
+  std::filesystem::path m_autos_directory;
+  frc::SendableChooser<std::string> m_auto_chooser;
 }; 
