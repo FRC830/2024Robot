@@ -11,8 +11,8 @@ SmartIntake::SmartIntake()
     m_SwitchModeFlag = false;
     m_prevSwitchMode = false;
 
-    m_IntakeState = 0;
-    m_OutTakeState = 0;
+    m_IntakeState = 10000;
+    m_OutTakeState = 10000;
 }
 
 void SmartIntake::HandleInput(RobotControlData& input){

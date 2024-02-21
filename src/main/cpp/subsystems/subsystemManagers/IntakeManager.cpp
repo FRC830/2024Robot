@@ -3,10 +3,10 @@
 namespace
 {
     const double NORMAL_INTAKE_SPEED = 0.95;
-    const double AMP_POS = 72.686;
-    const double GROUND_POS = 182.953;
-    const double STOW_POS = 119.375;
-    const double PSEUDO_STOW_POS = 153.105;
+    const double AMP_POS = 19.361;
+    const double GROUND_POS = 132.056;
+    const double STOW_POS = 68.144;
+    const double PSEUDO_STOW_POS = 104.671;
 }
 
 void IntakeManager::ResetIntake()

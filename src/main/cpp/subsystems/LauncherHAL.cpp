@@ -15,7 +15,7 @@ LauncherHAL::LauncherHAL()
 
     m_PvtAbsEncoder.SetInverted(true);
     m_PvtAbsEncoder.SetPositionConversionFactor(LAUNCHER_PVT_ABS_ENC_CONVERSION_FACTOR);
-    m_PvtAbsEncoder.SetZeroOffset(ZERO_OFFSET);
+    m_PvtAbsEncoder.SetZeroOffset(LAUNCHER_ZERO_OFFSET);
 
     m_PvtPID.SetFeedbackDevice(m_PvtAbsEncoder);
 
