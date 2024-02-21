@@ -80,8 +80,10 @@ void Robot::AutonomousPeriodic() {
       break;
     case 1:
       m_auto.get()->get()->Execute();
-      m_auto.get()->get()->IsFinished();
-      m_state++;
+      if (m_auto.get()->get()->IsFinished())
+      {
+        m_state++;
+      }
       break;
     case 2:
       m_auto.get()->get()->End(false);
