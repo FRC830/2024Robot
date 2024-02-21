@@ -36,10 +36,13 @@ const int INTAKE_ACT_CURRENT_LIMIT = 40;
 
 const double INTAKE_MAX_VEL = 60.0;
 const double INTAKE_ACCEL = 30.0;
+const double INTAKE_ZERO_OFFSET = 299.92;
 
 const bool LFT_PVT_ABS_ENC_INVERTED = false;
 const double LFT_PVT_ABS_ENC_CONVERSION_FACTOR = 360.0;
 const bool LFT_PVT_MTR_INVERTED = true;
+
+const bool INVERT_INTAKE_ACT = true;
 
 // ###########################################################
 // #                        LAUNCHER                         #
@@ -64,7 +67,7 @@ const int LAUNCHER_IND_CURRENT_LIMIT = 28;
 const bool INVERT_FLYWHEEL = true;
 
 const double LAUNCHER_PVT_ABS_ENC_CONVERSION_FACTOR = 80.0;
-const double ZERO_OFFSET = 13.501;
+const double LAUNCHER_ZERO_OFFSET = 13.501;
 
 const double MAX_PIVOT_ANGLE = 75.0;
 const double MIN_PIVOT_ANGLE = 5.0;
