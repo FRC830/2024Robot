@@ -8,11 +8,6 @@ class ClimberHAL{
     public:
         ClimberHAL();
         void RunClimber(double controllerSpeed);
-
-        double get(double rotations);
-        double getRotations();
-        double getCurrentHeight(double rotations);
-        double getChangeInHeight(double rotations);
         bool isNextRotationTooHigh(double height);
     private:
         rev::CANSparkMax m_climberMotorLeft = rev::CANSparkMax(CLIMBER_MOTOR_LEFT, rev::CANSparkMaxLowLevel::MotorType::kBrushless); 
