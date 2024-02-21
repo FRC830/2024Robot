@@ -8,6 +8,8 @@ IntakeHAL::IntakeHAL(){
     m_RGTActMotor.RestoreFactoryDefaults();
     m_RGTPvtMotor.RestoreFactoryDefaults();
 
+    m_LFTActMotor.SetInverted(INVERT_INTAKE_ACT);
+
     m_RGTActMotor.Follow(m_LFTActMotor, true);
     m_RGTPvtMotor.Follow(m_LFTPvtMotor, false);
 
@@ -33,6 +35,7 @@ IntakeHAL::IntakeHAL(){
     
     m_LFTPvtAbsEncoder.SetInverted(LFT_PVT_ABS_ENC_INVERTED);
     m_LFTPvtAbsEncoder.SetPositionConversionFactor(LFT_PVT_ABS_ENC_CONVERSION_FACTOR);
+    m_LFTPvtAbsEncoder.SetZeroOffset(INTAKE_ZERO_OFFSET);
 
     m_LFTPvtMotor.SetInverted(LFT_PVT_MTR_INVERTED);
 

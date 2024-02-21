@@ -4,7 +4,7 @@ void ControllerInterface::UpdateRobotControlData(RobotControlData &controlData)
 {
     UpdateIntakeInput(controlData);
     UpdateLauncherInput(controlData);
-    UpdateSwerveInput(controlData);
+    // UpdateSwerveInput(controlData);
     UpdateClimberInput(controlData);
 };
 
@@ -15,7 +15,8 @@ void ControllerInterface::UpdateIntakeInput(RobotControlData &controlData)
     controlData.smartIntakeInput.smartIntake = m_copilot.GetLeftBumper();
     controlData.smartIntakeInput.smartOutTake = m_copilot.GetRightBumper();
     controlData.intakeInput.runIntakeIn = m_copilot.GetLeftTriggerAxis() >= 0.2;
-    controlData.intakeInput.runIntakeOut = m_copilot.GetRightTriggerAxis() >= 0.2;
+    // controlData.intakeInput.runIntakeOut = m_copilot.GetRightTriggerAxis() >= 0.2;
+
 
     // This for debug purposes only
     controlData.smartIntakeInput.laser = m_copilot.GetLeftStickButton();
@@ -23,10 +24,11 @@ void ControllerInterface::UpdateIntakeInput(RobotControlData &controlData)
 
 void ControllerInterface::UpdateLauncherInput(RobotControlData &controlData)
 {
-    controlData.launcherInput.goToStowPos = m_copilot.GetBackButton();
-    controlData.launcherInput.goToSubPos = m_copilot.GetStartButton();
-    controlData.launcherInput.runIndexerForward = m_copilot.GetXButton();
-    controlData.launcherInput.runIndexerBackward = m_copilot.GetBButton();
+    controlData.launcherInput.goToStowPos = m_copilot.GetXButton();
+    controlData.launcherInput.goToSubPos = m_copilot.GetBButton();
+    controlData.launcherInput.runIndexerForward = m_copilot.GetRightTriggerAxis() >= 0.2;
+    //controlData.launcherInput.runIndexerForward = m_copilot.GetXButton();
+    //controlData.launcherInput.runIndexerBackward = m_copilot.GetBButton();
     //controlData.launcherInput.useVisionControl = m_copilot.GetYButton();
 };
 

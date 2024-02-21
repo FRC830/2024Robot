@@ -28,7 +28,6 @@ class LauncherHAL
         ctre::phoenix6::hardware::TalonFX m_FlywheelTop{FLYWHEEL_TOP_ID};
         ctre::phoenix6::hardware::TalonFX m_FlywheelBottom{FLYWHEEL_BOTTOM_ID};
         
-        rev::SparkRelativeEncoder m_PvtRelEncoder = m_PvtMotor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 42);
         rev::SparkPIDController m_PvtPID = m_PvtMotor.GetPIDController();
         rev::SparkAbsoluteEncoder m_PvtAbsEncoder= m_PvtMotor.GetAbsoluteEncoder(rev::SparkAbsoluteEncoder::Type::kDutyCycle);
 
@@ -36,9 +35,9 @@ class LauncherHAL
 
         frc::Timer m_Timer;
 
-        frc::TrapezoidProfile<units::meters> m_Profile{
+        frc::TrapezoidProfile<units::degrees> m_Profile{
 
-                frc::TrapezoidProfile<units::meters>::Constraints{0_mps, 0_mps_sq}  
+                frc::TrapezoidProfile<units::degrees>::Constraints{75_deg_per_s, 40_deg_per_s_sq}  
                 
             };
         
