@@ -1,9 +1,7 @@
 #pragma once
 
 #include "subsystems/ClimberHAL.h"
-#include "subsystems/subsystemconfig.h"
-// #include <CANSparkBase.h>
-// #include <CANEncoder.h>
+#include "subsystems/SubSystemConfig.h"
 
 struct ClimberInput
 {
