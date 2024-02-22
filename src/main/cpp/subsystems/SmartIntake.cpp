@@ -22,6 +22,8 @@ void SmartIntake::HandleInput(RobotControlData& input){
         m_SmartIntakeFlag = !m_SmartIntakeFlag;
         m_SmartOutTakeFlag = false;
         m_IntakeState = 0;
+        input.intakeInput.runIntakeOut = false;
+        input.launcherInput.runIndexerBackward = false;
         m_OutTakeState = 10000;
     }
     
@@ -29,6 +31,8 @@ void SmartIntake::HandleInput(RobotControlData& input){
     {
         m_SmartOutTakeFlag = !m_SmartOutTakeFlag;
         m_SmartIntakeFlag = false;
+        input.intakeInput.runIntakeIn = false;
+        input.launcherInput.runIndexerForward = false;
         m_IntakeState = 10000;
         m_OutTakeState = 0;
     }
@@ -62,6 +66,7 @@ void SmartIntake::HandleInput(RobotControlData& input){
         case 2:
         {
             input.intakeInput.runIntakeIn = true;
+            input.launcherInput.runIndexerForward = true;
             if (input.smartIntakeInput.laser)
             {
                 m_SmartIntakeFlag = false;
@@ -80,6 +85,7 @@ void SmartIntake::HandleInput(RobotControlData& input){
         case 0:
         {
             input.intakeInput.runIntakeIn = false;
+            input.launcherInput.runIndexerForward = false;
             input.intakeInput.goToPseudoStowPos = true;
             ++m_IntakeState;
         }
@@ -122,6 +128,7 @@ void SmartIntake::HandleInput(RobotControlData& input){
         case 2:
         {
             input.intakeInput.runIntakeOut = true;
+            input.launcherInput.runIndexerBackward = true;
             if (input.smartIntakeInput.laser)
             {
                 m_SmartOutTakeFlag = false;
@@ -141,6 +148,7 @@ void SmartIntake::HandleInput(RobotControlData& input){
         case 0:
         {    
             input.intakeInput.runIntakeOut = false;
+            input.launcherInput.runIndexerBackward = false;
             input.intakeInput.goToPseudoStowPos = true;
             ++m_OutTakeState;
         }
