@@ -14,7 +14,7 @@ void Robot::RobotInit() {
   // m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   // frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
-  vision = VisionConsumer();
+  // vision = VisionConsumer();
 
   m_autos_directory = frc::filesystem::GetDeployDirectory();
   m_autos_directory = m_autos_directory / "pathplanner" / "autos";
@@ -40,13 +40,13 @@ void Robot::RobotInit() {
  */
 void Robot::RobotPeriodic() {
 
-  vision.Periodic();
-  auto a = vision.GetPolarCoordForTagX(11);
-  auto b = vision.GetPolarCoordForTagX(15);
+//   vision.Periodic();
+//   auto a = vision.GetPolarCoordForTagX(11);
+//   auto b = vision.GetPolarCoordForTagX(15);
 
-  auto temp = vision.GetRobotToSpeaker(a, b, 6.9);
-  frc::SmartDashboard::PutNumber("Weird r", temp.r);
-  frc::SmartDashboard::PutNumber("Weird Theta", temp.theta);
+//   auto temp = vision.GetRobotToSpeaker(a, b, 6.9);
+//   frc::SmartDashboard::PutNumber("Weird r", temp.r);
+//   frc::SmartDashboard::PutNumber("Weird Theta", temp.theta);
 
 }
 

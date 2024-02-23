@@ -13,6 +13,7 @@
 #include <frc/XboxController.h>
 #include <frc2/command/CommandPtr.h>
 #include <memory>
+#include "NavXGyro.h"
 #include <pathplanner/lib/commands/PathPlannerAuto.h>
 #include "ControllerInterface.h"
 #include "RobotControlData.h"
