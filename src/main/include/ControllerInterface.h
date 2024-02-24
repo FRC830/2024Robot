@@ -9,7 +9,7 @@ class ControllerInterface
         ~ControllerInterface() = default;
         void UpdateRobotControlData(RobotControlData &controlData);
     private:
-        void UpdateIntakeInput(RobotControlData &controlData);
+        void UpdateIntakeInput(RobotControlData &controlData, );
         void UpdateLauncherInput(RobotControlData &controlData);
         void UpdateSwerveInput(RobotControlData &controlData);
         
