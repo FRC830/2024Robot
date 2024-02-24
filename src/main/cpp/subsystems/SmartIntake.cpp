@@ -1,4 +1,5 @@
 #include "subsystems/SmartIntake.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 
 SmartIntake::SmartIntake()
 {
@@ -21,6 +22,7 @@ void SmartIntake::ResetSmartIntake()
 }
 
 void SmartIntake::HandleInput(RobotControlData& input){
+    frc::SmartDashboard::PutBoolean("Launcher beam break", !m_beam_break.Get());
     input.smartIntakeInput.laser = !m_beam_break.Get();
 
     if (!m_prevSmartIntake && input.smartIntakeInput.smartIntake)
@@ -55,13 +57,14 @@ void SmartIntake::HandleInput(RobotControlData& input){
         {
         case 0:
         {
-                /* code */
                 input.intakeInput.goToGroundPos = true;
+                input.launcherInput.goToStowPos = true;
                 ++m_IntakeState;
         }
             break;
         case 1:
         {
+            input.launcherInput.goToStowPos = false;
             input.intakeInput.goToGroundPos = false;
             if (input.intakeOutput.intakePos == IntakePos::GROUND)
             {
@@ -117,13 +120,14 @@ void SmartIntake::HandleInput(RobotControlData& input){
         {
         case 0:
         {
-                /* code */
+                input.launcherInput.goToStowPos = true;
                 input.intakeInput.goToGroundPos = true;
                 ++m_OutTakeState;
         }
             break;
         case 1:
         {
+            input.launcherInput.goToStowPos = false;
             input.intakeInput.goToGroundPos = false;
             if (input.intakeOutput.intakePos == IntakePos::GROUND)
             {

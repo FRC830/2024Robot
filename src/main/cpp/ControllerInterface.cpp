@@ -23,6 +23,7 @@ void ControllerInterface::UpdateIntakeInput(RobotControlData &controlData)
         controlData.intakeInput.runIntakeIn = false;
     }
 
+    controlData.smartIntakeInput.smartOutTake = m_copilot.GetRightBumper();
     controlData.smartIntakeInput.smartIntake = m_copilot.GetLeftBumper();
     // controlData.intakeInput.runIntakeOut = m_copilot.GetRightTriggerAxis() >= 0.2;
 };
