@@ -50,6 +50,6 @@ void ControllerInterface::UpdateSwerveInput(RobotControlData &controlData)
 
 void ControllerInterface::UpdateClimberInput(RobotControlData &controlData)
 {
-    controlData.climberInput.controllerSpeed = m_pilot.GetLeftTriggerAxis();
+    controlData.climberInput.controllerSpeed = m_pilot.GetLeftY();
     
 };
