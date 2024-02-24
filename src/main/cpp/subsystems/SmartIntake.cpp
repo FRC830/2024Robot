@@ -16,6 +16,7 @@ SmartIntake::SmartIntake()
 }
 
 void SmartIntake::HandleInput(RobotControlData& input){
+    input.smartIntakeInput.laser = !m_beam_break.Get();
 
     if (!m_prevSmartIntake && input.smartIntakeInput.smartIntake)
     {
@@ -123,17 +124,29 @@ void SmartIntake::HandleInput(RobotControlData& input){
             {
                 ++m_OutTakeState;
             }
+
+            m_timer.Reset();
         }
             break;
         case 2:
         {
             input.intakeInput.runIntakeOut = true;
             input.launcherInput.runIndexerBackward = true;
-            if (input.smartIntakeInput.laser)
+            if (!input.smartIntakeInput.laser)
+            {
+                m_timer.Restart();
+                m_OutTakeState++;
+            }
+        }
+        case 3:
+        {
+            if (m_timer.Get() > units::second_t(0.045))
             {
                 m_SmartOutTakeFlag = false;
                 m_OutTakeState = 0;
+                m_timer.Stop();
             }
+
         }
             break;
         default:
