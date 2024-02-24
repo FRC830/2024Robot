@@ -46,3 +46,9 @@ void ControllerInterface::UpdateSwerveInput(RobotControlData &controlData)
         controlData.swerveInput.rotation *= m_slowmodefactor;
     }
 };
+
+void ControllerInterface::UpdateVisionInput(RobotControlData &controlData) {
+
+    controlData.visionInput.autoAim = m_copilot.GetRightBumper();
+
+}
