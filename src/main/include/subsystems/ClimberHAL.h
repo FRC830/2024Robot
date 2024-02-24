@@ -10,8 +10,8 @@ class ClimberHAL{
         void RunClimber(double controllerSpeed);
         bool isNextRotationTooHigh(double height);
     private:
-        rev::CANSparkMax m_climberMotorLeft = rev::CANSparkMax(CLIMBER_MOTOR_LEFT, rev::CANSparkMaxLowLevel::MotorType::kBrushless); 
-        rev::CANSparkMax m_climberMotorRight = rev::CANSparkMax(CLIMBER_MOTOR_RIGHT, rev::CANSparkMaxLowLevel::MotorType::kBrushless); 
+        rev::CANSparkMax m_climberMotorLeft = rev::CANSparkMax(CLIMBER_MOTOR_LEFT, rev::CANSparkLowLevel::MotorType::kBrushless); 
+        rev::CANSparkMax m_climberMotorRight = rev::CANSparkMax(CLIMBER_MOTOR_RIGHT, rev::CANSparkLowLevel::MotorType::kBrushless); 
 
         rev::SparkRelativeEncoder m_EncoderRight = m_climberMotorRight.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 1);
         rev::SparkRelativeEncoder m_EncoderLeft = m_climberMotorLeft.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 1);
