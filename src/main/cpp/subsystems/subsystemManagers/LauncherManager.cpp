@@ -33,7 +33,13 @@ void LauncherManager::HandleInput(LauncherInput &input, LauncherOutput &output)
     }
     else 
     {
+        if (m_visionResetProfiledMoveState)
+        {
+            m_launcher.SetFlywheelSpeed(0.0);
+        }
+
         m_visionResetProfiledMoveState = false;
+
 
         if(input.goToStowPos){
             m_goToStowPos = true;
