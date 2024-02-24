@@ -25,6 +25,8 @@ class AutoAimer{
         ~AutoAimer() = default; 
 
         
+        void ResetState();
+
         void AutoAim();
         
     
@@ -43,5 +45,10 @@ class AutoAimer{
         };
 
         void ProfiledMoveToDeg(double deg);
+
+        double ar;
+        double at;
+        double br;
+        double bt;
 
 };

@@ -16,6 +16,11 @@ void Robot::RobotInit() {
 
   // vision = VisionConsumer();
 
+  frc::SmartDashboard::PutNumber("ar", 0.0);
+  frc::SmartDashboard::PutNumber("at", 0.0);
+  frc::SmartDashboard::PutNumber("br", 0.0);
+  frc::SmartDashboard::PutNumber("bt", 0.0);
+
   m_autos_directory = frc::filesystem::GetDeployDirectory();
   m_autos_directory = m_autos_directory / "pathplanner" / "autos";
   m_auto_chooser.SetDefaultOption("None", "None");
@@ -118,11 +123,20 @@ void Robot::TeleopPeriodic() {
 
   
   _controller_interface.UpdateRobotControlData(_robot_control_data);
-  _swerve.Drive(_robot_control_data.swerveInput.xTranslation, _robot_control_data.swerveInput.yTranslation, _robot_control_data.swerveInput.rotation);
-  _smart_intake.HandleInput(_robot_control_data);
+   _smart_intake.HandleInput(_robot_control_data);
   _intake_manager.HandleInput(_robot_control_data.intakeInput, _robot_control_data.intakeOutput);
   _launcher_manager.HandleInput(_robot_control_data.launcherInput, _robot_control_data.launcherOutput);
-  if (_robot_control_data.visionInput.autoAim) m_autoAim.AutoAim();
+  if (_robot_control_data.visionInput.reset) m_autoAim.ResetState();
+  if (_robot_control_data.visionInput.autoAim) {
+
+    m_autoAim.AutoAim();
+
+  } else {
+
+ _swerve.Drive(_robot_control_data.swerveInput.xTranslation, _robot_control_data.swerveInput.yTranslation, _robot_control_data.swerveInput.rotation);
+
+
+  }
 
 }
 

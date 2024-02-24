@@ -1,6 +1,6 @@
 #include "AutoAimer.h"
 
-
+#include <frc/smartdashboard/SmartDashboard.h>
 
 
 AutoAimer::AutoAimer(WPISwerveDrive& s)
@@ -10,12 +10,14 @@ AutoAimer::AutoAimer(WPISwerveDrive& s)
 void AutoAimer::ProfiledMoveToDeg(double deg) {
 
 
-    switch(m_state) {
+    switch(m_state) 
+    {
 
         case 0: 
         {
             
             m_timer.Restart();
+            m_StartRobotHeading = m_Swerve.GetPose().Rotation().Degrees().to<double>();
 
             m_state++;
 
@@ -52,7 +54,6 @@ void AutoAimer::ProfiledMoveToDeg(double deg) {
         }
 
         default:
-            m_state = 0;
             break;
 
 
@@ -61,15 +62,29 @@ void AutoAimer::ProfiledMoveToDeg(double deg) {
 
 }
 
+void AutoAimer::ResetState()
+{
+    m_state = 0;
+}
+
 void AutoAimer::AutoAim() {
 
-    m_StartRobotHeading = m_Swerve.GetPose().Rotation().Degrees().to<double>();
-    m_vision.Periodic();
+    // ar = frc::SmartDashboard::GetNumber("ar", 0.0);
+    // at = frc::SmartDashboard::GetNumber("at", 0.0);
+    // br = frc::SmartDashboard::GetNumber("br", 0.0);
+    bt = frc::SmartDashboard::GetNumber("bt", 0.0);
+    
+    // PolarCoords a = {ar, at};
+    // PolarCoords b = {br, bt};
 
-    auto cur = frc::DriverStation::GetAlliance().value() == frc::DriverStation::Alliance::kRed ? red : blue;
-    PolarCoords a = m_vision.GetPolarCoordForTagX(cur.a);
-    PolarCoords b = m_vision.GetPolarCoordForTagX(cur.b);
-    PolarCoords c = m_vision.GetRobotToSpeaker(a, b, m_StartRobotHeading);
-    ProfiledMoveToDeg(c.theta);
+
+    // m_StartRobotHeading = m_Swerve.GetPose().Rotation().Degrees().to<double>();
+    // // m_vision.Periodic();
+
+    // // auto cur = frc::DriverStation::GetAlliance().value() == frc::DriverStation::Alliance::kRed ? red : blue;
+    // // PolarCoords a = m_vision.GetPolarCoordForTagX(cur.a);
+    // // PolarCoords b = m_vision.GetPolarCoordForTagX(cur.b);
+    // PolarCoords c = m_vision.GetRobotToSpeaker(a, b, m_StartRobotHeading);
+    ProfiledMoveToDeg(bt);
 
 }

@@ -11,7 +11,7 @@ struct SwerveInput{
 
 struct VisionInput {
     bool autoAim;
-
+    bool reset;
 
 };
 
