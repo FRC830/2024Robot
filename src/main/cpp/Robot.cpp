@@ -30,8 +30,6 @@ void Robot::RobotInit() {
       filename.erase(fileExtensionChar, 5);
       m_auto_chooser.AddOption(filename, filename);
     }
-    
-    std::cout << "Filename: " << filename << std::endl;
   }
 
   frc::SmartDashboard::PutData("Pathplanner Autos", &m_auto_chooser);
@@ -121,6 +119,7 @@ void Robot::TeleopInit()
 {
   _intake_manager.ResetIntake();
   _launcher_manager.ResetLauncher();
+  _smart_intake.ResetSmartIntake();
 }
 
 void Robot::TeleopPeriodic() {

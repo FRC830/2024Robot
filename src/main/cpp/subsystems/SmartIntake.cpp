@@ -2,6 +2,11 @@
 
 SmartIntake::SmartIntake()
 {
+    ResetSmartIntake();
+}
+
+void SmartIntake::ResetSmartIntake()
+{
     m_SmartIntakeFlag = false;
     m_prevSmartIntake = false;
     

@@ -7,6 +7,7 @@ public:
     SmartIntake();
     ~SmartIntake() = default;
     void HandleInput(RobotControlData& input);
+    void ResetSmartIntake();
     
 private:
     bool m_SmartIntakeFlag;
