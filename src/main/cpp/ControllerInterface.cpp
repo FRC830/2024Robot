@@ -14,13 +14,13 @@ void ControllerInterface::UpdateIntakeInput(RobotControlData &controlData)
 
     if (controlData.intakeOutput.intakePos == IntakePos::AMP)
     {
-        controlData.intakeInput.runIntakeIn = m_copilot.GetRightTriggerAxis() > 0.2;
+        controlData.intakeInput.runIntakeOut = m_copilot.GetRightTriggerAxis() > 0.2;
         controlData.launcherInput.runIndexerForward = false;
     }
     else
     {
         controlData.launcherInput.runIndexerForward = m_copilot.GetRightTriggerAxis() > 0.2;
-        controlData.intakeInput.runIntakeIn = false;
+        controlData.intakeInput.runIntakeOut = false;
     }
 
     controlData.smartIntakeInput.smartOutTake = m_copilot.GetRightBumper();
