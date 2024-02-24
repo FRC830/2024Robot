@@ -1,14 +1,8 @@
 #include "subsystems/subsystemsManagers/ClimberManager.h"
-// hi
-namespace
-{
-    
-}
 
 void ClimberManager::HandleInput(ClimberInput &input)
 {
     
-    // FIXME: I'm not correct according to the laws of mathematics
     double controllerInput = ((std::fabs(input.controllerSpeed) - m_deadzone)/(1-m_deadzone)) * m_multiplier;
     
     if (input.controllerSpeed > m_deadzone) 

@@ -1,7 +1,9 @@
 #include "subsystems/ClimberHAL.h"
 
 ClimberHAL::ClimberHAL() {
+    m_climberMotorLeft.RestoreFactoryDefaults();
     error = m_EncoderLeft.SetPositionConversionFactor(wheel_circumference); 
+    m_climberMotorLeft.BurnFlash();
 }
 
 void ClimberHAL::RunClimber(double controllerSpeed)
@@ -15,5 +17,5 @@ void ClimberHAL::RunClimber(double controllerSpeed)
 };
 
 bool ClimberHAL::isNextRotationTooHigh(double height) {
-    return height+wheel_circumference>maxHeight;
+    return (height+wheel_circumference)>maxHeight;
 }
