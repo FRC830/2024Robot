@@ -1,6 +1,12 @@
 #include "subsystems/SmartIntake.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 
 SmartIntake::SmartIntake()
+{
+    ResetSmartIntake();
+}
+
+void SmartIntake::ResetSmartIntake()
 {
     m_SmartIntakeFlag = false;
     m_prevSmartIntake = false;
@@ -16,6 +22,8 @@ SmartIntake::SmartIntake()
 }
 
 void SmartIntake::HandleInput(RobotControlData& input){
+    frc::SmartDashboard::PutBoolean("Launcher beam break", !m_beam_break.Get());
+    input.smartIntakeInput.laser = !m_beam_break.Get();
 
     if (!m_prevSmartIntake && input.smartIntakeInput.smartIntake)
     {
@@ -49,13 +57,14 @@ void SmartIntake::HandleInput(RobotControlData& input){
         {
         case 0:
         {
-                /* code */
                 input.intakeInput.goToGroundPos = true;
+                input.launcherInput.goToStowPos = true;
                 ++m_IntakeState;
         }
             break;
         case 1:
         {
+            input.launcherInput.goToStowPos = false;
             input.intakeInput.goToGroundPos = false;
             if (input.intakeOutput.intakePos == IntakePos::GROUND)
             {
@@ -111,29 +120,42 @@ void SmartIntake::HandleInput(RobotControlData& input){
         {
         case 0:
         {
-                /* code */
+                input.launcherInput.goToStowPos = true;
                 input.intakeInput.goToGroundPos = true;
                 ++m_OutTakeState;
         }
             break;
         case 1:
         {
+            input.launcherInput.goToStowPos = false;
             input.intakeInput.goToGroundPos = false;
             if (input.intakeOutput.intakePos == IntakePos::GROUND)
             {
                 ++m_OutTakeState;
             }
+
+            m_timer.Reset();
         }
             break;
         case 2:
         {
             input.intakeInput.runIntakeOut = true;
             input.launcherInput.runIndexerBackward = true;
-            if (input.smartIntakeInput.laser)
+            if (!input.smartIntakeInput.laser)
+            {
+                m_timer.Restart();
+                m_OutTakeState++;
+            }
+        }
+        case 3:
+        {
+            if (m_timer.Get() > units::second_t(0.045))
             {
                 m_SmartOutTakeFlag = false;
                 m_OutTakeState = 0;
+                m_timer.Stop();
             }
+
         }
             break;
         default:

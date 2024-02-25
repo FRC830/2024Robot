@@ -4,21 +4,28 @@ void ControllerInterface::UpdateRobotControlData(RobotControlData &controlData)
 {
     UpdateIntakeInput(controlData);
     UpdateLauncherInput(controlData);
-    // UpdateSwerveInput(controlData);
+    UpdateSwerveInput(controlData);
 };
 
 void ControllerInterface::UpdateIntakeInput(RobotControlData &controlData)
 {
     controlData.intakeInput.goToAmpPos = m_copilot.GetYButton();
     controlData.intakeInput.goToStowPos = m_copilot.GetAButton();
-    controlData.smartIntakeInput.smartIntake = m_copilot.GetLeftBumper();
+
+    if (controlData.intakeOutput.intakePos == IntakePos::AMP)
+    {
+        controlData.intakeInput.runIntakeOut = m_copilot.GetRightTriggerAxis() > 0.2;
+        controlData.launcherInput.runIndexerForward = false;
+    }
+    else
+    {
+        controlData.launcherInput.runIndexerForward = m_copilot.GetRightTriggerAxis() > 0.2;
+        controlData.intakeInput.runIntakeOut = false;
+    }
+
     controlData.smartIntakeInput.smartOutTake = m_copilot.GetRightBumper();
-    controlData.intakeInput.runIntakeIn = m_copilot.GetLeftTriggerAxis() >= 0.2;
+    controlData.smartIntakeInput.smartIntake = m_copilot.GetLeftBumper();
     // controlData.intakeInput.runIntakeOut = m_copilot.GetRightTriggerAxis() >= 0.2;
-
-
-    // This for debug purposes only
-    controlData.smartIntakeInput.laser = m_copilot.GetLeftStickButton();
 };
 
 void ControllerInterface::UpdateLauncherInput(RobotControlData &controlData)
@@ -35,8 +42,8 @@ void ControllerInterface::UpdateSwerveInput(RobotControlData &controlData)
 {
     controlData.swerveInput.slowMode = m_pilot.GetLeftBumper();
   
-    controlData.swerveInput.xTranslation = m_pilot.GetLeftY();
-    controlData.swerveInput.yTranslation = m_pilot.GetLeftX();
+    controlData.swerveInput.xTranslation = -m_pilot.GetLeftY();
+    controlData.swerveInput.yTranslation = -m_pilot.GetLeftX();
     controlData.swerveInput.rotation = -m_pilot.GetRightX();
 
     if (controlData.swerveInput.slowMode)

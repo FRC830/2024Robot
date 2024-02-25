@@ -1,11 +1,13 @@
 #pragma once
 #include "RobotControlData.h"
+#include <frc/DigitalInput.h>
 
 class SmartIntake{
 public:
     SmartIntake();
     ~SmartIntake() = default;
     void HandleInput(RobotControlData& input);
+    void ResetSmartIntake();
     
 private:
     bool m_SmartIntakeFlag;
@@ -19,4 +21,7 @@ private:
 
     int m_IntakeState;
     int m_OutTakeState;
+
+    frc::Timer m_timer;
+    frc::DigitalInput m_beam_break{9};
    };
