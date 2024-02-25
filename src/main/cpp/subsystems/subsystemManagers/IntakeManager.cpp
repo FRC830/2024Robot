@@ -2,7 +2,7 @@
 
 namespace
 {
-    const double NORMAL_INTAKE_SPEED = 0.95;
+    const double NORMAL_INTAKE_SPEED = 0.80;
     const double AMP_POS = 19.361;
     const double GROUND_POS = 132.056;
     const double STOW_POS = 68.144;

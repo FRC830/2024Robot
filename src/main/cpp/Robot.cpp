@@ -18,9 +18,18 @@ void Robot::RobotInit() {
   m_autos_directory = m_autos_directory / "pathplanner" / "autos";
   m_auto_chooser.SetDefaultOption("None", "None");
 
+  int fileExtensionChar;
+
   for (auto i : std::filesystem::directory_iterator(m_autos_directory))
   {
-    m_auto_chooser.AddOption(std::filesystem::path(i.path().string()).filename().string(), std::filesystem::path(i.path().string()).filename().string());
+    std::string filename = std::filesystem::path(i.path().string()).filename().string();
+    fileExtensionChar = filename.rfind('.');
+
+    if (fileExtensionChar != -1)
+    {
+      filename.erase(fileExtensionChar, 5);
+      m_auto_chooser.AddOption(filename, filename);
+    }
   }
 
   frc::SmartDashboard::PutData("Pathplanner Autos", &m_auto_chooser);
@@ -75,19 +84,31 @@ void Robot::AutonomousPeriodic() {
   switch(m_state)
   {
     case 0:
-      m_auto.get()->get()->Initialize();
-      m_state++;
-      break;
-    case 1:
-      m_auto.get()->get()->Execute();
-      if (m_auto.get()->get()->IsFinished())
       {
+        m_auto.get()->get()->Initialize();
         m_state++;
       }
       break;
+    case 1:
+      {
+        m_auto.get()->get()->Execute();
+        if (m_auto.get()->get()->IsFinished())
+        {
+          m_state++;
+        }
+      }
+      break;
     case 2:
-      m_auto.get()->get()->End(false);
-      m_state++;
+      {
+        m_auto.get()->get()->End(false);
+        m_state++;
+      }
+      break;
+    case 3:
+      {
+        _swerve.Drive(0.0, 0.0, 0.0);
+      }
+    
       break;
     default:
       break;
@@ -98,6 +119,7 @@ void Robot::TeleopInit()
 {
   _intake_manager.ResetIntake();
   _launcher_manager.ResetLauncher();
+  _smart_intake.ResetSmartIntake();
 }
 
 void Robot::TeleopPeriodic() {

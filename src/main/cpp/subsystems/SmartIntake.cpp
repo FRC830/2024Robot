@@ -1,6 +1,12 @@
 #include "subsystems/SmartIntake.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 
 SmartIntake::SmartIntake()
+{
+    ResetSmartIntake();
+}
+
+void SmartIntake::ResetSmartIntake()
 {
     m_SmartIntakeFlag = false;
     m_prevSmartIntake = false;
@@ -16,12 +22,16 @@ SmartIntake::SmartIntake()
 }
 
 void SmartIntake::HandleInput(RobotControlData& input){
+    frc::SmartDashboard::PutBoolean("Launcher beam break", !m_beam_break.Get());
+    input.smartIntakeInput.laser = !m_beam_break.Get();
 
     if (!m_prevSmartIntake && input.smartIntakeInput.smartIntake)
     {
         m_SmartIntakeFlag = !m_SmartIntakeFlag;
         m_SmartOutTakeFlag = false;
         m_IntakeState = 0;
+        input.intakeInput.runIntakeOut = false;
+        input.launcherInput.runIndexerBackward = false;
         m_OutTakeState = 10000;
     }
     
@@ -29,6 +39,8 @@ void SmartIntake::HandleInput(RobotControlData& input){
     {
         m_SmartOutTakeFlag = !m_SmartOutTakeFlag;
         m_SmartIntakeFlag = false;
+        input.intakeInput.runIntakeIn = false;
+        input.launcherInput.runIndexerForward = false;
         m_IntakeState = 10000;
         m_OutTakeState = 0;
     }
@@ -45,13 +57,14 @@ void SmartIntake::HandleInput(RobotControlData& input){
         {
         case 0:
         {
-                /* code */
                 input.intakeInput.goToGroundPos = true;
+                input.launcherInput.goToStowPos = true;
                 ++m_IntakeState;
         }
             break;
         case 1:
         {
+            input.launcherInput.goToStowPos = false;
             input.intakeInput.goToGroundPos = false;
             if (input.intakeOutput.intakePos == IntakePos::GROUND)
             {
@@ -62,6 +75,7 @@ void SmartIntake::HandleInput(RobotControlData& input){
         case 2:
         {
             input.intakeInput.runIntakeIn = true;
+            input.launcherInput.runIndexerForward = true;
             if (input.smartIntakeInput.laser)
             {
                 m_SmartIntakeFlag = false;
@@ -80,6 +94,7 @@ void SmartIntake::HandleInput(RobotControlData& input){
         case 0:
         {
             input.intakeInput.runIntakeIn = false;
+            input.launcherInput.runIndexerForward = false;
             input.intakeInput.goToPseudoStowPos = true;
             ++m_IntakeState;
         }
@@ -105,28 +120,42 @@ void SmartIntake::HandleInput(RobotControlData& input){
         {
         case 0:
         {
-                /* code */
+                input.launcherInput.goToStowPos = true;
                 input.intakeInput.goToGroundPos = true;
                 ++m_OutTakeState;
         }
             break;
         case 1:
         {
+            input.launcherInput.goToStowPos = false;
             input.intakeInput.goToGroundPos = false;
             if (input.intakeOutput.intakePos == IntakePos::GROUND)
             {
                 ++m_OutTakeState;
             }
+
+            m_timer.Reset();
         }
             break;
         case 2:
         {
             input.intakeInput.runIntakeOut = true;
-            if (input.smartIntakeInput.laser)
+            input.launcherInput.runIndexerBackward = true;
+            if (!input.smartIntakeInput.laser)
+            {
+                m_timer.Restart();
+                m_OutTakeState++;
+            }
+        }
+        case 3:
+        {
+            if (m_timer.Get() > units::second_t(0.045))
             {
                 m_SmartOutTakeFlag = false;
                 m_OutTakeState = 0;
+                m_timer.Stop();
             }
+
         }
             break;
         default:
@@ -141,6 +170,7 @@ void SmartIntake::HandleInput(RobotControlData& input){
         case 0:
         {    
             input.intakeInput.runIntakeOut = false;
+            input.launcherInput.runIndexerBackward = false;
             input.intakeInput.goToPseudoStowPos = true;
             ++m_OutTakeState;
         }

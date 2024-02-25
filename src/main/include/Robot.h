@@ -73,4 +73,4 @@ class Robot : public frc::TimedRobot {
   std::unique_ptr<frc2::CommandPtr> m_auto;
   std::filesystem::path m_autos_directory;
   frc::SendableChooser<std::string> m_auto_chooser;
-}; 
+};
