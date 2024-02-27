@@ -28,8 +28,8 @@ void WPISwerveDrive::Configure(SwerveConfig &config){
         [this](){return GetRobotRelativeSpeeds(); },
         [this](frc::ChassisSpeeds speeds) {Drive(speeds);},
         pathplanner::HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-            pathplanner::PIDConstants(1.0, 0.0, 0.0), // Translation PID constants
-            pathplanner::PIDConstants(1.0, 0.0, 0.0), // Rotation PID constants
+            pathplanner::PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+            pathplanner::PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
             4.5_mps, // Max module speed, in m/s
             0.4_m, // Drive base radius in meters. Distance from robot center to furthest module.
             pathplanner::ReplanningConfig() // Default path replanning config. See the API for the options here
