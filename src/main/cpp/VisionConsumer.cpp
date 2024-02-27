@@ -1,37 +1,8 @@
 #include "VisionConsumer.h"
 #include <iostream>
 
-VisionConsumer::VisionConsumer() {
 
-    for (int i = 0; i < 16; i++){
-
-        x.emplace_back(frc::SmartDashboard::GetNumber("vision/Apriltag " + std::to_string(i + 1) + " X: ", 0.0));
-        y.emplace_back(frc::SmartDashboard::GetNumber("vision/Apriltag " + std::to_string(i + 1) + " Y: ", 0.0));
-        z.emplace_back(frc::SmartDashboard::GetNumber("vision/Apriltag " + std::to_string(i + 1) + " Z: ", 0.0));
-        v.emplace_back(frc::SmartDashboard::GetBoolean("vision/Apriltag " + std::to_string(i + 1) + "Detected", false));
-
-    }
-
-    fps = frc::SmartDashboard::GetNumber("vision/FPS", 0.0);
-
-}
-
-void VisionConsumer::Periodic() {
-
-    for (int i = 0; i<16; i++){
-
-        x.at(i) = frc::SmartDashboard::GetNumber("vision/Apriltag " + std::to_string(i + 1) + " X: ", 0.0);
-        x.at(i) = frc::SmartDashboard::GetNumber("vision/Apriltag " + std::to_string(i + 1) + " Y: ", 0.0);
-        x.at(i) = frc::SmartDashboard::GetNumber("vision/Apriltag " + std::to_string(i + 1) + " Z: ", 0.0);
-        x.at(i) = frc::SmartDashboard::GetBoolean("vision/Apriltag " + std::to_string(i + 1) + "Detected", false);
-
-    }
-
-    fps = frc::SmartDashboard::GetNumber("FPS", 0.0);
-
-}
-
-PolarCoords VisionConsumer::toPolar(double x, double y) {
+struct PolarCoords VisionConsumer::toPolar(double x, double y) {
 
     double r = sqrt(pow(x, 2) + pow(y, 2));
     double theta = atan2(y, x);
@@ -40,15 +11,41 @@ PolarCoords VisionConsumer::toPolar(double x, double y) {
 
 }
 
-PolarCoords VisionConsumer::GetPolarCoordForTagX(int id) {
+struct PolarCoords VisionConsumer::GetPolarCoordForTagX(int id) {
 
-    return toPolar(x.at(id), y.at(id));
+    double x = frc::SmartDashboard::GetNumber("Apriltag " + std::to_string(id) + " X: ", 0.0);
+    double y = frc::SmartDashboard::GetNumber("Apriltag " + std::to_string(id) + " Y: ", 0.0);
+
+
+    return toPolar(x, y);
 
 }
 
-PolarCoords VisionConsumer::GetRobotToSpeaker(PolarCoords a, PolarCoords b, double rot) {
+PolarCoords VisionConsumer::GetRobotToSpeaker(double rot) {
 
-    // double dist = frc::DriverStation::GetAlliance().value() == frc::DriverStation::Alliance::kRed ? 22.25 : -22.25;
+    struct PolarCoords a; 
+    struct PolarCoords b; 
+    double dist;
+
+    // get A, B
+
+    if (frc::DriverStation::GetAlliance().value() == frc::DriverStation::Alliance::kRed) {
+
+        dist = -22.25;
+
+        a = GetPolarCoordForTagX(4);
+        b = GetPolarCoordForTagX(3);
+
+    } else {
+
+        dist = 22.25;
+        
+        a = GetPolarCoordForTagX(7);
+        b = GetPolarCoordForTagX(8);
+
+    }
+
+    rot = (rot > 180) ? rot - 360 :
 
     rot = rot * ( 3.14159265358979323846 / 180.0);
 
