@@ -24,21 +24,18 @@ struct CartCoords {
 class VisionConsumer {
 
     public:
-        VisionConsumer();
-        void Periodic();
+        VisionConsumer() = default;
+        ~VisionConsumer() = default;
 
-        PolarCoords GetPolarCoordForTagX(int tagId);
-        PolarCoords toPolar(double x, double y);
-        PolarCoords GetRobotToSpeaker(PolarCoords a, PolarCoords b, double rot);
+        struct PolarCoords GetPolarCoordForTagX(int tagId);
+        struct PolarCoords toPolar(double x, double y);
+        struct PolarCoords GetRobotToSpeaker(double rot);
+        
+
         
     
     private:            
 
-        std::vector<double> x; 
-        std::vector<double> y; 
-        std::vector<double> z; 
-        std::vector<bool> v;
-        double fps;
-        double dist = 0.43; 
+
 
 };
