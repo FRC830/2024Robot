@@ -79,3 +79,5 @@ const bool INVERT_INDEXER = false;
 
 const int CLIMBER_MOTOR_LEFT = 24; 
 const int CLIMBER_MOTOR_RIGHT = 25;
+
+const int CLIMBER_CURRENT_LIMIT = 40;
