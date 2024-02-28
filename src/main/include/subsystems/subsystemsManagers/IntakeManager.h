@@ -10,6 +10,7 @@ struct IntakeInput
     bool goToStowPos;
     bool goToAmpPos;
     bool goToPseudoStowPos;
+    bool goToOutakePos;
     double manualMove;
 };
 
@@ -19,6 +20,7 @@ enum class IntakePos
     GROUND,
     STOW,
     PSEUDO_STOW,
+    OUTAKE,
     UNKNOWN
 };
 
@@ -40,4 +42,5 @@ private:
     bool m_goToStowPos;
     bool m_goToAmpPos;
     bool m_goToPseudoStowPos;
+    bool m_goToOutakePos;
 };

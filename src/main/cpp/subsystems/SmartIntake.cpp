@@ -121,15 +121,15 @@ void SmartIntake::HandleInput(RobotControlData& input){
         case 0:
         {
                 input.launcherInput.goToStowPos = true;
-                input.intakeInput.goToGroundPos = true;
+                input.intakeInput.goToOutakePos = true;
                 ++m_OutTakeState;
         }
             break;
         case 1:
         {
             input.launcherInput.goToStowPos = false;
-            input.intakeInput.goToGroundPos = false;
-            if (input.intakeOutput.intakePos == IntakePos::GROUND)
+            input.intakeInput.goToOutakePos = false;
+            if (input.intakeOutput.intakePos == IntakePos::OUTAKE)
             {
                 ++m_OutTakeState;
             }
@@ -149,7 +149,7 @@ void SmartIntake::HandleInput(RobotControlData& input){
         }
         case 3:
         {
-            if (m_timer.Get() > units::second_t(0.45))
+            if (m_timer.Get() > units::second_t(0.04))
             {
                 m_SmartOutTakeFlag = false;
                 m_OutTakeState = 0;
