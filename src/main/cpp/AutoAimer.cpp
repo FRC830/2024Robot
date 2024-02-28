@@ -2,24 +2,63 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 
+AutoAimer::AutoAimer()
+{
+    m_lookup.emplace_back(AutoAimer::VisionSetPoint{36.0, 55.0, 150.0});
+    m_lookup.emplace_back(AutoAimer::VisionSetPoint{240.0, 25.0, 350.0});
+}
 
-AutoAimer::AutoAimer(WPISwerveDrive& s)
-    : m_Swerve(s)
-{}
 
-void AutoAimer::ProfiledMoveToDeg(double deg) {
+AutoAimer::VisionSetPoint AutoAimer::DetermineSetpoint(double dist) {
+
+    //cond verify
+
+    if (dist < m_lookup.begin()->distance || dist > m_lookup.end()->distance) return AutoAimer::VisionSetPoint{dist, 25.0, 0.0};
 
 
-    switch(m_state) 
+    AutoAimer::VisionSetPoint a = m_lookup.at(0);
+    AutoAimer::VisionSetPoint b = m_lookup.at(1);
+
+
+    AutoAimer::VisionSetPoint ret = a;
+
+    for (int i = 0; i < m_lookup.size() - 1; i++) {
+
+        b = m_lookup.at(i);
+
+        if (a.distance < dist && b.distance > dist) {
+
+            break; 
+
+        } else {
+
+            a = b;
+
+        }
+
+    }
+
+    double ratio = (dist - a.distance) / (b.distance - a.distance);
+
+    ret.flywheelSpeed = (ratio * (b.flywheelSpeed - a.flywheelSpeed)) + a.flywheelSpeed;
+    ret.launcherAngle = (ratio * (b.launcherAngle - a.launcherAngle)) + a.launcherAngle;
+
+    return ret;
+
+}
+
+void AutoAimer::TurnRobotToHeading(RobotControlData& data) {
+
+    switch(m_turnState) 
     {
 
         case 0: 
         {
             
             m_timer.Restart();
-            m_StartRobotHeading = m_Swerve.GetPose().Rotation().Degrees().to<double>();
+            m_StartRobotHeading = data.autoAimInput.robotCurAngle;
 
-            m_state++;
+            m_turnState++;
 
             break;
         }
@@ -28,13 +67,14 @@ void AutoAimer::ProfiledMoveToDeg(double deg) {
         {
             auto setVelocity = m_Profile.Calculate(m_timer.Get(),
             frc::TrapezoidProfile<units::degrees>::State{units::degree_t{m_StartRobotHeading}, 0_deg_per_s},
-            frc::TrapezoidProfile<units::degrees>::State{units::degree_t{m_StartRobotHeading + deg}, 0_deg_per_s}
+            frc::TrapezoidProfile<units::degrees>::State{units::degree_t{m_StartRobotHeading + data.autoAimInput.robotSetAngle}, 0_deg_per_s}
             );
-            m_Swerve.Drive(0.0, 0.0, setVelocity.velocity.to<double>());
+
+            data.autoAimOutput.robotRotSpeed = setVelocity.velocity.to<double>();
 
             if (m_Profile.IsFinished(m_timer.Get())) {
 
-                m_state++;
+                m_turnState++;
 
             }
 
@@ -47,7 +87,7 @@ void AutoAimer::ProfiledMoveToDeg(double deg) {
 
             m_timer.Stop();
 
-            m_state++;
+            m_turnState++;
 
             break;
 
@@ -62,29 +102,116 @@ void AutoAimer::ProfiledMoveToDeg(double deg) {
 
 }
 
-void AutoAimer::ResetState()
-{
-    m_state = 0;
+void AutoAimer::MonitorLauncherAngle(RobotControlData& data) {
+
+    switch (m_piviotState) {
+
+        case 0: 
+        {
+
+            m_piviotState = std::fabs(data.launcherInput.visionAngleSetpoint - data.launcherOutput.launcherAngle) < 0.5 ? 1 : 0;
+            break;
+
+        }
+
+        default: 
+        {
+
+            break;
+
+        }
+
+    }
+
 }
 
-void AutoAimer::AutoAim() {
+void AutoAimer::MonitorLauncherFlyWheelSpeed(RobotControlData& data) {
 
-    // ar = frc::SmartDashboard::GetNumber("ar", 0.0);
-    // at = frc::SmartDashboard::GetNumber("at", 0.0);
-    // br = frc::SmartDashboard::GetNumber("br", 0.0);
-    bt = frc::SmartDashboard::GetNumber("bt", 0.0);
-    
-    // PolarCoords a = {ar, at};
-    // PolarCoords b = {br, bt};
+    switch (m_flyWheelState){
 
+        case 0:
+        {
+            auto setpoint = data.launcherInput.visionSpeedSetpoint;
+            auto current = data.launcherOutput.flywheelSpeed;
 
-    // m_StartRobotHeading = m_Swerve.GetPose().Rotation().Degrees().to<double>();
-    // // m_vision.Periodic();
+            if (std::fabs(setpoint - current) < 0.1 * setpoint) {
 
-    // // auto cur = frc::DriverStation::GetAlliance().value() == frc::DriverStation::Alliance::kRed ? red : blue;
-    // // PolarCoords a = m_vision.GetPolarCoordForTagX(cur.a);
-    // // PolarCoords b = m_vision.GetPolarCoordForTagX(cur.b);
-    // PolarCoords c = m_vision.GetRobotToSpeaker(a, b, m_StartRobotHeading);
-    ProfiledMoveToDeg(bt);
+                m_flyWheelState++;
+                
+            }
+
+            break;
+        }
+
+        default: 
+        {
+
+            break;
+
+        }
+
+       
+    }
+
+}
+
+void AutoAimer::HandleInput(RobotControlData& data) {
+
+    if (data.autoAimInput.autoAim) {
+        switch(m_state) {
+
+            case 0: 
+            {
+                PolarCoords robotToSpeaker = m_vision.GetRobotToSpeaker(data.autoAimInput.robotCurAngle);
+                
+                data.autoAimInput.robotSetAngle = robotToSpeaker.theta;
+
+                // vision lookup
+                data.launcherInput.useVisionControl = true;
+
+                //set launcher speed and angle in data.autoaim stuff
+                AutoAimer::VisionSetPoint set = AutoAimer::DetermineSetpoint(robotToSpeaker.r);
+
+                data.launcherInput.visionAngleSetpoint = set.launcherAngle;
+                data.launcherInput.visionSpeedSetpoint = set.flywheelSpeed;
+
+                ++m_state;
+                
+                break;
+
+            }
+            case 1: 
+            {
+                TurnRobotToHeading(data);
+                MonitorLauncherAngle(data);
+                MonitorLauncherFlyWheelSpeed(data);
+
+                if (m_turnState == 3 && m_flyWheelState != 0 && m_piviotState != 0) m_state++;
+                ++m_state;
+                break;
+            }
+            case 2:
+            {
+                data.launcherInput.runIndexerForward = true;
+                break;
+            }
+            default: 
+            {
+                break;
+            }
+             
+
+        }
+
+    }
+    else{
+
+        m_state = 0; 
+        m_turnState = 0;
+        m_flyWheelState = 0; 
+        m_piviotState = 0;
+        data.launcherInput.useVisionControl = false;
+
+    }
 
 }

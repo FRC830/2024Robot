@@ -148,10 +148,12 @@ void Robot::TeleopPeriodic() {
    _smart_intake.HandleInput(_robot_control_data);
   _intake_manager.HandleInput(_robot_control_data.intakeInput, _robot_control_data.intakeOutput);
   _launcher_manager.HandleInput(_robot_control_data.launcherInput, _robot_control_data.launcherOutput);
-  if (_robot_control_data.visionInput.reset) m_autoAim.ResetState();
-  if (_robot_control_data.visionInput.autoAim) {
 
-    m_autoAim.AutoAim();
+  if (_robot_control_data.autoAimInput.autoAim) {
+
+    m_autoAim.HandleInput(_robot_control_data);
+    //_swerve.Drive(0.0, 0.0, )
+
 
   } else {
 

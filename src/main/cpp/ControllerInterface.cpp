@@ -58,7 +58,5 @@ void ControllerInterface::UpdateSwerveInput(RobotControlData &controlData)
 
 void ControllerInterface::UpdateVisionInput(RobotControlData &controlData) {
 
-    controlData.visionInput.autoAim = m_copilot.GetStartButtonPressed();
-    controlData.visionInput.reset = m_copilot.GetBackButtonPressed();
 
 }

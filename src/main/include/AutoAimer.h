@@ -8,43 +8,60 @@
 #include <frc/trajectory/TrapezoidProfile.h>
 #include <frc/Timer.h>
 #include <frc/DriverStation.h>
+#include "RobotControlData.h"
+#include <vector>
 
 
 
-struct ASDF{
-
-    int a;
-    int b;
-
+struct VisionSetPoint{
+    double distance;
+    double launcherAngle;
+    double flywheelSpeed;
 };
+
 
 class AutoAimer{
 
     public: 
-        AutoAimer(WPISwerveDrive& swerve);
+
+    struct VisionSetPoint{
+        double distance;
+        double launcherAngle;
+        double flywheelSpeed;
+    };
+    
+        AutoAimer();
         ~AutoAimer() = default; 
-
         
-        void ResetState();
+        void HandleInput(RobotControlData& data);
+        
 
-        void AutoAim();
         
     
     private: 
-        WPISwerveDrive& m_Swerve;  
+
+        
+        void TurnRobotToHeading(RobotControlData& data);
+        void MonitorLauncherAngle(RobotControlData& data);
+        void MonitorLauncherFlyWheelSpeed(RobotControlData& data);
+       
+        struct VisionSetPoint DetermineSetpoint(double dist);
+
+        std::vector<VisionSetPoint> m_lookup;
+
         double m_StartRobotHeading;
         int m_state = 0; 
+        int m_turnState = 0;
+        int m_flyWheelState = 0; 
+        int m_piviotState = 0;
         frc::Timer m_timer; 
         VisionConsumer m_vision;
-        struct ASDF blue = {3, 4};
-        struct ASDF red = {8, 7};
         frc::TrapezoidProfile<units::degrees> m_Profile{
 
                 frc::TrapezoidProfile<units::degrees>::Constraints{360_deg_per_s, 50_deg_per_s_sq}  
                 
         };
 
-        void ProfiledMoveToDeg(double deg);
 
         double ar;
         double at;

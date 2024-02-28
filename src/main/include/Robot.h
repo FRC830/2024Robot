@@ -77,5 +77,5 @@ class Robot : public frc::TimedRobot {
   std::filesystem::path m_autos_directory;
   frc::SendableChooser<std::string> m_auto_chooser;
 
-  AutoAimer m_autoAim = AutoAimer(_swerve);
+  AutoAimer m_autoAim = AutoAimer();
 }; 
