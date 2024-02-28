@@ -50,6 +50,7 @@ void SmartIntake::HandleInput(RobotControlData& input){
         m_SwitchModeFlag = !m_SwitchModeFlag;
     }
 
+    // TODO: We want to add a new condition so that when we intake, we set it to the transfer position by default
     //SmartIntake switch stuff
     if (m_SmartIntakeFlag)
     {
