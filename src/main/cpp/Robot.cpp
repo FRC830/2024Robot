@@ -129,7 +129,7 @@ void Robot::TeleopPeriodic() {
   _swerve.Drive(_robot_control_data.swerveInput.xTranslation, _robot_control_data.swerveInput.yTranslation, _robot_control_data.swerveInput.rotation);
   _smart_intake.HandleInput(_robot_control_data);
   _intake_manager.HandleInput(_robot_control_data.intakeInput, _robot_control_data.intakeOutput);
-  _launcher_manager.HandleInput(_robot_control_data.launcherInput, _robot_control_data.launcherOutput);
+  _launcher_manager.HandleInput(_robot_control_data.launcherInput, _robot_control_data.launcherOutput, _robot_control_data.intakeInput, _robot_control_data.intakeOutput);
 }
 
 void Robot::DisabledInit() {}

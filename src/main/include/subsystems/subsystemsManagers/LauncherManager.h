@@ -1,6 +1,7 @@
 #pragma once
 
 #include "subsystems/LauncherHAL.h"
+#include "subsystems/subsystemsManagers/IntakeManager.h"
 
 struct LauncherInput
 {
@@ -22,7 +23,7 @@ struct LauncherOutput
 class LauncherManager
 {
     public:
-        void HandleInput(LauncherInput &input, LauncherOutput &output);
+        void HandleInput(LauncherInput &launcherInput, LauncherOutput &launcherOutput, IntakeInput &intakeInput, IntakeOutput &intakeOutput);
         void ResetLauncher();
         
     private:
