@@ -31,6 +31,8 @@ LauncherHAL::LauncherHAL()
     configs.Slot0.kI = FLYWHEEL_I;
     configs.Slot0.kD = FLYWHEEL_D;
 
+    configs.MotionMagic.MotionMagicJerk = MAX_JERK;
+
     m_FlywheelBottom.SetControl(m_FlywheelTopFollower);
     
     m_FlywheelTop.GetConfigurator().Apply(configs);
@@ -42,25 +44,24 @@ LauncherHAL::LauncherHAL()
 
 void LauncherHAL::SetFlywheelSpeed(double speed)
 {   
+    if (INVERT_FLYWHEEL)
+    {
+        speed = -speed;
+    }
+
+    units::angular_velocity::turns_per_second_t speed_tps = units::angular_velocity::turns_per_second_t(speed);
+    ctre::phoenix6::controls::MotionMagicVelocityVoltage m_request{speed_tps};
+        
     if (std::fabs(speed) > 1.0)
     {
-        units::angular_velocity::turns_per_second_t speed_tps = units::angular_velocity::turns_per_second_t(speed);
-        ctre::phoenix6::controls::VelocityVoltage m_request{speed_tps};
-        if (INVERT_FLYWHEEL)
-        {
-            m_FlywheelTop.SetControl(m_request.WithVelocity(-speed_tps));
-        }
-        else
-        {
-            m_FlywheelTop.SetControl(m_request.WithVelocity(speed_tps));
-        }
-        
+        m_request.Acceleration = units::turns_per_second_squared_t(UP_MAX_ACC);
     }
     else
     {
-        ctre::phoenix6::controls::DutyCycleOut m_request{0.0};
-        m_FlywheelTop.SetControl(m_request.WithOutput(0.0));
+        m_request.Acceleration = units::turns_per_second_squared_t(DOWN_MAX_ACC);
     }
+
+    m_FlywheelTop.SetControl(m_request.WithVelocity(speed_tps));
 }
 
 void LauncherHAL::SetIndexerSpeed(double speed)

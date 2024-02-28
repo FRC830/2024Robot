@@ -150,7 +150,7 @@ void Robot::TeleopPeriodic() {
   _controller_interface.UpdateRobotControlData(_robot_control_data);
    _smart_intake.HandleInput(_robot_control_data);
   _intake_manager.HandleInput(_robot_control_data.intakeInput, _robot_control_data.intakeOutput);
-  _launcher_manager.HandleInput(_robot_control_data.launcherInput, _robot_control_data.launcherOutput);
+  _launcher_manager.HandleInput(_robot_control_data.launcherInput, _robot_control_data.launcherOutput, _robot_control_data.intakeInput, _robot_control_data.intakeOutput);
 
   if (_robot_control_data.autoAimInput.autoAim) {
 
