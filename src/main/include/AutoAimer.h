@@ -13,13 +13,6 @@
 
 
 
-struct VisionSetPoint{
-    double distance;
-    double launcherAngle;
-    double flywheelSpeed;
-};
-
-
 class AutoAimer{
 
     public: 
@@ -29,7 +22,7 @@ class AutoAimer{
         double launcherAngle;
         double flywheelSpeed;
     };
-    
+
         AutoAimer();
         ~AutoAimer() = default; 
         
@@ -62,10 +55,5 @@ class AutoAimer{
                 
         };
 
-
-        double ar;
-        double at;
-        double br;
-        double bt;
 
 };

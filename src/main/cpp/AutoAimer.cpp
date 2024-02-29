@@ -13,7 +13,8 @@ AutoAimer::VisionSetPoint AutoAimer::DetermineSetpoint(double dist) {
 
     //cond verify
 
-    if (dist < m_lookup.begin()->distance || dist > m_lookup.end()->distance) return AutoAimer::VisionSetPoint{dist, 25.0, 0.0};
+    if (dist <= m_lookup.begin()->distance || dist > m_lookup.end()->distance)
+     return AutoAimer::VisionSetPoint{dist, 0.0, 0.0};
 
 
     AutoAimer::VisionSetPoint a = m_lookup.at(0);
@@ -22,7 +23,7 @@ AutoAimer::VisionSetPoint AutoAimer::DetermineSetpoint(double dist) {
 
     AutoAimer::VisionSetPoint ret = a;
 
-    for (int i = 0; i < m_lookup.size() - 1; i++) {
+    for (int i = 0; i < m_lookup.size(); i++) {
 
         b = m_lookup.at(i);
 
@@ -186,8 +187,9 @@ void AutoAimer::HandleInput(RobotControlData& data) {
                 MonitorLauncherAngle(data);
                 MonitorLauncherFlyWheelSpeed(data);
 
-                if (m_turnState == 3 && m_flyWheelState != 0 && m_piviotState != 0) m_state++;
-                ++m_state;
+                if (m_turnState == 3 && m_flyWheelState != 0 && m_piviotState != 0)
+                m_state++;
+
                 break;
             }
             case 2:
