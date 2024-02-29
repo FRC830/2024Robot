@@ -6,6 +6,10 @@ AutoAimer::AutoAimer()
 {
     m_lookup.emplace_back(AutoAimer::VisionSetPoint{36.0, 55.0, 150.0});
     m_lookup.emplace_back(AutoAimer::VisionSetPoint{240.0, 25.0, 350.0});
+
+    frc::SmartDashboard::PutBoolean("use_manual_tune", false);
+    frc::SmartDashboard::PutNumber("manual_launcher_pivot", 0.0);
+    frc::SmartDashboard::PutNumber("manual_flywheel_speed", 0.0);
 }
 
 
@@ -175,6 +179,12 @@ void AutoAimer::HandleInput(RobotControlData& data) {
 
                 data.launcherInput.visionAngleSetpoint = set.launcherAngle;
                 data.launcherInput.visionSpeedSetpoint = set.flywheelSpeed;
+
+                if (frc::SmartDashboard::GetBoolean("use_manual_tune", false))
+                {
+                    data.launcherInput.visionAngleSetpoint = frc::SmartDashboard::GetNumber("manual_launcher_pivot", 0.0);
+                    data.launcherInput.visionSpeedSetpoint = frc::SmartDashboard::GetNumber("manual_flywheel_speed", 0.0);
+                }
 
                 ++m_state;
                 
