@@ -7,7 +7,14 @@
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
-void Robot::updateDashBoardValues() {};
+void Robot::updateDashBoardValues() {
+
+  frc::SmartDashboard::PutBoolean("AutoAim", false);
+  frc::SmartDashboard::PutNumber("RobotCurAngle", _robot_control_data.autoAimInput.robotCurAngle);
+  frc::SmartDashboard::PutNumber("RobotSetAngle", _robot_control_data.autoAimInput.robotSetAngle);
+  frc::SmartDashboard::PutNumber("RobotRotSpeed", _robot_control_data.autoAimOutput.robotRotSpeed);
+
+};
 
 void Robot::RobotInit() {
   // m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
@@ -15,11 +22,6 @@ void Robot::RobotInit() {
   // frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
   // vision = VisionConsumer();
-
-  frc::SmartDashboard::PutNumber("ar", 0.0);
-  frc::SmartDashboard::PutNumber("at", 0.0);
-  frc::SmartDashboard::PutNumber("br", 0.0);
-  frc::SmartDashboard::PutNumber("bt", 0.0);
 
   m_autos_directory = frc::filesystem::GetDeployDirectory();
   m_autos_directory = m_autos_directory / "pathplanner" / "autos";
@@ -132,11 +134,12 @@ void Robot::AutonomousPeriodic() {
   }
 }
 
-void Robot::TeleopInit() 
-{
+void Robot::TeleopInit() {
+
   _intake_manager.ResetIntake();
   _launcher_manager.ResetLauncher();
   _smart_intake.ResetSmartIntake();
+  
 }
 
 void Robot::TeleopPeriodic() {
@@ -149,7 +152,7 @@ void Robot::TeleopPeriodic() {
   _swerve.Drive(_robot_control_data.swerveInput.xTranslation, _robot_control_data.swerveInput.yTranslation, _robot_control_data.swerveInput.rotation);
   _smart_intake.HandleInput(_robot_control_data);
   _intake_manager.HandleInput(_robot_control_data.intakeInput, _robot_control_data.intakeOutput);
-  _launcher_manager.HandleInput(_robot_control_data.launcherInput, _robot_control_data.launcherOutput);
+  _launcher_manager.HandleInput(_robot_control_data.launcherInput, _robot_control_data.launcherOutput, _robot_control_data.intakeInput, _robot_control_data.intakeOutput);
 
 
 
