@@ -37,7 +37,7 @@ class LauncherHAL
 
         frc::TrapezoidProfile<units::degrees> m_Profile{
 
-                frc::TrapezoidProfile<units::degrees>::Constraints{150_deg_per_s, 150_deg_per_s_sq}  
+                frc::TrapezoidProfile<units::degrees>::Constraints{150_deg_per_s, 175_deg_per_s_sq}  
                 
             };
         
