@@ -13,6 +13,8 @@ void Robot::updateDashBoardValues() {
   frc::SmartDashboard::PutNumber("RobotCurAngle", _robot_control_data.autoAimInput.robotCurAngle);
   frc::SmartDashboard::PutNumber("RobotSetAngle", _robot_control_data.autoAimInput.robotSetAngle);
   frc::SmartDashboard::PutNumber("RobotRotSpeed", _robot_control_data.autoAimOutput.robotRotSpeed);
+  frc::SmartDashboard::PutNumber("vision_flywheel_speed", _robot_control_data.launcherInput.visionSpeedSetpoint);
+  frc::SmartDashboard::PutNumber("vision_launcher_angle", _robot_control_data.launcherInput.visionAngleSetpoint);
 
 };
 
@@ -148,6 +150,7 @@ void Robot::TeleopPeriodic() {
 
   
   _controller_interface.UpdateRobotControlData(_robot_control_data);
+  _robot_control_data.autoAimInput.robotCurAngle = _gyro.GetHeading().Degrees().to<double>();
   m_autoAim.HandleInput(_robot_control_data);
   if (_robot_control_data.autoAimInput.autoAim) {
 

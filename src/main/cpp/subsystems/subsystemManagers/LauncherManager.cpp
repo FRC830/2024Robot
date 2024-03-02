@@ -5,7 +5,7 @@ namespace
     const double SUB_ANGLE = 55.0;
     const double STOW_ANGLE = 10.0;
     const double SUB_SPEED = 150.0;
-    const double INDEXER_SPEED = 1.0;
+    const double INDEXER_SPEED = 0.6;
 }
 
 void LauncherManager::ResetLauncher()
@@ -14,7 +14,7 @@ void LauncherManager::ResetLauncher()
     m_goToSubPos = false;
     m_visionResetProfiledMoveState = false;
 }
-
+#include <iostream>
 void LauncherManager::HandleInput(LauncherInput &launcherInput, LauncherOutput &launcherOutput, IntakeInput &intakeInput, IntakeOutput &intakeOutput)
 {
 
@@ -28,6 +28,7 @@ void LauncherManager::HandleInput(LauncherInput &launcherInput, LauncherOutput &
             m_goToSubPos = false;
         }
 
+        std::cout << "setting to " << launcherInput.visionAngleSetpoint << ", " << launcherInput.visionSpeedSetpoint << std::endl;
         m_launcher.SetFlywheelSpeed(launcherInput.visionSpeedSetpoint);
         m_launcher.ProfiledMoveToAngle(launcherInput.visionAngleSetpoint);
     }
@@ -75,7 +76,14 @@ void LauncherManager::HandleInput(LauncherInput &launcherInput, LauncherOutput &
 
     if (launcherInput.runIndexerForward && !launcherInput.runIndexerBackward)
     {
-        m_launcher.SetIndexerSpeed(INDEXER_SPEED);
+        if (std::fabs(m_launcher.GetAngle() - STOW_ANGLE) <= 0.5 || m_goToStowPos)
+        {
+            m_launcher.SetIndexerSpeed(INDEXER_SPEED);
+        }
+        else
+        {
+            m_launcher.SetIndexerSpeed(1.0);
+        }
     } 
     else if (launcherInput.runIndexerBackward && !launcherInput.runIndexerForward) 
     {

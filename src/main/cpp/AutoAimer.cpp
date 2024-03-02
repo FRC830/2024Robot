@@ -4,8 +4,13 @@
 
 AutoAimer::AutoAimer()
 {
-    m_lookup.emplace_back(AutoAimer::VisionSetPoint{36.0, 55.0, 150.0});
-    m_lookup.emplace_back(AutoAimer::VisionSetPoint{240.0, 25.0, 350.0});
+    m_lookup.emplace_back(VisionSetPoint{58.27, 48.0, 100.0});
+    m_lookup.emplace_back(VisionSetPoint{105.25, 33.0, 130.0});
+    m_lookup.emplace_back(VisionSetPoint{154.9, 22.5, 150.0});
+    m_lookup.emplace_back(VisionSetPoint{200.58, 20.6, 225});
+    m_lookup.emplace_back(VisionSetPoint{240.84, 19.1, 250.0});
+
+    
 
     frc::SmartDashboard::PutBoolean("use_manual_tune", false);
     frc::SmartDashboard::PutNumber("manual_launcher_pivot", 0.0);
@@ -13,19 +18,22 @@ AutoAimer::AutoAimer()
 }
 
 
-AutoAimer::VisionSetPoint AutoAimer::DetermineSetpoint(double dist) {
+VisionSetPoint AutoAimer::DetermineSetpoint(double dist) {
 
     //cond verify
 
-    if (dist <= m_lookup.begin()->distance || dist > m_lookup.end()->distance)
-     return AutoAimer::VisionSetPoint{dist, 0.0, 0.0};
+    // TODO
+    // if (dist <= m_lookup.begin()->distance || dist > m_lookup.end()->distance)
+    // {
+    //     return VisionSetPoint{dist, 0.0, 0.0};
+    // }
 
 
-    AutoAimer::VisionSetPoint a = m_lookup.at(0);
-    AutoAimer::VisionSetPoint b = m_lookup.at(1);
+    VisionSetPoint a = m_lookup.at(0);
+    VisionSetPoint b = m_lookup.at(1);
 
 
-    AutoAimer::VisionSetPoint ret = a;
+    VisionSetPoint ret = a;
 
     for (int i = 0; i < m_lookup.size(); i++) {
 
@@ -47,6 +55,9 @@ AutoAimer::VisionSetPoint AutoAimer::DetermineSetpoint(double dist) {
 
     ret.flywheelSpeed = (ratio * (b.flywheelSpeed - a.flywheelSpeed)) + a.flywheelSpeed;
     ret.launcherAngle = (ratio * (b.launcherAngle - a.launcherAngle)) + a.launcherAngle;
+
+    frc::SmartDashboard::PutNumber("after_vision_flywheel_speedASDF", ret.flywheelSpeed);
+    frc::SmartDashboard::PutNumber("after_vision_launcher_angleASDF", ret.launcherAngle);
 
     return ret;
 
@@ -75,7 +86,7 @@ void AutoAimer::TurnRobotToHeading(RobotControlData& data) {
             frc::TrapezoidProfile<units::degrees>::State{units::degree_t{m_StartRobotHeading + data.autoAimInput.robotSetAngle}, 0_deg_per_s}
             );
 
-            data.autoAimOutput.robotRotSpeed = setVelocity.velocity.to<double>();
+            data.autoAimOutput.robotRotSpeed = -setVelocity.velocity.to<double>();
 
             if (m_Profile.IsFinished(m_timer.Get())) {
 
@@ -139,7 +150,7 @@ void AutoAimer::MonitorLauncherFlyWheelSpeed(RobotControlData& data) {
             auto setpoint = data.launcherInput.visionSpeedSetpoint;
             auto current = data.launcherOutput.flywheelSpeed;
 
-            if (std::fabs(setpoint - current) < 0.1 * setpoint) {
+            if (std::fabs(setpoint - current) < 0.05 * setpoint) {
 
                 m_flyWheelState++;
                 
@@ -161,6 +172,10 @@ void AutoAimer::MonitorLauncherFlyWheelSpeed(RobotControlData& data) {
 }
 
 void AutoAimer::HandleInput(RobotControlData& data) {
+    auto temp = m_vision.GetRobotToSpeaker(data.autoAimInput.robotCurAngle);
+
+    frc::SmartDashboard::PutNumber("r_corrected", temp.r);
+    frc::SmartDashboard::PutNumber("theta_corrected", temp.theta);
 
     if (data.autoAimInput.autoAim) {
         switch(m_state) {
@@ -175,7 +190,11 @@ void AutoAimer::HandleInput(RobotControlData& data) {
                 data.launcherInput.useVisionControl = true;
 
                 //set launcher speed and angle in data.autoaim stuff
-                AutoAimer::VisionSetPoint set = AutoAimer::DetermineSetpoint(robotToSpeaker.r);
+                VisionSetPoint set = DetermineSetpoint(robotToSpeaker.r);
+                frc::SmartDashboard::PutNumber("after_vision_flywheel_speed", set.flywheelSpeed);
+                frc::SmartDashboard::PutNumber("after_vision_launcher_angle", set.launcherAngle);
+
+
 
                 data.launcherInput.visionAngleSetpoint = set.launcherAngle;
                 data.launcherInput.visionSpeedSetpoint = set.flywheelSpeed;

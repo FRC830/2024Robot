@@ -11,17 +11,15 @@
 #include "RobotControlData.h"
 #include <vector>
 
-
-
-class AutoAimer{
-
-    public: 
-
     struct VisionSetPoint{
         double distance;
         double launcherAngle;
         double flywheelSpeed;
     };
+
+class AutoAimer{
+
+    public: 
 
         AutoAimer();
         ~AutoAimer() = default; 
@@ -38,7 +36,7 @@ class AutoAimer{
         void MonitorLauncherAngle(RobotControlData& data);
         void MonitorLauncherFlyWheelSpeed(RobotControlData& data);
        
-        struct VisionSetPoint DetermineSetpoint(double dist);
+        VisionSetPoint DetermineSetpoint(double dist);
 
         std::vector<VisionSetPoint> m_lookup;
 
@@ -51,7 +49,7 @@ class AutoAimer{
         VisionConsumer m_vision;
         frc::TrapezoidProfile<units::degrees> m_Profile{
 
-                frc::TrapezoidProfile<units::degrees>::Constraints{360_deg_per_s, 50_deg_per_s_sq}  
+                frc::TrapezoidProfile<units::degrees>::Constraints{540_deg_per_s, 180_deg_per_s_sq}  
                 
         };
 
