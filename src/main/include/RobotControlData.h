@@ -9,22 +9,11 @@ struct SwerveInput{
     bool slowMode;
 };
 
-
 struct SmartIntakeInput{
     bool smartIntake;
     bool smartOutTake;
     bool switchMode;
     bool laser;
-};
-
-struct AutoAimInput{
-    bool autoAim;
-    double robotCurAngle;
-    double robotSetAngle;
-};
-
-struct AutoAimOutput{
-    double robotRotSpeed;
 };
 
 struct RobotControlData {
@@ -34,7 +23,4 @@ struct RobotControlData {
     LauncherOutput launcherOutput;
     SwerveInput swerveInput;
     SmartIntakeInput smartIntakeInput;
-    AutoAimInput autoAimInput;
-    AutoAimOutput autoAimOutput;
 };
-

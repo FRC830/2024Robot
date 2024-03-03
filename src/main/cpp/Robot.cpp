@@ -3,27 +3,16 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "Robot.h"
-#include "VisionConsumer.h"
+
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
-void Robot::updateDashBoardValues() {
-
-  frc::SmartDashboard::PutBoolean("AutoAim", false);
-  frc::SmartDashboard::PutNumber("RobotCurAngle", _robot_control_data.autoAimInput.robotCurAngle);
-  frc::SmartDashboard::PutNumber("RobotSetAngle", _robot_control_data.autoAimInput.robotSetAngle);
-  frc::SmartDashboard::PutNumber("RobotRotSpeed", _robot_control_data.autoAimOutput.robotRotSpeed);
-  frc::SmartDashboard::PutNumber("vision_flywheel_speed", _robot_control_data.launcherInput.visionSpeedSetpoint);
-  frc::SmartDashboard::PutNumber("vision_launcher_angle", _robot_control_data.launcherInput.visionAngleSetpoint);
-
-};
+void Robot::updateDashBoardValues() {};
 
 void Robot::RobotInit() {
-  // m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
-  // m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
-  // frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
-
-  // vision = VisionConsumer();
+  m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
+  m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
+  frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
   m_autos_directory = frc::filesystem::GetDeployDirectory();
   m_autos_directory = m_autos_directory / "pathplanner" / "autos";
@@ -46,7 +35,6 @@ void Robot::RobotInit() {
   frc::SmartDashboard::PutData("Pathplanner Autos", &m_auto_chooser);
 
   SwerveInit();
-  
 }
 
 /**
@@ -57,17 +45,7 @@ void Robot::RobotInit() {
  * <p> This runs after the mode specific periodic functions, but before
  * LiveWindow and SmartDashboard integrated updating.
  */
-void Robot::RobotPeriodic() {
-
-//   vision.Periodic();
-//   auto a = vision.GetPolarCoordForTagX(11);
-//   auto b = vision.GetPolarCoordForTagX(15);
-
-//   auto temp = vision.GetRobotToSpeaker(a, b, 6.9);
-//   frc::SmartDashboard::PutNumber("Weird r", temp.r);
-//   frc::SmartDashboard::PutNumber("Weird Theta", temp.theta);
-
-}
+void Robot::RobotPeriodic() {}
 
 /**
  * This autonomous (along with the chooser code above) shows how to select
@@ -81,9 +59,10 @@ void Robot::RobotPeriodic() {
  * make sure to add them to the chooser code above as well.
  */
 void Robot::AutonomousInit() {
-  // m_autoSelected = m_chooser.GetSelected();
-  // m_autoSelected = frc::SmartDashboard::GetString("Auto Selector", kAutoNameDefault);
-  // fmt::print("Auto selected: {}\n", m_autoSelected);
+  m_autoSelected = m_chooser.GetSelected();
+  // m_autoSelected = SmartDashboard::GetString("Auto Selector",
+  //     kAutoNameDefault);
+  fmt::print("Auto selected: {}\n", m_autoSelected);
 
   if (m_autoSelected == kAutoNameCustom) {
     // Custom Auto goes here
@@ -136,39 +115,21 @@ void Robot::AutonomousPeriodic() {
   }
 }
 
-void Robot::TeleopInit() {
-
+void Robot::TeleopInit() 
+{
   _intake_manager.ResetIntake();
   _launcher_manager.ResetLauncher();
   _smart_intake.ResetSmartIntake();
-  
 }
 
 void Robot::TeleopPeriodic() {
 
   PrintSwerveInfo();
-
-  
   _controller_interface.UpdateRobotControlData(_robot_control_data);
-  _robot_control_data.autoAimInput.robotCurAngle = _gyro.GetHeading().Degrees().to<double>();
-  m_autoAim.HandleInput(_robot_control_data);
-  if (_robot_control_data.autoAimInput.autoAim) {
-
-    _swerve.Drive(units::feet_per_second_t{0.0}, units::feet_per_second_t{0.0}, units::degrees_per_second_t{_robot_control_data.autoAimOutput.robotRotSpeed});
-
-  } else {
-
-    _swerve.Drive(_robot_control_data.swerveInput.xTranslation, _robot_control_data.swerveInput.yTranslation, _robot_control_data.swerveInput.rotation);
-
-
-  }
+  _swerve.Drive(_robot_control_data.swerveInput.xTranslation, _robot_control_data.swerveInput.yTranslation, _robot_control_data.swerveInput.rotation);
   _smart_intake.HandleInput(_robot_control_data);
   _intake_manager.HandleInput(_robot_control_data.intakeInput, _robot_control_data.intakeOutput);
   _launcher_manager.HandleInput(_robot_control_data.launcherInput, _robot_control_data.launcherOutput, _robot_control_data.intakeInput, _robot_control_data.intakeOutput);
-  updateDashBoardValues();
-
-
-
 }
 
 void Robot::DisabledInit() {}
