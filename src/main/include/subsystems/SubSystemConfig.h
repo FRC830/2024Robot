@@ -73,6 +73,10 @@ const double MAX_PIVOT_ANGLE = 75.0;
 const double MIN_PIVOT_ANGLE = 5.0;
 
 const bool INVERT_INDEXER = false;
+
+const double UP_MAX_ACC = 600.0;
+const double DOWN_MAX_ACC = 200.0;
+const double MAX_JERK = 1250.0;
 // ###########################################################
 // #                         Climber                         #
 // ###########################################################
@@ -80,3 +84,5 @@ const bool INVERT_INDEXER = false;
 const int CLIMBER_MOTOR_LEFT = 24; 
 const int CLIMBER_MOTOR_RIGHT = 25;
 const bool INVERT_CLIMBER_MOTOR_LEFT = true;
+
+const int CLIMBER_CURRENT_LIMIT = 40;
