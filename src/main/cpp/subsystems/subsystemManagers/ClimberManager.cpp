@@ -3,13 +3,13 @@
 void ClimberManager::HandleInput(ClimberInput &input)
 {
     
-    double controllerInput = ((std::fabs(input.controllerSpeed) - m_deadzone)/(1-m_deadzone)) * m_multiplier;
+    double controllerInput = ((std::fabs(input.controllerSpeed) - DEADZONE)/(1-DEADZONE)) * MULTIPLIER;
     
-    if (input.controllerSpeed > m_deadzone) 
+    if (input.controllerSpeed > DEADZONE) 
     {
         m_climber.RunClimber(controllerInput);
     }
-    else if (input.controllerSpeed < -(m_deadzone))
+    else if (input.controllerSpeed < -(DEADZONE))
     {       
         m_climber.RunClimber(-controllerInput);
     }

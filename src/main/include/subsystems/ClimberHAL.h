@@ -14,7 +14,7 @@ class ClimberHAL{
         rev::CANSparkMax m_climberMotorRight = rev::CANSparkMax(CLIMBER_MOTOR_RIGHT, rev::CANSparkLowLevel::MotorType::kBrushless); 
 
         rev::SparkRelativeEncoder m_EncoderRight = m_climberMotorRight.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 42);
-        rev::SparkRelativeEncoder m_EncoderLeft = m_climberMotorLeft.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 1);
+        rev::SparkRelativeEncoder m_EncoderLeft = m_climberMotorLeft.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 42);
     
         rev::REVLibError error;
 

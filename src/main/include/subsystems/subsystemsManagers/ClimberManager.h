@@ -17,8 +17,8 @@ public:
     
 private:
     ClimberHAL m_climber;
-    double m_deadzone = 0.05;
-    double m_multiplier = 0.8;
+    const double DEADZONE = 0.05;
+    const double MULTIPLIER = 0.8;
 
     
 };
