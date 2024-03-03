@@ -3,7 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "Robot.h"
-
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
@@ -32,7 +31,11 @@ void Robot::RobotInit() {
     }
   }
 
+  
   frc::SmartDashboard::PutData("Pathplanner Autos", &m_auto_chooser);
+
+  pathplanner::NamedCommands::registerCommand("SubShoot", std::make_shared<SubShoot>(_robot_control_data));
+  pathplanner::NamedCommands::registerCommand("SmartIntakeCommand", std::make_shared<SmartIntakeCommand>(_robot_control_data));
 
   SwerveInit();
 }
@@ -113,6 +116,8 @@ void Robot::AutonomousPeriodic() {
     default:
       break;
   }
+
+  TeleopPeriodic();
 }
 
 void Robot::TeleopInit() 
@@ -123,10 +128,14 @@ void Robot::TeleopInit()
 }
 
 void Robot::TeleopPeriodic() {
-
   PrintSwerveInfo();
-  _controller_interface.UpdateRobotControlData(_robot_control_data);
-  _swerve.Drive(_robot_control_data.swerveInput.xTranslation, _robot_control_data.swerveInput.yTranslation, _robot_control_data.swerveInput.rotation);
+  
+  if (!IsAutonomous())
+  {
+    _controller_interface.UpdateRobotControlData(_robot_control_data);
+    _swerve.Drive(_robot_control_data.swerveInput.xTranslation, _robot_control_data.swerveInput.yTranslation, _robot_control_data.swerveInput.rotation);
+  }
+
   _smart_intake.HandleInput(_robot_control_data);
   _intake_manager.HandleInput(_robot_control_data.intakeInput, _robot_control_data.intakeOutput);
   _launcher_manager.HandleInput(_robot_control_data.launcherInput, _robot_control_data.launcherOutput, _robot_control_data.intakeInput, _robot_control_data.intakeOutput);

@@ -1,18 +1,17 @@
-#pragma once
+/* #pragma once
 
-#include "subsystems/subsystemsManagers/LauncherManager.h"
 #include <frc2/command/CommandHelper.h>
+#include <LauncherManager.h>
 #include "RobotControlData.h"
 
-class SpeakerShoot : public frc2::CommandHelper<frc2::Command, SpeakerShoot>
+class VisionShoot : public frc2::CommandHelper<frc2::Command, VisionShoot>
 {
     public:
-        SpeakerShoot(RobotControlData &controlData);
+        VisionShoot(RobotControlData &controlData);
         void Initialize() override;
         void Execute() override;
         bool IsFinished() override;
         void End(bool interrupted) override;
-
     private:
         RobotControlData &m_controlData;
-};
+}; */

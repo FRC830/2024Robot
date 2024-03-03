@@ -1,12 +1,13 @@
 #pragma once
 
-#include "subsystems/SmartIntake.h"
+#include "subsystems/subsystemsManagers/LauncherManager.h"
 #include <frc2/command/CommandHelper.h>
+#include "RobotControlData.h"
 
-class SmartOuttake : public frc2::CommandHelper<frc2::Command, SmartOuttake>
+class SubShoot : public frc2::CommandHelper<frc2::Command, SubShoot>
 {
     public:
-        SmartOuttake(RobotControlData &controlData);
+        SubShoot(RobotControlData &controlData);
         void Initialize() override;
         void Execute() override;
         bool IsFinished() override;
@@ -14,4 +15,5 @@ class SmartOuttake : public frc2::CommandHelper<frc2::Command, SmartOuttake>
 
     private:
         RobotControlData &m_controlData;
+        int m_state;
 };
