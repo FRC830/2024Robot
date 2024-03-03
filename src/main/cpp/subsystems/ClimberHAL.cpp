@@ -2,7 +2,8 @@
 
 ClimberHAL::ClimberHAL() {
     m_climberMotorLeft.RestoreFactoryDefaults();
-    error = m_EncoderLeft.SetPositionConversionFactor(wheel_circumference); 
+    error = m_EncoderLeft.SetPositionConversionFactor(WHEEL_CIRCUMFERENCE); 
+    m_climberMotorLeft.SetInverted(INVERT_CLIMBER_MOTOR_LEFT);
     m_climberMotorLeft.BurnFlash();
 }
 
@@ -17,5 +18,5 @@ void ClimberHAL::RunClimber(double controllerSpeed)
 };
 
 bool ClimberHAL::isNextRotationTooHigh(double height) {
-    return (height+wheel_circumference)>maxHeight;
+    return (height+WHEEL_CIRCUMFERENCE)>MAXHEIGHT;
 }

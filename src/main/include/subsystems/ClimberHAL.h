@@ -13,13 +13,13 @@ class ClimberHAL{
         rev::CANSparkMax m_climberMotorLeft = rev::CANSparkMax(CLIMBER_MOTOR_LEFT, rev::CANSparkLowLevel::MotorType::kBrushless); 
         rev::CANSparkMax m_climberMotorRight = rev::CANSparkMax(CLIMBER_MOTOR_RIGHT, rev::CANSparkLowLevel::MotorType::kBrushless); 
 
-        rev::SparkRelativeEncoder m_EncoderRight = m_climberMotorRight.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 1);
+        rev::SparkRelativeEncoder m_EncoderRight = m_climberMotorRight.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 42);
         rev::SparkRelativeEncoder m_EncoderLeft = m_climberMotorLeft.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor, 1);
     
         rev::REVLibError error;
 
         //Constants
-        const double wheel_radius = 1.5;
-        const double wheel_circumference = 2 * 3.14 * wheel_radius;
-        const double maxHeight = (3 + 8/12) * 12; //inches     
+        const double WHEEL_RADIUS = 1.5;
+        const double WHEEL_CIRCUMFERENCE = 2.0 * 3.14 * WHEEL_RADIUS;
+        const double MAXHEIGHT = (3.0 + 8.0/12.0) * 12.0; //inches     
 };

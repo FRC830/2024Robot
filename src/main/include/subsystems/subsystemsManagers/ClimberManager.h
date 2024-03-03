@@ -19,7 +19,7 @@ private:
     ClimberHAL m_climber;
     double m_deadzone = 0.05;
     double m_multiplier = 0.8;
-    double m_maxHeight = 3.8;
+
     
 };
 

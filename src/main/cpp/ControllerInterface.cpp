@@ -59,6 +59,6 @@ void ControllerInterface::UpdateSwerveInput(RobotControlData &controlData)
 
 void ControllerInterface::UpdateClimberInput(RobotControlData &controlData)
 {
-    controlData.climberInput.controllerSpeed = m_pilot.GetLeftY();
+    controlData.climberInput.controllerSpeed = m_pilot.GetRightY();
     
 };
