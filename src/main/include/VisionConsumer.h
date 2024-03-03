@@ -30,6 +30,7 @@ class VisionConsumer {
         struct PolarCoords GetPolarCoordForTagX(int tagId);
         struct PolarCoords toPolar(double x, double y);
         struct PolarCoords GetRobotToSpeaker(double rot);
+        bool getVisible(int id);
         
 
         

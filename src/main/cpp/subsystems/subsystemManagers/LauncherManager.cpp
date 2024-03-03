@@ -81,8 +81,9 @@ void LauncherManager::HandleInput(LauncherInput &launcherInput, LauncherOutput &
             m_launcher.SetIndexerSpeed(INDEXER_SPEED);
         }
         else
+        
         {
-            m_launcher.SetIndexerSpeed(1.0);
+            m_launcher.SetIndexerSpeed(0.5);
         }
     } 
     else if (launcherInput.runIndexerBackward && !launcherInput.runIndexerForward) 

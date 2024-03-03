@@ -21,11 +21,19 @@ struct PolarCoords VisionConsumer::GetPolarCoordForTagX(int id) {
 
 }
 
+bool VisionConsumer::getVisible(int id) {
+
+    return frc::SmartDashboard::GetBoolean("Apriltag " + std::to_string(id) + " Detected", false);
+
+}
+
 PolarCoords VisionConsumer::GetRobotToSpeaker(double rot) {
 
     struct PolarCoords a; 
     struct PolarCoords b; 
     double dist;
+    bool AisVisible; 
+    bool BisVisible;
 
     // get A, B
 
@@ -35,6 +43,8 @@ PolarCoords VisionConsumer::GetRobotToSpeaker(double rot) {
 
         a = GetPolarCoordForTagX(4);
         b = GetPolarCoordForTagX(3);
+        
+        
 
     } else {
 
@@ -43,10 +53,10 @@ PolarCoords VisionConsumer::GetRobotToSpeaker(double rot) {
         a = GetPolarCoordForTagX(7);
         b = GetPolarCoordForTagX(8);
 
+        AisVisible = getVisible(7);
+        BisVisible = getVisible(8);
     }
 
-    bool AisVisible = a.r >= 0.00001;
-    bool BisVisible = b.r >= 0.00001;
     
 
     rot = (rot > 180) ? rot - 360 : rot;

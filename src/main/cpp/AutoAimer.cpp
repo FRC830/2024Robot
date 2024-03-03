@@ -5,14 +5,14 @@
 AutoAimer::AutoAimer()
 {
     m_lookup.emplace_back(VisionSetPoint{58.27, 48.0, 100.0});
-    m_lookup.emplace_back(VisionSetPoint{105.25, 33.0, 130.0});
-    m_lookup.emplace_back(VisionSetPoint{154.9, 22.5, 150.0});
-    m_lookup.emplace_back(VisionSetPoint{200.58, 20.6, 225});
-    m_lookup.emplace_back(VisionSetPoint{240.84, 19.1, 250.0});
+    m_lookup.emplace_back(VisionSetPoint{107.4769, 31.75, 130.0});
+    m_lookup.emplace_back(VisionSetPoint{155.16, 22.45, 175.0});
+    m_lookup.emplace_back(VisionSetPoint{200.58, 20.6, 250});
+    m_lookup.emplace_back(VisionSetPoint{240.84, 19.1, 350.0});
 
     
 
-    frc::SmartDashboard::PutBoolean("use_manual_tune", false);
+    frc::SmartDashboard::PutBoolean("use_manal_tune", false);
     frc::SmartDashboard::PutNumber("manual_launcher_pivot", 0.0);
     frc::SmartDashboard::PutNumber("manual_flywheel_speed", 0.0);
 }
@@ -22,11 +22,10 @@ VisionSetPoint AutoAimer::DetermineSetpoint(double dist) {
 
     //cond verify
 
-    // TODO
-    // if (dist <= m_lookup.begin()->distance || dist > m_lookup.end()->distance)
-    // {
-    //     return VisionSetPoint{dist, 0.0, 0.0};
-    // }
+    if (dist <= m_lookup.front().distance || dist > m_lookup.back().distance)
+    {
+        return VisionSetPoint{dist, 0.0, 0.0};
+    }
 
 
     VisionSetPoint a = m_lookup.at(0);
