@@ -28,14 +28,11 @@
 #include <pathplanner/lib/commands/PathPlannerAuto.h>
 #include <filesystem>
 #include <frc/Filesystem.h>
-<<<<<<< HEAD
 #include "VisionConsumer.h"
 #include "AutoAimer.h"
-=======
 #include <pathplanner/lib/auto/NamedCommands.h>
 #include "commands/SmartIntakeCommand.h"
 #include "commands/SubShoot.h"
->>>>>>> 51759bc (More named commands stuff.)
 #include <pathplanner/lib/auto/NamedCommands.h>
 #include "commands/SmartIntakeCommand.h"
 #include "commands/SubShoot.h"
