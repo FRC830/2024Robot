@@ -48,7 +48,4 @@ bool SmartIntakeCommand::IsFinished()
     return isFinished;
 }
 
-void SmartIntakeCommand::End(bool interrupted)
-{
-    m_controlData.smartIntakeInput.smartIntake = false;
-}
+void SmartIntakeCommand::End(bool interrupted) {}

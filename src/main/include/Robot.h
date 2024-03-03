@@ -13,7 +13,6 @@
 #include "NeoDriveMotor.h"
 #include "WPISwerveModule.h"
 #include "WPISwerveDrive.h"
-#include <iostream>
 #include "NavXGyro.h"
 #include <array>
 #include <frc/XboxController.h>
@@ -29,8 +28,14 @@
 #include <pathplanner/lib/commands/PathPlannerAuto.h>
 #include <filesystem>
 #include <frc/Filesystem.h>
+<<<<<<< HEAD
 #include "VisionConsumer.h"
 #include "AutoAimer.h"
+=======
+#include <pathplanner/lib/auto/NamedCommands.h>
+#include "commands/SmartIntakeCommand.h"
+#include "commands/SubShoot.h"
+>>>>>>> 51759bc (More named commands stuff.)
 
 class Robot : public frc::TimedRobot {
  public:
