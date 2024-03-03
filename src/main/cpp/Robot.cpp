@@ -157,6 +157,9 @@ void Robot::TeleopPeriodic() {
   
   if (!IsAutonomous())
   {
+    
+  if (!IsAutonomous())
+  {
     _controller_interface.UpdateRobotControlData(_robot_control_data);
   _robot_control_data.autoAimInput.robotCurAngle = _gyro.GetHeading().Degrees().to<double>();
   m_autoAim.HandleInput(_robot_control_data);
@@ -166,10 +169,12 @@ void Robot::TeleopPeriodic() {
 
   } else {
 
-      _swerve.Drive(_robot_control_data.swerveInput.xTranslation, _robot_control_data.swerveInput.yTranslation, _robot_control_data.swerveInput.rotation);
+        _swerve.Drive(_robot_control_data.swerveInput.xTranslation, _robot_control_data.swerveInput.yTranslation, _robot_control_data.swerveInput.rotation);
 
 
   }
+  }
+
   }
 
   _smart_intake.HandleInput(_robot_control_data);

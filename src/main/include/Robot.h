@@ -36,6 +36,9 @@
 #include "commands/SmartIntakeCommand.h"
 #include "commands/SubShoot.h"
 >>>>>>> 51759bc (More named commands stuff.)
+#include <pathplanner/lib/auto/NamedCommands.h>
+#include "commands/SmartIntakeCommand.h"
+#include "commands/SubShoot.h"
 
 class Robot : public frc::TimedRobot {
  public:
