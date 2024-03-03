@@ -1,7 +1,6 @@
-/* #pragma once
+#pragma once
 
 #include <frc2/command/CommandHelper.h>
-#include <LauncherManager.h>
 #include "RobotControlData.h"
 
 class VisionShoot : public frc2::CommandHelper<frc2::Command, VisionShoot>
@@ -14,4 +13,5 @@ class VisionShoot : public frc2::CommandHelper<frc2::Command, VisionShoot>
         void End(bool interrupted) override;
     private:
         RobotControlData &m_controlData;
-}; */
+        frc::Timer m_timer;
+};
