@@ -1,12 +1,5 @@
 #include "subsystems/subsystemsManagers/LauncherManager.h"
-
-namespace
-{
-    const double SUB_ANGLE = 55.0;
-    const double STOW_ANGLE = 10.0;
-    const double SUB_SPEED = 150.0;
-    const double INDEXER_SPEED = 1.0;
-}
+#include "subsystems/SubSystemConfig.h"
 
 void LauncherManager::ResetLauncher()
 {
@@ -14,7 +7,6 @@ void LauncherManager::ResetLauncher()
     m_goToSubPos = false;
     m_visionResetProfiledMoveState = false;
 }
-
 void LauncherManager::HandleInput(LauncherInput &launcherInput, LauncherOutput &launcherOutput, IntakeInput &intakeInput, IntakeOutput &intakeOutput)
 {
 
@@ -75,6 +67,7 @@ void LauncherManager::HandleInput(LauncherInput &launcherInput, LauncherOutput &
 
     if (launcherInput.runIndexerForward && !launcherInput.runIndexerBackward)
     {
+       
         m_launcher.SetIndexerSpeed(INDEXER_SPEED);
     } 
     else if (launcherInput.runIndexerBackward && !launcherInput.runIndexerForward) 

@@ -5,6 +5,7 @@ void ControllerInterface::UpdateRobotControlData(RobotControlData &controlData)
     UpdateIntakeInput(controlData);
     UpdateLauncherInput(controlData);
     UpdateSwerveInput(controlData);
+    UpdateVisionInput(controlData);
     UpdateClimberInput(controlData);
 };
 
@@ -56,6 +57,11 @@ void ControllerInterface::UpdateSwerveInput(RobotControlData &controlData)
         controlData.swerveInput.rotation *= m_slowmodefactor;
     }
 };
+
+void ControllerInterface::UpdateVisionInput(RobotControlData &controlData) {
+
+    controlData.autoAimInput.autoAim = m_copilot.GetXButton();
+}
 
 void ControllerInterface::UpdateClimberInput(RobotControlData &controlData)
 {

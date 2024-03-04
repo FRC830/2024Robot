@@ -77,6 +77,11 @@ const bool INVERT_INDEXER = false;
 const double UP_MAX_ACC = 600.0;
 const double DOWN_MAX_ACC = 200.0;
 const double MAX_JERK = 1250.0;
+
+const double SUB_ANGLE = 55.0;
+const double STOW_ANGLE = 10.0;
+const double SUB_SPEED = 150.0;
+const double INDEXER_SPEED = 1.0;
 // ###########################################################
 // #                         Climber                         #
 // ###########################################################

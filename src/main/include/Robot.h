@@ -13,7 +13,6 @@
 #include "NeoDriveMotor.h"
 #include "WPISwerveModule.h"
 #include "WPISwerveDrive.h"
-#include <iostream>
 #include "NavXGyro.h"
 #include <array>
 #include <frc/XboxController.h>
@@ -29,6 +28,14 @@
 #include <pathplanner/lib/commands/PathPlannerAuto.h>
 #include <filesystem>
 #include <frc/Filesystem.h>
+#include "VisionConsumer.h"
+#include "AutoAimer.h"
+#include <pathplanner/lib/auto/NamedCommands.h>
+#include "commands/SmartIntakeCommand.h"
+#include "commands/SubShoot.h"
+#include <pathplanner/lib/auto/NamedCommands.h>
+#include "commands/SmartIntakeCommand.h"
+#include "commands/SubShoot.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -61,6 +68,7 @@ class Robot : public frc::TimedRobot {
   std::array<NeoDriveMotor, NUM_MODULES> _drive_motors;
   std::array<WPISwerveModule, NUM_MODULES> _modules;
   WPISwerveDrive _swerve;
+  VisionConsumer vision; 
 
   NavXGyro _gyro;
   ControllerInterface _controller_interface;
@@ -73,4 +81,6 @@ class Robot : public frc::TimedRobot {
   std::unique_ptr<frc2::CommandPtr> m_auto;
   std::filesystem::path m_autos_directory;
   frc::SendableChooser<std::string> m_auto_chooser;
-};
+
+  AutoAimer m_autoAim = AutoAimer();
+}; 
