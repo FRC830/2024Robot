@@ -153,30 +153,24 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic() {
   PrintSwerveInfo();
 
-  
-  
-  if (!IsAutonomous())
-  {
-    
   if (!IsAutonomous())
   {
     _controller_interface.UpdateRobotControlData(_robot_control_data);
+
+    if (!_robot_control_data.autoAimInput.autoAim)
+    {
+      _swerve.Drive(_robot_control_data.swerveInput.xTranslation, _robot_control_data.swerveInput.yTranslation, _robot_control_data.swerveInput.rotation);
+    }
+  }
+
   _robot_control_data.autoAimInput.robotCurAngle = _gyro.GetHeading().Degrees().to<double>();
   m_autoAim.HandleInput(_robot_control_data);
-  if (_robot_control_data.autoAimInput.autoAim) {
 
+  if (_robot_control_data.autoAimInput.autoAim)
+  {
     _swerve.Drive(units::feet_per_second_t{0.0}, units::feet_per_second_t{0.0}, units::degrees_per_second_t{_robot_control_data.autoAimOutput.robotRotSpeed});
-
-  } else {
-
-        _swerve.Drive(_robot_control_data.swerveInput.xTranslation, _robot_control_data.swerveInput.yTranslation, _robot_control_data.swerveInput.rotation);
-
-
   }
-  }
-
-  }
-
+  
   _smart_intake.HandleInput(_robot_control_data);
   _intake_manager.HandleInput(_robot_control_data.intakeInput, _robot_control_data.intakeOutput);
   _launcher_manager.HandleInput(_robot_control_data.launcherInput, _robot_control_data.launcherOutput, _robot_control_data.intakeInput, _robot_control_data.intakeOutput);
