@@ -215,8 +215,14 @@ void AutoAimer::HandleInput(RobotControlData& data) {
                 MonitorLauncherAngle(data);
                 MonitorLauncherFlyWheelSpeed(data);
 
+                frc::SmartDashboard::PutBoolean("Turn is Good", m_turnState == 3);
+                frc::SmartDashboard::PutBoolean("Flywheel is Good", m_flyWheelState != 0);
+                frc::SmartDashboard::PutBoolean("Pivot is Good", m_piviotState != 0);
+
                 if (m_turnState == 3 && m_flyWheelState != 0 && m_piviotState != 0)
-                m_state++;
+                {
+                    m_state++;
+                }
 
                 break;
             }

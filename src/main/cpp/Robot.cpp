@@ -15,6 +15,8 @@ void Robot::updateDashBoardValues() {
   frc::SmartDashboard::PutNumber("RobotRotSpeed", _robot_control_data.autoAimOutput.robotRotSpeed);
   frc::SmartDashboard::PutNumber("vision_flywheel_speed", _robot_control_data.launcherInput.visionSpeedSetpoint);
   frc::SmartDashboard::PutNumber("vision_launcher_angle", _robot_control_data.launcherInput.visionAngleSetpoint);
+  frc::SmartDashboard::PutNumber("Measured Flywheel Speed", _robot_control_data.launcherOutput.flywheelSpeed);
+  frc::SmartDashboard::PutNumber("Measured Launcher Angle", _robot_control_data.launcherOutput.launcherAngle);
 
 };
 
