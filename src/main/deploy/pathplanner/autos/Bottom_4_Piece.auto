@@ -1,0 +1,91 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.61,
+      "y": 4.51
+    },
+    "rotation": -60.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "SubShoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Preloaded_BottomNote"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SmartIntakeCommand"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionShoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BottomNote_Note5"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SmartIntakeCommand"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note5_Shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionShoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note5Shoot_Note4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SmartIntakeCommand"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note4_Shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionShoot"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

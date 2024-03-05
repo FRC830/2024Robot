@@ -14,4 +14,5 @@ class VisionShoot : public frc2::CommandHelper<frc2::Command, VisionShoot>
     private:
         RobotControlData &m_controlData;
         frc::Timer m_timer;
+        int m_state;
 };

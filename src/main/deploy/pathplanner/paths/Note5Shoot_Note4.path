@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.0,
-        "y": 7.0
+        "x": 1.282954626977957,
+        "y": 3.4884287580280002
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.0,
-        "y": 7.0
+        "x": 2.202061605141023,
+        "y": 2.7259877420518204
       },
       "isLocked": false,
-      "linkedName": "Forward Start"
+      "linkedName": "Note5ShootPosition"
     },
     {
       "anchor": {
-        "x": 10.0,
-        "y": 7.0
+        "x": 7.8315918463897995,
+        "y": 2.464877805073676
       },
       "prevControl": {
-        "x": 9.0,
-        "y": 7.0
+        "x": 5.888933915272411,
+        "y": -0.1044439747912566
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Test"
+      "linkedName": "Note4"
     }
   ],
   "rotationTargets": [],

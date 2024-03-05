@@ -48,6 +48,7 @@ void Robot::RobotInit() {
 
   pathplanner::NamedCommands::registerCommand("SubShoot", std::make_shared<SubShoot>(_robot_control_data));
   pathplanner::NamedCommands::registerCommand("SmartIntakeCommand", std::make_shared<SmartIntakeCommand>(_robot_control_data));
+  pathplanner::NamedCommands::registerCommand("VisionShoot", std::make_shared<VisionShoot>(_robot_control_data));
 
   SwerveInit();
   

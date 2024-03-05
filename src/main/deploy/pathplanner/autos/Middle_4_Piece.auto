@@ -1,0 +1,79 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.74,
+      "y": 6.69
+    },
+    "rotation": 60.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "SubShoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Preloaded_TopNote"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SmartIntakeCommand"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionShoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TopNote_MiddleNote"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SmartIntakeCommand"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionShoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MiddleNote_BottomNote"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SmartIntakeCommand"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionShoot"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

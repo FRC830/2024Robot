@@ -36,6 +36,7 @@
 #include <pathplanner/lib/auto/NamedCommands.h>
 #include "commands/SmartIntakeCommand.h"
 #include "commands/SubShoot.h"
+#include "commands/VisionShoot.h"
 
 class Robot : public frc::TimedRobot {
  public:

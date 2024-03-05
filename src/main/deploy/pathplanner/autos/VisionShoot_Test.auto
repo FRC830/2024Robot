@@ -1,0 +1,31 @@
+{
+  "version": 1.0,
+  "startingPose": null,
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Forward Path"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionShoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Backwards Path"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

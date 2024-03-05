@@ -15,5 +15,7 @@ class SubShoot : public frc2::CommandHelper<frc2::Command, SubShoot>
 
     private:
         RobotControlData &m_controlData;
-        int m_state;
+        int m_execute_state;
+        int m_isFinished_state;
+        frc::Timer m_timer;
 };
