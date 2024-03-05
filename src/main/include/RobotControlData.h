@@ -1,4 +1,5 @@
 #pragma once
+#include "subsystems/subsystemsManagers/ClimberManager.h"
 #include "subsystems/subsystemsManagers/IntakeManager.h"
 #include "subsystems/subsystemsManagers/LauncherManager.h"
 
@@ -36,5 +37,6 @@ struct RobotControlData {
     SmartIntakeInput smartIntakeInput;
     AutoAimInput autoAimInput;
     AutoAimOutput autoAimOutput;
+    ClimberInput climberInput;
 };
 

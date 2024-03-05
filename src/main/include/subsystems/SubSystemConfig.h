@@ -82,3 +82,12 @@ const double SUB_ANGLE = 55.0;
 const double STOW_ANGLE = 10.0;
 const double SUB_SPEED = 150.0;
 const double INDEXER_SPEED = 1.0;
+// ###########################################################
+// #                         Climber                         #
+// ###########################################################
+
+const int CLIMBER_MOTOR_LEFT = 24; 
+const int CLIMBER_MOTOR_RIGHT = 25;
+const bool INVERT_CLIMBER_MOTOR_LEFT = true;
+
+const int CLIMBER_CURRENT_LIMIT = 40;

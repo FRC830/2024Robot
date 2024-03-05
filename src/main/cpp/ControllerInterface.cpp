@@ -6,6 +6,7 @@ void ControllerInterface::UpdateRobotControlData(RobotControlData &controlData)
     UpdateLauncherInput(controlData);
     UpdateSwerveInput(controlData);
     UpdateVisionInput(controlData);
+    UpdateClimberInput(controlData);
 };
 
 void ControllerInterface::UpdateIntakeInput(RobotControlData &controlData)
@@ -61,3 +62,9 @@ void ControllerInterface::UpdateVisionInput(RobotControlData &controlData) {
 
     controlData.autoAimInput.autoAim = m_copilot.GetXButton();
 }
+
+void ControllerInterface::UpdateClimberInput(RobotControlData &controlData)
+{
+    controlData.climberInput.controllerSpeed = m_pilot.GetRightY();
+    
+};
