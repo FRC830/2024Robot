@@ -12,21 +12,28 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "SubShoot"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "SubShoot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "SmartIntakeCommand"
+                }
+              }
+            ]
           }
         },
         {
           "type": "path",
           "data": {
             "pathName": "Preloaded_TopNote"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "SmartIntakeCommand"
           }
         },
         {
@@ -44,12 +51,6 @@
         {
           "type": "named",
           "data": {
-            "name": "SmartIntakeCommand"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "VisionShoot"
           }
         },
@@ -57,12 +58,6 @@
           "type": "path",
           "data": {
             "pathName": "MiddleNote_BottomNote"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "SmartIntakeCommand"
           }
         },
         {
