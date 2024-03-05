@@ -25,7 +25,7 @@ bool VisionConsumer::getVisible(PolarCoords cur, bool isA) {
     
     if (isA) {
 
-        if (lastA.r == 0.0) {
+        if (lastA.r <= 0.00001) {
 
             return false;
 
@@ -37,7 +37,7 @@ bool VisionConsumer::getVisible(PolarCoords cur, bool isA) {
 
     } else {
 
-        if (lastB.r == 0.0) {
+        if (lastB.r <= 0.00001) {
 
             return false;
 
