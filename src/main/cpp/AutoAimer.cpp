@@ -12,7 +12,7 @@ AutoAimer::AutoAimer()
 
     
 
-    frc::SmartDashboard::PutBoolean("use_manal_tune", false);
+    frc::SmartDashboard::PutBoolean("use_manual_tune", false);
     frc::SmartDashboard::PutNumber("manual_launcher_pivot", 0.0);
     frc::SmartDashboard::PutNumber("manual_flywheel_speed", 0.0);
 }
