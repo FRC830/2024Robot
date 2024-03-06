@@ -21,9 +21,33 @@ struct PolarCoords VisionConsumer::GetPolarCoordForTagX(int id) {
 
 }
 
-bool VisionConsumer::getVisible(int id) {
+bool VisionConsumer::getVisible(PolarCoords cur, bool isA) {
+    
+    if (isA) {
 
-    return frc::SmartDashboard::GetBoolean("Apriltag " + std::to_string(id) + " Detected", false);
+        if (lastA.r <= 0.00001) {
+
+            return false;
+
+        } else if (std::fabs(cur.r - lastA.r) <= 0.00001){
+
+            return false;
+
+        } else {return true;}
+
+    } else {
+
+        if (lastB.r <= 0.00001) {
+
+            return false;
+
+        } else if (std::fabs(cur.r - lastB.r) <= 0.00001){
+
+            return false;
+
+        } else {return true;}
+
+    }
 
 }
 
@@ -44,6 +68,8 @@ PolarCoords VisionConsumer::GetRobotToSpeaker(double rot) {
         a = GetPolarCoordForTagX(4);
         b = GetPolarCoordForTagX(3);
         
+        AisVisible = getVisible(a, true);
+        BisVisible = getVisible(b, false);
         
 
     } else {
@@ -53,8 +79,8 @@ PolarCoords VisionConsumer::GetRobotToSpeaker(double rot) {
         a = GetPolarCoordForTagX(7);
         b = GetPolarCoordForTagX(8);
 
-        AisVisible = getVisible(7);
-        BisVisible = getVisible(8);
+        AisVisible = getVisible(a, true);
+        BisVisible = getVisible(b, false);
     }
 
     
@@ -62,6 +88,9 @@ PolarCoords VisionConsumer::GetRobotToSpeaker(double rot) {
     rot = (rot > 180) ? rot - 360 : rot;
 
     rot = rot * ( 3.14159265358979323846 / 180.0);
+
+    lastA = a;
+    lastB = b;
 
     if (AisVisible && BisVisible) {
 
