@@ -32,31 +32,11 @@ frc::Rotation2d NavXGyro::GetHeading()
 
 frc::Rotation2d NavXGyro::GetRawHeading() 
 {
-    double rawHeading = m_gyro->GetAngle();
+    double rawHeading = std::fmod(m_gyro->GetAngle(), 360.0);
 
     if (m_is_inverted) 
     {
         rawHeading = std::abs(360.0f - rawHeading);
-    }
-
-    int repeat = std::fmod(rawHeading, 360.0);
-
-    for (int i = 0; i < repeat; i++) {
-
-        if(rawHeading > 360.0) {
-
-            rawHeading -= 360.0;
-
-        } else if (rawHeading < -360.0) {
-
-            rawHeading += 360;
-
-        } else {
-
-            continue;
-
-        }
-
     }
 
     return frc::Rotation2d(units::degree_t(rawHeading));
