@@ -34,7 +34,7 @@ void ControllerInterface::UpdateLauncherInput(RobotControlData &controlData)
 {
     controlData.launcherInput.goToStowPos = m_copilot.GetAButton();
     controlData.launcherInput.goToSubPos = m_copilot.GetYButton();
-
+    controlData.launcherInput.runIndexerBackward = m_copilot.GetLeftTriggerAxis() >= 0.2;
     // controlData.launcherInput.runIndexerForward = m_copilot.GetRightTriggerAxis() >= 0.2;
     //controlData.launcherInput.runIndexerForward = m_copilot.GetXButton();
     //controlData.launcherInput.runIndexerBackward = m_copilot.GetBButton();
