@@ -39,7 +39,7 @@ frc::Rotation2d NavXGyro::GetRawHeading()
         rawHeading = std::abs(360.0f - rawHeading);
     }
 
-    int repeat = std::fabs(rawHeading / 360.0);
+    int repeat = std::fmod(rawHeading, 360.0);
 
     for (int i = 0; i < repeat; i++) {
 
