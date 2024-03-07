@@ -27,5 +27,5 @@ private:
 
     frc::Timer m_timer;
     frc::DigitalInput m_beam_break{9};
-    frc::DigitalInput m_front_beam_break{7};
+    frc::DigitalInput m_front_beam_break{8};
    };

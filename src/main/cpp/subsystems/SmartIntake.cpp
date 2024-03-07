@@ -103,7 +103,10 @@ void SmartIntake::HandleInput(RobotControlData& input){
         case 0:
         {
             input.intakeInput.runIntakeIn = false;
-            input.launcherInput.runIndexerForward = false;
+            if (!m_centerNote)
+            {
+                input.launcherInput.runIndexerForward = false;
+            }
             input.intakeInput.goToPseudoStowPos = true;
             ++m_IntakeState;
         }
@@ -140,7 +143,8 @@ void SmartIntake::HandleInput(RobotControlData& input){
         }
         case 1:
         {
-            if (m_timer.Get() >= units::second_t(0.5))
+            input.launcherInput.runIndexerForward = true;
+            if (m_timer.Get() >= units::second_t(0.3))
             {
                 m_timer.Stop();
                 input.launcherInput.runIndexerForward = false;
