@@ -19,11 +19,17 @@ void SmartIntake::ResetSmartIntake()
 
     m_IntakeState = 10000;
     m_OutTakeState = 10000;
+
+    m_centerNote = false;
+    m_centerNoteState = 0;
 }
 
 void SmartIntake::HandleInput(RobotControlData& input){
     frc::SmartDashboard::PutBoolean("Launcher beam break", !m_beam_break.Get());
     input.smartIntakeInput.laser = !m_beam_break.Get();
+
+    auto front_beam_break = !m_front_beam_break.Get();
+    frc::SmartDashboard::PutBoolean("Launcher front beam break", front_beam_break);
 
     if (!m_prevSmartIntake && input.smartIntakeInput.smartIntake)
     {
@@ -32,6 +38,7 @@ void SmartIntake::HandleInput(RobotControlData& input){
         m_IntakeState = 0;
         input.intakeInput.runIntakeOut = false;
         input.launcherInput.runIndexerBackward = false;
+        input.launcherInput.runIndexerBackwardSlow = false;
         m_OutTakeState = 10000;
     }
     
@@ -41,6 +48,7 @@ void SmartIntake::HandleInput(RobotControlData& input){
         m_SmartIntakeFlag = false;
         input.intakeInput.runIntakeIn = false;
         input.launcherInput.runIndexerForward = false;
+        input.launcherInput.runIndexerBackwardSlow = false;
         m_IntakeState = 10000;
         m_OutTakeState = 0;
     }
@@ -80,6 +88,7 @@ void SmartIntake::HandleInput(RobotControlData& input){
             {
                 m_SmartIntakeFlag = false;
                 m_IntakeState = 0;
+                m_centerNote = true;
             }
         }
             break;
@@ -94,7 +103,10 @@ void SmartIntake::HandleInput(RobotControlData& input){
         case 0:
         {
             input.intakeInput.runIntakeIn = false;
-            input.launcherInput.runIndexerForward = false;
+            if (!m_centerNote)
+            {
+                input.launcherInput.runIndexerForward = false;
+            }
             input.intakeInput.goToPseudoStowPos = true;
             ++m_IntakeState;
         }
@@ -108,6 +120,56 @@ void SmartIntake::HandleInput(RobotControlData& input){
             }
         }
             break;
+        default:
+            break;
+        }
+    }
+
+    if (m_centerNote)
+    {
+        switch (m_centerNoteState)
+        {
+        case 0:
+        {
+            m_timer.Stop();
+            m_timer.Reset();
+            m_timer.Start();
+
+            input.launcherInput.runIndexerForward = true;
+
+            ++m_centerNoteState;
+
+            break;
+        }
+        case 1:
+        {
+            input.launcherInput.runIndexerForward = true;
+            if (m_timer.Get() >= units::second_t(0.3))
+            {
+                m_timer.Stop();
+                input.launcherInput.runIndexerForward = false;
+                input.launcherInput.runIndexerBackwardSlow = true;
+                ++m_centerNoteState;
+            }
+
+            break;
+        }
+        case 2:
+        {
+            if (!front_beam_break)
+            {
+                input.launcherInput.runIndexerBackwardSlow = false;
+                ++m_centerNoteState;
+            }
+
+            break;
+        }
+        case 3:
+        {
+            m_centerNoteState = 0;
+            m_centerNote = false;
+            break;
+        }
         default:
             break;
         }
