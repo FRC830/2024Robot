@@ -22,32 +22,43 @@ struct PolarCoords VisionConsumer::GetPolarCoordForTagX(int id) {
 }
 
 bool VisionConsumer::getVisible(PolarCoords cur, bool isA) {
-    
+
     if (isA) {
 
-        if (lastA.r <= 0.00001) {
+        if (lastA.r <= 1e-10) {
+            m_a_count++;
 
-            return false;
 
-        } else if (std::fabs(cur.r - lastA.r) <= 0.00001){
+        } else if (std::fabs(cur.r - lastA.r) <= 1e-16){
+            m_a_count++;
 
-            return false;
-
-        } else {return true;}
+        } else 
+        {
+            m_a_count = 0;
+        }
 
     } else {
 
-        if (lastB.r <= 0.00001) {
+        if (lastB.r <= 1e-10) {
+            m_b_count++;
 
-            return false;
+        } else if (std::fabs(cur.r - lastB.r) <= 1e-16){
+            m_b_count++;
 
-        } else if (std::fabs(cur.r - lastB.r) <= 0.00001){
 
-            return false;
+        } else 
+        {
+            m_b_count = 0;
 
-        } else {return true;}
+        }
 
     }
+
+    frc::SmartDashboard::PutNumber("Bcount", m_b_count);
+    frc::SmartDashboard::PutNumber("Acount", m_a_count);
+
+    int cond = isA ? m_a_count : m_b_count;
+    return cond <= 10;
 
 }
 
@@ -125,11 +136,13 @@ PolarCoords VisionConsumer::GetRobotToSpeaker(double rot) {
         struct PolarCoords B = {b.r, b.theta - rot};
         double Bx = B.r * cos(B.theta);
         double By = B.r * sin(B.theta);   
+        frc::SmartDashboard::PutNumber("bx", Bx);
+        frc::SmartDashboard::PutNumber("by", By);
         struct PolarCoords A = toPolar(Bx, By + dist);
-        a.theta += rot;
-        a.theta *= (180.0 / 3.14159265358979323846);
+        A.theta += rot;
+        A.theta *= (180.0 / 3.14159265358979323846);
 
-        return a; 
+        return A; 
 
 
     } else {
