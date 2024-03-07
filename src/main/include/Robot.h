@@ -37,6 +37,7 @@
 #include "commands/SmartIntakeCommand.h"
 #include "commands/SubShoot.h"
 #include "commands/VisionShoot.h"
+#include "commands/IntakeDown.h"
 
 class Robot : public frc::TimedRobot {
  public:

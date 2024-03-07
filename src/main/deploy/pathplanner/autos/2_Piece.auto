@@ -12,6 +12,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "IntakeDown"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Preloaded_TopNote"
@@ -24,9 +30,21 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "TopNote_Sub"
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "VisionShoot"
+            "name": "SubShoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeDown"
           }
         }
       ]
