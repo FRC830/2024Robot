@@ -12,6 +12,7 @@ struct LauncherInput
     bool goToSubPos;
     bool runIndexerForward; //Indexer is the little "kick" to help the Note transfer from the Intake to the Launcher
     bool runIndexerBackward;
+    bool runIndexerBackwardSlow;
 };
 
 struct LauncherOutput

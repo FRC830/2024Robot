@@ -22,6 +22,10 @@ private:
     int m_IntakeState;
     int m_OutTakeState;
 
+    bool m_centerNote;
+    int m_centerNoteState;
+
     frc::Timer m_timer;
     frc::DigitalInput m_beam_break{9};
+    frc::DigitalInput m_front_beam_break{8};
    };
