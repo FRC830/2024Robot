@@ -39,6 +39,9 @@ class VisionConsumer {
         struct PolarCoords lastA; 
         struct PolarCoords lastB;
 
+        int m_a_count;
+        int m_b_count;
+
 
 
 };

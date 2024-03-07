@@ -4,11 +4,10 @@
 
 AutoAimer::AutoAimer()
 {
-    m_lookup.emplace_back(VisionSetPoint{58.27, 48.0, 100.0});
-    m_lookup.emplace_back(VisionSetPoint{107.4769, 31.75, 130.0});
-    m_lookup.emplace_back(VisionSetPoint{155.16, 22.45, 175.0});
-    m_lookup.emplace_back(VisionSetPoint{200.58, 20.6, 250});
-    m_lookup.emplace_back(VisionSetPoint{240.84, 19.1, 350.0});
+    m_lookup.emplace_back(VisionSetPoint{59.34, 50.0, 75.0});
+    m_lookup.emplace_back(VisionSetPoint{107.4769, 30, 130.0});
+    m_lookup.emplace_back(VisionSetPoint{155.16, 22.3, 175.0});
+    m_lookup.emplace_back(VisionSetPoint{200.58, 21.8, 250});
 
     
 
@@ -190,8 +189,8 @@ void AutoAimer::HandleInput(RobotControlData& data) {
 
                 //set launcher speed and angle in data.autoaim stuff
                 VisionSetPoint set = DetermineSetpoint(robotToSpeaker.r);
-                frc::SmartDashboard::PutNumber("after_vision_flywheel_speed", set.flywheelSpeed);
-                frc::SmartDashboard::PutNumber("after_vision_launcher_angle", set.launcherAngle);
+                // frc::SmartDashboard::PutNumber("after_vision_flywheel_speed", set.flywheelSpeed);
+                // frc::SmartDashboard::PutNumber("after_vision_launcher_angle", set.launcherAngle);
 
 
 
