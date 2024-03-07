@@ -3,34 +3,52 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.8315918463897995,
-        "y": 2.464877805073676
+        "x": 1.1785106521866997,
+        "y": 5.545975061415772
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.59649078585689,
-        "y": 0.42822029664415623
+        "x": 1.7111749236221125,
+        "y": 5.065532777375987
       },
       "isLocked": false,
-      "linkedName": "Note4"
+      "linkedName": "Sub"
     },
     {
       "anchor": {
-        "x": 1.282954626977957,
-        "y": 3.4884287580280002
+        "x": 2.5362823244730466,
+        "y": 4.376202543753688
       },
       "prevControl": {
-        "x": 2.6929482866599335,
-        "y": 2.5379885874275563
+        "x": 2.0767288353915134,
+        "y": 4.783534045439592
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Note5ShootPosition"
+      "linkedName": "Bottom_Note"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Intake",
+      "waypointRelativePos": 0.5,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "SmartIntakeCommand"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -39,7 +57,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -60.0,
+    "rotation": -40.0,
     "rotateFast": false
   },
   "reversed": false,

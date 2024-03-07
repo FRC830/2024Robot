@@ -2,85 +2,107 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.61,
-      "y": 4.51
+      "x": 1.18,
+      "y": 5.55
     },
-    "rotation": -60.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "SubShoot"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "SubShoot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeDown"
+                }
+              }
+            ]
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Preloaded_BottomNote"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "SmartIntakeCommand"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "VisionShoot"
+            "pathName": "Sub_BottomNote"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "BottomNote_Note5"
+            "pathName": "BottomNote_Sub"
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "SmartIntakeCommand"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Note5_Shoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "VisionShoot"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "SubShoot"
+                }
+              }
+            ]
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Note5Shoot_Note4"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "SmartIntakeCommand"
+            "pathName": "Sub_Note5"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Note4_Shoot"
+            "pathName": "Note5_Sub"
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "VisionShoot"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "SubShoot"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Sub_Note4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note4_Sub"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "SubShoot"
+                }
+              }
+            ]
           }
         }
       ]

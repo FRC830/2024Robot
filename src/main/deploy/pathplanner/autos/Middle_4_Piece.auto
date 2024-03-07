@@ -1,26 +1,108 @@
 {
   "version": 1.0,
-  "startingPose": null,
+  "startingPose": {
+    "position": {
+      "x": 1.18,
+      "y": 5.55
+    },
+    "rotation": 0
+  },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "SubShoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakeDown"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "SubShoot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeDown"
+                }
+              }
+            ]
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Preloaded_TopNote"
+            "pathName": "Sub_TopNote"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TopNote_Sub"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "SubShoot"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Sub_MiddleNote"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MiddleNote_Sub"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "SubShoot"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Sub_BottomNote"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BottomNote_Sub"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "SubShoot"
+                }
+              }
+            ]
           }
         }
       ]
