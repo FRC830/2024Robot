@@ -49,7 +49,7 @@ void LauncherManager::HandleInput(LauncherInput &launcherInput, LauncherOutput &
         {
             m_launcher.ProfiledMoveToAngle(STOW_ANGLE);
             
-            if (intakeOutput.intakePos == IntakePos::GROUND && intakeInput.runIntakeIn)
+            if ((intakeOutput.intakePos == IntakePos::GROUND && intakeInput.runIntakeIn) || (launcherInput.runIndexerBackwardSlow))
             {
                 m_launcher.SetFlywheelSpeed(-10.0);
             }
