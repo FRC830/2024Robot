@@ -48,10 +48,12 @@ void Robot::RobotInit() {
   
   frc::SmartDashboard::PutData("Pathplanner Autos", &m_auto_chooser);
 
+  // Register Named Commands
   pathplanner::NamedCommands::registerCommand("SubShoot", std::make_shared<SubShoot>(_robot_control_data));
   pathplanner::NamedCommands::registerCommand("SmartIntakeCommand", std::make_shared<SmartIntakeCommand>(_robot_control_data));
   pathplanner::NamedCommands::registerCommand("VisionShoot", std::make_shared<VisionShoot>(_robot_control_data));
-
+  pathplanner::NamedCommands::registerCommand("IntakeDown", std::make_shared<IntakeDown>(_robot_control_data));
+  
   SwerveInit();
   
 }
@@ -167,6 +169,14 @@ void Robot::TeleopPeriodic() {
   }
 
   _robot_control_data.autoAimInput.robotCurAngle = _gyro.GetHeading().Degrees().to<double>();
+
+/*  
+  if (_robot_control_data.swerveInput.resetGyroZeroHeading)
+  {
+    _gyro.SetZeroHeading(double(_gyro.GetRawHeading().Degrees()));
+  }
+*/
+
   m_autoAim.HandleInput(_robot_control_data);
 
   if (_robot_control_data.autoAimInput.autoAim)
