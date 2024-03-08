@@ -7,6 +7,7 @@ struct SwerveInput{
     double yTranslation;
     double rotation;
     bool slowMode;
+    bool resetGyroZeroHeading;
 };
 
 

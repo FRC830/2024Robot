@@ -55,6 +55,15 @@ void ControllerInterface::UpdateSwerveInput(RobotControlData &controlData)
         controlData.swerveInput.yTranslation *= m_slowmodefactor;
         controlData.swerveInput.rotation *= m_slowmodefactor;
     }
+
+    if (m_pilot.GetLeftTriggerAxis() > 0.2 && m_pilot.GetRightTriggerAxis() > 0.2)
+    {
+        controlData.swerveInput.resetGyroZeroHeading = true;
+    }
+    else
+    {
+        controlData.swerveInput.resetGyroZeroHeading = false;
+    }
 };
 
 void ControllerInterface::UpdateVisionInput(RobotControlData &controlData) {
