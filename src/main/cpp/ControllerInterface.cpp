@@ -13,6 +13,7 @@ void ControllerInterface::UpdateIntakeInput(RobotControlData &controlData)
     controlData.intakeInput.goToAmpPos = m_copilot.GetLeftY() > 0.5;
     controlData.intakeInput.goToStowPos = m_copilot.GetLeftY() < -0.5;
     controlData.intakeInput.goToPseudoStowPos = m_copilot.GetLeftX() > 0.5;
+    controlData.intakeInput.runIntakeOutSlow = m_copilot.GetLeftTriggerAxis() >= 0.2;
 
     if (controlData.intakeOutput.intakePos == IntakePos::AMP)
     {
