@@ -20,14 +20,10 @@ class IntakeHAL
         double GetAngle(); 
         double GetSpeed();
         void ResetProfiledMoveState();
-        void fixInversion();
-        bool checkIfInverted();
         void PublishDebugInfo();
-
         
 
     private:
-        bool m_curIntakeInversion;
         rev::CANSparkMax m_RGTActMotor{RGT_INTAKE_ACT_MTR_ID, rev::CANSparkMax::MotorType::kBrushless};
         rev::CANSparkMax m_LFTActMotor{LFT_INTAKE_ACT_MTR_ID, rev::CANSparkMax::MotorType::kBrushless};
         rev::CANSparkMax m_RGTPvtMotor{RGT_INTAKE_PVT_MTR_ID, rev::CANSparkMax::MotorType::kBrushless};
