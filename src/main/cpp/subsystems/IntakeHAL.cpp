@@ -1,14 +1,23 @@
 #include "subsystems/IntakeHAL.h"
 
 
+
 IntakeHAL::IntakeHAL(){
-     
+    // Since our pivot motor had no issue move the intake up and down. However we had issues with the actuator 
+    //motors rotating the right way. 
     m_LFTActMotor.RestoreFactoryDefaults();
     m_LFTPvtMotor.RestoreFactoryDefaults();
     m_RGTActMotor.RestoreFactoryDefaults();
     m_RGTPvtMotor.RestoreFactoryDefaults();
+    
+
+    /**
+     * Here's the act motor inversion stuff. 
+     * Inverted intake is set to true...  
+    */
 
     m_LFTActMotor.SetInverted(INVERT_INTAKE_ACT);
+    m_curIntakeInversion = m_LFTActMotor.GetInverted();
 
     m_RGTActMotor.Follow(m_LFTActMotor, true);
     m_RGTPvtMotor.Follow(m_LFTPvtMotor, false);
@@ -56,6 +65,10 @@ IntakeHAL::IntakeHAL(){
 void IntakeHAL::RunIntake(double speed) {
 
     m_intakeSpeed = speed;
+
+    if (checkIfInverted()) {
+        fixInversion();
+    }
 
     m_LFTActMotor.Set(m_intakeSpeed);
 
@@ -141,8 +154,28 @@ double IntakeHAL::GetSpeed() {
 
 }
 
+void IntakeHAL::fixInversion() {
+    m_LFTActMotor.RestoreFactoryDefaults();
+    m_RGTActMotor.RestoreFactoryDefaults();
+    m_RGTActMotor.Follow(m_LFTActMotor, true);
+    m_LFTActMotor.SetInverted(INVERT_INTAKE_ACT);
+    m_curIntakeInversion = m_LFTActMotor.GetInverted();
+    m_LFTActMotor.SetSmartCurrentLimit(INTAKE_ACT_CURRENT_LIMIT);
+    m_LFTActMotor.BurnFlash();
+    m_RGTActMotor.BurnFlash();
+}
+
+bool IntakeHAL::checkIfInverted() {
+
+    return m_curIntakeInversion;
+
+}
+
+
 void IntakeHAL::PublishDebugInfo()
 {
+
+    
     pub_intakeSpeed.Set(m_intakeSpeed);
     pub_angle.Set(GetAngle());
     pub_speed.Set(GetSpeed());
