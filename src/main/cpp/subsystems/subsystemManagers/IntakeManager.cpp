@@ -21,7 +21,11 @@ void IntakeManager::ResetIntake()
 
 void IntakeManager::HandleInput(IntakeInput &input, IntakeOutput &output)
 {
-    if (input.runIntakeIn && !input.runIntakeOut)
+    if (input.runIntakeOutSlow)
+    {
+        m_intake.RunIntake(-0.1);
+    }
+    else if (input.runIntakeIn && !input.runIntakeOut)
     {
         m_intake.RunIntake(NORMAL_INTAKE_SPEED);
     }
@@ -117,7 +121,7 @@ void IntakeManager::HandleInput(IntakeInput &input, IntakeOutput &output)
     {
         output.intakePos = IntakePos::GROUND;
     }
-    else if (std::fabs(m_intake.GetAngle() - AMP_POS) < tolerance)
+    else if (std::fabs(m_intake.GetAngle() - AMP_POS) < 5.0)
     {
         output.intakePos = IntakePos::AMP;
     }

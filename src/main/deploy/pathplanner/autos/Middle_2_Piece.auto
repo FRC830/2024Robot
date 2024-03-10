@@ -60,37 +60,6 @@
               }
             ]
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Sub_MiddleNote"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "MiddleNote_Sub"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "SubShoot"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeDown"
-                }
-              }
-            ]
-          }
         }
       ]
     }

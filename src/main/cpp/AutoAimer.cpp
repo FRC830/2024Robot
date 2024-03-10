@@ -7,7 +7,8 @@ AutoAimer::AutoAimer()
     m_lookup.emplace_back(VisionSetPoint{59.34, 50.0, 75.0});
     m_lookup.emplace_back(VisionSetPoint{107.4769, 30, 130.0});
     m_lookup.emplace_back(VisionSetPoint{155.16, 22.3, 175.0});
-    m_lookup.emplace_back(VisionSetPoint{200.58, 21.8, 250});
+    m_lookup.emplace_back(VisionSetPoint{172.71, 21.2, 205.3}); 
+    m_lookup.emplace_back(VisionSetPoint{200.58, 20.5, 250});
 
     
 
@@ -147,6 +148,9 @@ void AutoAimer::MonitorLauncherFlyWheelSpeed(RobotControlData& data) {
         {
             auto setpoint = data.launcherInput.visionSpeedSetpoint;
             auto current = data.launcherOutput.flywheelSpeed;
+            frc::SmartDashboard::PutNumber("FlywheelSpeedSetPoint", setpoint);
+            frc::SmartDashboard::PutNumber("FlywheelCurrentSPEED", current);
+            frc::SmartDashboard::PutBoolean("VisionFlywheelAtSpeed?????", std::fabs(setpoint - current) < 0.05 * setpoint);
 
             if (std::fabs(setpoint - current) < 0.05 * setpoint) {
 

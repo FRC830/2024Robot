@@ -6,6 +6,7 @@ struct IntakeInput
 {
     bool runIntakeOut;
     bool runIntakeIn;
+    bool runIntakeOutSlow;
     bool goToGroundPos;
     bool goToStowPos;
     bool goToAmpPos;

@@ -1,0 +1,31 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.6230802761177547,
+      "y": 4.532093743217444
+    },
+    "rotation": -62.44718842328223
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "SubShoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Drive Out"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
