@@ -2,7 +2,7 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.0,
+      "x": 1.18,
       "y": 5.55
     },
     "rotation": 0
@@ -43,9 +43,16 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "SubShoot"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "SubShoot"
+                }
+              }
+            ]
           }
         },
         {
@@ -61,9 +68,16 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "SubShoot"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "SubShoot"
+                }
+              }
+            ]
           }
         },
         {
@@ -79,9 +93,16 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "SubShoot"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "SubShoot"
+                }
+              }
+            ]
           }
         }
       ]
