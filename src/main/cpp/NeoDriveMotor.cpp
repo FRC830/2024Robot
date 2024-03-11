@@ -5,17 +5,43 @@ void NeoDriveMotor::Configure(SwerveDriveMotorConfig &config){
     m_motorID = config.motorID;
     m_motor = config.motor;
     m_PID = config.PID;
-    m_motor->RestoreFactoryDefaults();
-    m_PID->SetP(config.p);
-    m_PID->SetI(config.i);
-    m_PID->SetD(config.d);
-    m_PID->SetFF(config.ff);
-    m_motor->SetIdleMode(config.idleMode);
-    m_encoder->SetVelocityConversionFactor(config.ratio);
-    m_encoder->SetPositionConversionFactor(config.ratio * 60);
-    m_motor->SetSmartCurrentLimit(config.drive_motor_current_limit);
-    m_motor->EnableVoltageCompensation(config.swerve_voltage_compensation);
-    m_motor->BurnFlash();
+
+    bool successfulConfig = false;
+    int numRetries = 0;
+    rev::REVLibError error;
+
+    while (!successfulConfig && numRetries <= 5)
+    {
+        numRetries++;
+
+        error = m_motor->RestoreFactoryDefaults();
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_motor->SetCANTimeout(50);
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_PID->SetP(config.p);
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_PID->SetI(config.i);
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_PID->SetD(config.d);
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_PID->SetFF(config.ff);
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_encoder->SetVelocityConversionFactor(config.ratio);
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_encoder->SetPositionConversionFactor(config.ratio * 60);
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_motor->SetIdleMode(config.idleMode);
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_motor->SetSmartCurrentLimit(config.drive_motor_current_limit);
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_motor->EnableVoltageCompensation(config.swerve_voltage_compensation);
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_motor->BurnFlash();
+        if (error != rev::REVLibError::kOk) continue;
+
+        successfulConfig = true;
+    }
+
     m_MaxSpeed = config.maxSpeed;
     m_correction_factor = config.correction_factor;
 };
