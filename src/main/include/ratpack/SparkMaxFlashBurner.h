@@ -7,12 +7,12 @@
 
 #define BURN_FLASH(spark_max)\
 {\
-    rev::REVLibError error = spark_max->BurnFlash();\
+    rev::REVLibError error = (spark_max)->BurnFlash();\
     if (error != rev::REVLibError::kOk)\
     {\
         SparkMaxFlashBurner::GetInstance().AddToRetryList(spark_max);\
     }\
-}\
+}
 
 class SparkMaxFlashBurner
 {
