@@ -8,6 +8,7 @@ struct LauncherInput
     bool useVisionControl;
     double visionAngleSetpoint;
     double visionSpeedSetpoint;
+    double compare;
     bool goToStowPos;
     bool goToSubPos;
     bool runIndexerForward; //Indexer is the little "kick" to help the Note transfer from the Intake to the Launcher

@@ -22,6 +22,7 @@ struct AutoAimInput{
     bool autoAim;
     double robotCurAngle;
     double robotSetAngle;
+    double compare;
 };
 
 struct AutoAimOutput{

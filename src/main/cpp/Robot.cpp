@@ -8,7 +8,7 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 void Robot::updateDashBoardValues() {
-
+  
   frc::SmartDashboard::PutBoolean("AutoAim", false);
   frc::SmartDashboard::PutNumber("RobotCurAngle", _robot_control_data.autoAimInput.robotCurAngle);
   frc::SmartDashboard::PutNumber("RobotSetAngle", _robot_control_data.autoAimInput.robotSetAngle);
