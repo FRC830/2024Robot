@@ -1,4 +1,4 @@
-#include "include/ratpack/SparkMaxFlashBurner.h"
+#include "ratpack/SparkMaxFlashBurner.h"
 
 #include <iostream>
 
