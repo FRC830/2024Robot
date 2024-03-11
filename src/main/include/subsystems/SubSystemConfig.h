@@ -42,7 +42,7 @@ const bool LFT_PVT_ABS_ENC_INVERTED = false;
 const double LFT_PVT_ABS_ENC_CONVERSION_FACTOR = 360.0;
 const bool LFT_PVT_MTR_INVERTED = true;
 
-const bool INVERT_INTAKE_ACT = true;
+const bool INVERT_INTAKE_ACT = false;
 
 // ###########################################################
 // #                        LAUNCHER                         #

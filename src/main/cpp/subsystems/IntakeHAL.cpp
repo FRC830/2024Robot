@@ -8,9 +8,9 @@ IntakeHAL::IntakeHAL(){
     m_RGTActMotor.RestoreFactoryDefaults();
     m_RGTPvtMotor.RestoreFactoryDefaults();
 
-    m_LFTActMotor.SetInverted(INVERT_INTAKE_ACT);
+    m_RGTActMotor.SetInverted(INVERT_INTAKE_ACT);
 
-    m_RGTActMotor.Follow(m_LFTActMotor, true);
+    m_LFTActMotor.Follow(m_RGTActMotor, true);
     m_RGTPvtMotor.Follow(m_LFTPvtMotor, false);
 
     m_LFTActMotor.EnableVoltageCompensation(VOLT_COMP);
@@ -21,7 +21,6 @@ IntakeHAL::IntakeHAL(){
     m_LFTPvtPID.SetP(INTAKE_P);
     m_LFTPvtPID.SetI(INTAKE_I);
     m_LFTPvtPID.SetD(INTAKE_D);
-
     
     m_LFTActMotor.SetSmartCurrentLimit(INTAKE_ACT_CURRENT_LIMIT);
     m_LFTPvtMotor.SetSmartCurrentLimit(INTAKE_PVT_CURRENT_LIMIT);
