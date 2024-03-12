@@ -1,0 +1,171 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.0055648106551263,
+      "y": 5.545975061415772
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "SubShoot"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": []
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Sub_BottomNote"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionShoot"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": []
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BottomNote_MiddleNote"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionShoot"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": []
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MiddleNote_TopNote"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionShoot"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": []
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TopNote_Note1"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.5
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note1_Shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionShoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot_Note2"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": []
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note2_Shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionShoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot_Note3"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeDown"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note3_Shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionShoot"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
