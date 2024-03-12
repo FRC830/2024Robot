@@ -151,9 +151,11 @@ void AutoAimer::MonitorLauncherFlyWheelSpeed(RobotControlData& data) {
             auto current = data.launcherOutput.flywheelSpeed;
             frc::SmartDashboard::PutNumber("FlywheelSpeedSetPoint", setpoint);
             
-            frc::SmartDashboard::PutBoolean("VisionFlywheelAtSpeed?????", std::fabs(setpoint - current) < 0.05 * setpoint);
+            bool atSpeed = std::fabs(setpoint - current) <= 0.1 * std::fabs(setpoint);
 
-            if (std::fabs(setpoint) - current < 0.05 * setpoint) {
+            frc::SmartDashboard::PutBoolean("VisionFlywheelAtSpeed?????", atSpeed);
+
+            if (atSpeed) {
 
                 m_flyWheelState++;
                 
@@ -216,7 +218,7 @@ void AutoAimer::HandleInput(RobotControlData& data) {
             }
             case 1: 
             {
-                // TurnRobotToHeading(data);
+                TurnRobotToHeading(data);
                 MonitorLauncherAngle(data);
                 MonitorLauncherFlyWheelSpeed(data);
 
