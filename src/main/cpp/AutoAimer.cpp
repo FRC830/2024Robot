@@ -4,11 +4,11 @@
 
 AutoAimer::AutoAimer()
 {
-    m_lookup.emplace_back(VisionSetPoint{59.34, 50.0, 75.0});
-    m_lookup.emplace_back(VisionSetPoint{107.4769, 30, 130.0});
-    m_lookup.emplace_back(VisionSetPoint{155.16, 22.3, 175.0});
-    m_lookup.emplace_back(VisionSetPoint{172.71, 21.2, 205.3}); 
-    m_lookup.emplace_back(VisionSetPoint{200.58, 20.5, 250});
+    m_lookup.emplace_back(VisionSetPoint{59.34, 50.0, 75.0, -51.9});
+    m_lookup.emplace_back(VisionSetPoint{107.4769, 30, 130.0, -89.5});
+    m_lookup.emplace_back(VisionSetPoint{155.16, 22.3, 175.0, -104.5});
+    m_lookup.emplace_back(VisionSetPoint{172.71, 21.2, 205.3, -104.7}); 
+    m_lookup.emplace_back(VisionSetPoint{200.58, 20.5, 250, -106.5});
 
     
 
@@ -24,7 +24,7 @@ VisionSetPoint AutoAimer::DetermineSetpoint(double dist) {
 
     if (dist <= m_lookup.front().distance || dist > m_lookup.back().distance)
     {
-        return VisionSetPoint{dist, 0.0, 0.0};
+        return VisionSetPoint{dist, 0.0, 0.0, 0.0};
     }
 
 
@@ -54,6 +54,7 @@ VisionSetPoint AutoAimer::DetermineSetpoint(double dist) {
 
     ret.flywheelSpeed = (ratio * (b.flywheelSpeed - a.flywheelSpeed)) + a.flywheelSpeed;
     ret.launcherAngle = (ratio * (b.launcherAngle - a.launcherAngle)) + a.launcherAngle;
+    ret.compare = (ratio * (b.compare - a.compare)) + a.compare;
 
     frc::SmartDashboard::PutNumber("after_vision_flywheel_speedASDF", ret.flywheelSpeed);
     frc::SmartDashboard::PutNumber("after_vision_launcher_angleASDF", ret.launcherAngle);
@@ -146,13 +147,15 @@ void AutoAimer::MonitorLauncherFlyWheelSpeed(RobotControlData& data) {
 
         case 0:
         {
-            auto setpoint = data.launcherInput.visionSpeedSetpoint;
+            auto setpoint = data.launcherInput.compare;
             auto current = data.launcherOutput.flywheelSpeed;
             frc::SmartDashboard::PutNumber("FlywheelSpeedSetPoint", setpoint);
-            frc::SmartDashboard::PutNumber("FlywheelCurrentSPEED", current);
-            frc::SmartDashboard::PutBoolean("VisionFlywheelAtSpeed?????", std::fabs(setpoint - current) < 0.05 * setpoint);
+            
+            bool atSpeed = std::fabs(setpoint - current) <= 0.1 * std::fabs(setpoint);
 
-            if (std::fabs(setpoint - current) < 0.05 * setpoint) {
+            frc::SmartDashboard::PutBoolean("VisionFlywheelAtSpeed?????", atSpeed);
+
+            if (atSpeed) {
 
                 m_flyWheelState++;
                 
@@ -200,6 +203,7 @@ void AutoAimer::HandleInput(RobotControlData& data) {
 
                 data.launcherInput.visionAngleSetpoint = set.launcherAngle;
                 data.launcherInput.visionSpeedSetpoint = set.flywheelSpeed;
+                data.launcherInput.compare = set.compare;
 
                 if (frc::SmartDashboard::GetBoolean("use_manual_tune", false))
                 {

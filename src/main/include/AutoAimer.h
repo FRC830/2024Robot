@@ -15,6 +15,7 @@
         double distance;
         double launcherAngle;
         double flywheelSpeed;
+        double compare;
     };
 
 class AutoAimer{
