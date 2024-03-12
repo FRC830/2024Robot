@@ -52,4 +52,5 @@ bool VisionShoot::IsFinished() {
 
 void VisionShoot::End(bool interrupted) {
     m_controlData.autoAimInput.autoAim = false;
+    m_controlData.launcherInput.runIndexerForward = false;
 }

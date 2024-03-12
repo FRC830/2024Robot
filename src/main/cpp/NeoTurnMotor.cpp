@@ -7,17 +7,39 @@ void NeoTurnMotor::Configure(SwerveTurnMotorConfig &config){
     m_turn_motor = config.turn_motor;
     m_relative_Encoder = config.relative_Encoder;
     m_PID = config.PID;
-    m_turn_motor->RestoreFactoryDefaults();
-    m_turn_motor->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
-    m_PID->SetP(config.p);
-    m_PID->SetI(config.i);
-    m_PID->SetD(config.d);
-    m_PID->SetFF(config.ff);
-    m_relative_Encoder->SetPositionConversionFactor(config.ratio);
-    m_turn_motor->SetSmartCurrentLimit(config.turn_motor_current_limit);
-    SetInverted(config.inverted);
-    m_turn_motor->EnableVoltageCompensation(config.swerve_voltage_compensation);
-    m_turn_motor->BurnFlash();
+    bool succesful = false;
+    int num_retries = 0;
+    rev::REVLibError error;
+    
+    while (!succesful && num_retries <= 5)
+    {
+        num_retries++;
+        error = m_turn_motor->RestoreFactoryDefaults();
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_turn_motor->SetCANTimeout(50);
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_turn_motor->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_PID->SetP(config.p);
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_PID->SetI(config.i);
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_PID->SetD(config.d);
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_PID->SetFF(config.ff);
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_relative_Encoder->SetPositionConversionFactor(config.ratio);
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_turn_motor->SetSmartCurrentLimit(config.turn_motor_current_limit);
+        if (error != rev::REVLibError::kOk) continue;
+        SetInverted(config.inverted);
+        if (m_turn_motor->GetInverted() != config.inverted) continue;
+        error = m_turn_motor->EnableVoltageCompensation(config.swerve_voltage_compensation);
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_turn_motor->BurnFlash();
+        if (error != rev::REVLibError::kOk) continue;
+        succesful = true;
+    }
 };    
 
 void NeoTurnMotor::SetRotation(frc::Rotation2d deg){

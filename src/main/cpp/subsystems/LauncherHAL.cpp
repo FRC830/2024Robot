@@ -2,28 +2,71 @@
 
 LauncherHAL::LauncherHAL()
 {
-    m_PvtMotor.RestoreFactoryDefaults();
-    m_IndMotor.RestoreFactoryDefaults();
-    m_PvtMotor.EnableVoltageCompensation(VOLT_COMP);
-    m_IndMotor.EnableVoltageCompensation(VOLT_COMP);
+    bool successfulConfig = false;
+    int numRetries = 0;
+    rev::REVLibError error;
 
-    m_PvtPID.SetPositionPIDWrappingEnabled(false);
+    while (!successfulConfig && numRetries <= 5)
+    {
+        numRetries++;
+   
+        error = m_PvtMotor.RestoreFactoryDefaults();
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_IndMotor.RestoreFactoryDefaults();
+        if (error != rev::REVLibError::kOk) continue;
 
-    m_PvtPID.SetP(PVT_P);
-    m_PvtPID.SetI(PVT_I);
-    m_PvtPID.SetD(PVT_D);
+        error = m_PvtMotor.SetCANTimeout(50);
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_IndMotor.SetCANTimeout(50);
+        if (error != rev::REVLibError::kOk) continue;
 
-    m_PvtAbsEncoder.SetInverted(true);
-    m_PvtAbsEncoder.SetPositionConversionFactor(LAUNCHER_PVT_ABS_ENC_CONVERSION_FACTOR);
-    m_PvtAbsEncoder.SetZeroOffset(LAUNCHER_ZERO_OFFSET);
+        error = m_PvtMotor.EnableVoltageCompensation(VOLT_COMP);
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_IndMotor.EnableVoltageCompensation(VOLT_COMP);
+        if (error != rev::REVLibError::kOk) continue;
+      
+        error = m_PvtMotor.SetSmartCurrentLimit(LAUNCHER_PVT_CURRENT_LIMIT);
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_IndMotor.SetSmartCurrentLimit(LAUNCHER_IND_CURRENT_LIMIT);
+        if (error != rev::REVLibError::kOk) continue;
 
-    m_PvtPID.SetFeedbackDevice(m_PvtAbsEncoder);
+        error = m_PvtMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+        if (error != rev::REVLibError::kOk) continue;
+        
+        m_PvtMotor.SetInverted(true);
+        if (m_PvtMotor.GetInverted() != true) continue;
 
-    m_PvtMotor.SetSmartCurrentLimit(LAUNCHER_PVT_CURRENT_LIMIT);
-    m_IndMotor.SetSmartCurrentLimit(LAUNCHER_IND_CURRENT_LIMIT);
+        error = m_PvtMotor.BurnFlash();
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_IndMotor.BurnFlash();
+        if (error != rev::REVLibError::kOk) continue;
 
-    m_PvtMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
-    m_PvtMotor.SetInverted(true);
+        error = m_PvtPID.SetPositionPIDWrappingEnabled(false);
+        if (error != rev::REVLibError::kOk) continue;
+
+        error = m_PvtPID.SetP(PVT_P);
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_PvtPID.SetI(PVT_I);
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_PvtPID.SetD(PVT_D);
+        if (error != rev::REVLibError::kOk) continue;
+
+        error = m_PvtPID.SetFeedbackDevice(m_PvtAbsEncoder);
+        if (error != rev::REVLibError::kOk) continue;
+
+        error = m_PvtAbsEncoder.SetInverted(true);
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_PvtAbsEncoder.SetPositionConversionFactor(LAUNCHER_PVT_ABS_ENC_CONVERSION_FACTOR);
+        if (error != rev::REVLibError::kOk) continue;
+        error = m_PvtAbsEncoder.SetZeroOffset(LAUNCHER_ZERO_OFFSET);
+        if (error != rev::REVLibError::kOk) continue;
+        
+        successfulConfig = true;
+    }
+
+
+
+
 
     ctre::phoenix6::configs::TalonFXConfiguration configs{};
 
@@ -38,8 +81,6 @@ LauncherHAL::LauncherHAL()
     m_FlywheelTop.GetConfigurator().Apply(configs);
     m_FlywheelBottom.GetConfigurator().Apply(configs);
 
-    m_PvtMotor.BurnFlash();
-    m_IndMotor.BurnFlash();
 }
 
 void LauncherHAL::SetFlywheelSpeed(double speed)
