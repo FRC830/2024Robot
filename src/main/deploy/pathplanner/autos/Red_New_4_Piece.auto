@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.48918041856440025,
-      "y": 4.731312058043963
+      "x": 0.5868225259582199,
+      "y": 6.456421738466253
     },
-    "rotation": -60.0
+    "rotation": 60.0
   },
   "command": {
     "type": "sequential",
@@ -14,25 +14,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Path1"
+            "pathName": "3_Piece_Path_1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Path5"
+            "pathName": "Red_Path2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Path2"
+            "pathName": "3_Piece_Path_3"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Path3"
+            "pathName": "Red_Path4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3_Piece_Path_5"
           }
         }
       ]

@@ -3,29 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.036539916496203,
-        "y": 7.128357032514777
+        "x": 3.664277252218627,
+        "y": 6.0055285504973055
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.164330609736623,
-        "y": 6.282360836705591
+        "x": 4.562495435423436,
+        "y": 6.412860052183209
       },
       "isLocked": false,
-      "linkedName": "Note1"
+      "linkedName": "TopShootPos"
     },
     {
       "anchor": {
-        "x": 2.5049491320356694,
-        "y": 3.2482076160081075
+        "x": 5.742712350564652,
+        "y": 6.527748424453591
       },
       "prevControl": {
-        "x": 4.95938253963022,
-        "y": 3.895760259713903
+        "x": 5.263081461312067,
+        "y": 6.634333066509721
+      },
+      "nextControl": {
+        "x": 6.7767077009981,
+        "y": 6.297971679912826
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.026801723828832,
+        "y": 5.472864279061892
+      },
+      "prevControl": {
+        "x": 6.78391842381287,
+        "y": 5.451975484103641
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Sub"
+      "linkedName": "Note2"
     }
   ],
   "rotationTargets": [],
@@ -45,7 +61,7 @@
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 10.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

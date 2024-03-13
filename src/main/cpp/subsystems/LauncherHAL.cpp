@@ -1,4 +1,6 @@
 #include "subsystems/LauncherHAL.h"
+#include <iostream>
+#include <unistd.h>
 
 LauncherHAL::LauncherHAL()
 {
@@ -6,19 +8,23 @@ LauncherHAL::LauncherHAL()
     int numRetries = 0;
     rev::REVLibError error;
 
-    while (!successfulConfig && numRetries <= 5)
+    while (!successfulConfig && numRetries <= 20)
     {
+        std::cout << "Retrying flash for LauncherHAL" << std::endl;
         numRetries++;
    
         error = m_PvtMotor.RestoreFactoryDefaults();
+        usleep(200000);
         if (error != rev::REVLibError::kOk) continue;
         error = m_IndMotor.RestoreFactoryDefaults();
+        usleep(200000);
         if (error != rev::REVLibError::kOk) continue;
 
         error = m_PvtMotor.SetCANTimeout(50);
         if (error != rev::REVLibError::kOk) continue;
         error = m_IndMotor.SetCANTimeout(50);
         if (error != rev::REVLibError::kOk) continue;
+        
 
         error = m_PvtMotor.EnableVoltageCompensation(VOLT_COMP);
         if (error != rev::REVLibError::kOk) continue;
@@ -62,6 +68,8 @@ LauncherHAL::LauncherHAL()
         if (error != rev::REVLibError::kOk) continue;
         
         successfulConfig = true;
+
+        std::cout << "Flashing complete" << std::endl;
     }
 
 
