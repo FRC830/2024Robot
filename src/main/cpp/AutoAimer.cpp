@@ -8,7 +8,7 @@ AutoAimer::AutoAimer()
     m_lookup.emplace_back(VisionSetPoint{107.4769, 30, 130.0, -89.5});
     m_lookup.emplace_back(VisionSetPoint{155.16, 22.3, 175.0, -104.5});
     m_lookup.emplace_back(VisionSetPoint{172.71, 21.2, 205.3, -104.7}); 
-    m_lookup.emplace_back(VisionSetPoint{200.58, 20.5, 250, -106.5});
+    m_lookup.emplace_back(VisionSetPoint{200.58, 20.2, 250, -106.5});
 
     
 
