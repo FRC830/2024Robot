@@ -14,25 +14,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": null
+            "pathName": "RED_Path1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": null
+            "pathName": "RED_Path5"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": null
+            "pathName": "RED_Path2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": null
+            "pathName": "RED_Path3"
           }
         }
       ]
