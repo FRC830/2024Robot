@@ -8,7 +8,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Forward Path"
+            "pathName": null
           }
         },
         {
@@ -20,7 +20,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Backwards Path"
+            "pathName": null
           }
         }
       ]

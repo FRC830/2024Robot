@@ -1,6 +1,12 @@
 {
   "version": 1.0,
-  "startingPose": null,
+  "startingPose": {
+    "position": {
+      "x": 0.48918041856440025,
+      "y": 4.731312058043963
+    },
+    "rotation": -60.0
+  },
   "command": {
     "type": "sequential",
     "data": {
@@ -12,9 +18,15 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "SmartIntakeCommand"
+            "pathName": null
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": null
           }
         },
         {
@@ -26,6 +38,6 @@
       ]
     }
   },
-  "folder": "Test Autos",
+  "folder": "REDAUTON",
   "choreoAuto": false
 }

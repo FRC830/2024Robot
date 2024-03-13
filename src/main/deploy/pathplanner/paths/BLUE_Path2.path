@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.8078366589303156,
+        "y": 3.0288752689464666
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.572939832902567,
+        "y": 2.078435098346024
+      },
+      "isLocked": false,
+      "linkedName": "BottomShootPos"
+    },
+    {
+      "anchor": {
+        "x": 7.9882578085766855,
+        "y": 0.9504401706004426
+      },
+      "prevControl": {
+        "x": 6.25448782704181,
+        "y": 0.9504401706004426
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Note5"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "BLUEPATH",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
