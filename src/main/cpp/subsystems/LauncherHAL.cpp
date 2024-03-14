@@ -2,78 +2,107 @@
 #include <iostream>
 #include <unistd.h>
 
+#include "ratpack/CANSparkMaxDebugMacro.h"
+
 LauncherHAL::LauncherHAL()
 {
-    bool successfulConfig = false;
-    int numRetries = 0;
-    rev::REVLibError error;
 
-    while (!successfulConfig && numRetries <= 20)
+    START_RETRYING(PVT_MTR_RESTORE_FACOTRY_DEFAULT)
+    m_PvtMotor.RestoreFactoryDefaults();
+    END_RETRYING
+    START_RETRYING(IND_MTR_RESTORE_FACOTRY_DEFAULT)
+    m_IndMotor.RestoreFactoryDefaults();
+    END_RETRYING
+
+    START_RETRYING(PVT_MTR_SET_CAN_TIMEOUT)
+    m_PvtMotor.SetCANTimeout(50);
+    END_RETRYING
+    START_RETRYING(IND_MTR_RESTORE_FACOTRY_DEFAULT)
+    m_IndMotor.SetCANTimeout(50);
+    END_RETRYING
+
+    START_RETRYING(PVT_MTR_ENABLE_VOLTAGE_COMPENSATION)
+    m_PvtMotor.EnableVoltageCompensation(VOLT_COMP);
+    END_RETRYING
+    START_RETRYING(IND_MTR_ENABLE_VOLTAGE_COMPENSATION)
+    m_IndMotor.EnableVoltageCompensation(VOLT_COMP);
+    END_RETRYING
+    
+    START_RETRYING(PVT_MTR_SET_SMART_CURRENT_LIMIT)
+    m_PvtMotor.SetSmartCurrentLimit(LAUNCHER_PVT_CURRENT_LIMIT);
+    END_RETRYING
+    START_RETRYING(IND_MTR_SET_SMART_CURRENT_LIMIT)
+    m_IndMotor.SetSmartCurrentLimit(LAUNCHER_IND_CURRENT_LIMIT);
+    END_RETRYING
+
+    START_RETRYING(PVT_MTR_SET_IDLE_MODE)
+    m_PvtMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+    END_RETRYING
+    
     {
-        std::cout << "Retrying flash for LauncherHAL" << std::endl;
-        numRetries++;
-   
-        error = m_PvtMotor.RestoreFactoryDefaults();
-        usleep(200000);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_IndMotor.RestoreFactoryDefaults();
-        usleep(200000);
-        if (error != rev::REVLibError::kOk) continue;
+        bool successful = false;
+        int retries = 0;
 
-        error = m_PvtMotor.SetCANTimeout(50);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_IndMotor.SetCANTimeout(50);
-        if (error != rev::REVLibError::kOk) continue;
-        
-
-        error = m_PvtMotor.EnableVoltageCompensation(VOLT_COMP);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_IndMotor.EnableVoltageCompensation(VOLT_COMP);
-        if (error != rev::REVLibError::kOk) continue;
-      
-        error = m_PvtMotor.SetSmartCurrentLimit(LAUNCHER_PVT_CURRENT_LIMIT);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_IndMotor.SetSmartCurrentLimit(LAUNCHER_IND_CURRENT_LIMIT);
-        if (error != rev::REVLibError::kOk) continue;
-
-        error = m_PvtMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
-        if (error != rev::REVLibError::kOk) continue;
-        
-        m_PvtMotor.SetInverted(true);
-        if (m_PvtMotor.GetInverted() != true) continue;
-
-        error = m_PvtMotor.BurnFlash();
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_IndMotor.BurnFlash();
-        if (error != rev::REVLibError::kOk) continue;
-
-        error = m_PvtPID.SetPositionPIDWrappingEnabled(false);
-        if (error != rev::REVLibError::kOk) continue;
-
-        error = m_PvtPID.SetP(PVT_P);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_PvtPID.SetI(PVT_I);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_PvtPID.SetD(PVT_D);
-        if (error != rev::REVLibError::kOk) continue;
-
-        error = m_PvtPID.SetFeedbackDevice(m_PvtAbsEncoder);
-        if (error != rev::REVLibError::kOk) continue;
-
-        error = m_PvtAbsEncoder.SetInverted(true);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_PvtAbsEncoder.SetPositionConversionFactor(LAUNCHER_PVT_ABS_ENC_CONVERSION_FACTOR);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_PvtAbsEncoder.SetZeroOffset(LAUNCHER_ZERO_OFFSET);
-        if (error != rev::REVLibError::kOk) continue;
-        
-        successfulConfig = true;
-
-        std::cout << "Flashing complete" << std::endl;
+        while (!successful && retries <= 10)
+        {
+            retries++;
+            m_PvtMotor.SetInverted(true);
+            if (m_PvtMotor.GetInverted() == true)
+            {
+                successful = true;
+            }
+        }
     }
 
+    START_RETRYING(PVT_MTR_BURN_FLASH)
+    m_PvtMotor.BurnFlash();
+    END_RETRYING
+    START_RETRYING(IND_MTR_BURN_FLASH)
+    m_IndMotor.BurnFlash();
+    END_RETRYING
 
+    START_RETRYING(PVT_PID_SET_POSITION_PID_WRAPPING_ENABLED)
+    m_PvtPID.SetPositionPIDWrappingEnabled(false);
+    END_RETRYING
 
+    START_RETRYING(PVT_PID_SETP)
+    m_PvtPID.SetP(PVT_P);
+    END_RETRYING
+    START_RETRYING(PVT_PID_SETI)
+    m_PvtPID.SetI(PVT_I);
+    END_RETRYING
+    START_RETRYING(PVT_PID_SETD)
+    m_PvtPID.SetD(PVT_D);
+    END_RETRYING
+
+    START_RETRYING(PVT_PID_SET_FEEDBACK_DEVICE)
+    m_PvtPID.SetFeedbackDevice(m_PvtAbsEncoder);
+    END_RETRYING
+
+    {
+        bool successful = false;
+        int retries = 0;
+
+        while (!successful && retries <= 10)
+        {
+            retries++;
+            m_PvtAbsEncoder.SetInverted(true);
+
+            if (m_PvtAbsEncoder.GetInverted() == true)
+            {
+                successful = true;
+            }
+        }
+    }
+
+    START_RETRYING(PVT_ABS_ENC_SET_POSITION_CONVERSION_FACTOR)
+    m_PvtAbsEncoder.SetPositionConversionFactor(LAUNCHER_PVT_ABS_ENC_CONVERSION_FACTOR);
+    END_RETRYING
+    START_RETRYING(PVT_ABS_ENC_SET_ZERO_OFFSET)
+    m_PvtAbsEncoder.SetZeroOffset(LAUNCHER_ZERO_OFFSET);
+    END_RETRYING
+
+    std::cout << "Flashing complete" << std::endl;
 
 
     ctre::phoenix6::configs::TalonFXConfiguration configs{};

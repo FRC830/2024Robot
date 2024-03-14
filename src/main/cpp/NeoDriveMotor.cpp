@@ -1,4 +1,5 @@
 #include "NeoDriveMotor.h"
+#include "ratpack/CANSparkMaxDebugMacro.h"
 
 void NeoDriveMotor::Configure(SwerveDriveMotorConfig &config){
     m_encoder = config.encoder;
@@ -6,41 +7,56 @@ void NeoDriveMotor::Configure(SwerveDriveMotorConfig &config){
     m_motor = config.motor;
     m_PID = config.PID;
 
-    bool successfulConfig = false;
-    int numRetries = 0;
-    rev::REVLibError error;
+    START_RETRYING(NEO_DRIVE_MTR_RESTORE_FACTORY_DEFAULTS)
+    m_motor->RestoreFactoryDefaults();
+    END_RETRYING
+    START_RETRYING(NEO_DRIVE_MTR_SET_CAN_TIMEOUT)
+    m_motor->SetCANTimeout(50);
+    END_RETRYING
+    START_RETRYING(NEO_DRIVE_PID_SETP)
+    m_PID->SetP(config.p);
+    END_RETRYING
+    START_RETRYING(NEO_DRIVE_PID_SETI)
+    m_PID->SetI(config.i);
+    END_RETRYING
+    START_RETRYING(NEO_DRIVE_PID_SETD)
+    m_PID->SetD(config.d);
+    END_RETRYING
+    START_RETRYING(NEO_DRIVE_PID_SETP)
+    m_PID->SetFF(config.ff);
+    END_RETRYING
+    START_RETRYING(NEO_DRIVE_ENC_SET_VELOCITY_CONVERSION_FACTOR)
+    m_encoder->SetVelocityConversionFactor(config.ratio);
+    END_RETRYING
+    START_RETRYING(NEO_DRIVE_ENC_SET_POSITION_CONVERSION_FACTOR)
+    m_encoder->SetPositionConversionFactor(config.ratio * 60);
+    END_RETRYING
 
-    while (!successfulConfig && numRetries <= 5)
     {
-        numRetries++;
+        bool successful = false;
+        int retries = 0;
 
-        error = m_motor->RestoreFactoryDefaults();
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_motor->SetCANTimeout(50);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_PID->SetP(config.p);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_PID->SetI(config.i);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_PID->SetD(config.d);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_PID->SetFF(config.ff);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_encoder->SetVelocityConversionFactor(config.ratio);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_encoder->SetPositionConversionFactor(config.ratio * 60);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_motor->SetIdleMode(config.idleMode);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_motor->SetSmartCurrentLimit(config.drive_motor_current_limit);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_motor->EnableVoltageCompensation(config.swerve_voltage_compensation);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_motor->BurnFlash();
-        if (error != rev::REVLibError::kOk) continue;
+        while (!successful && retries <= 50)
+        {
+            retries++;
+            m_motor->SetIdleMode(config.idleMode);
 
-        successfulConfig = true;
+            if (m_motor->GetIdleMode() == config.idleMode)
+            {
+                successful = true;
+            }
+        }
     }
+
+    START_RETRYING(NEO_DRIVE_MTR_SET_SMART_CURRENT_LIMIT)
+    m_motor->SetSmartCurrentLimit(config.drive_motor_current_limit);
+    END_RETRYING
+    START_RETRYING(NEO_DRIVE_MTR_ENABLE_VOLTAGE_COMPENSATION)
+    m_motor->EnableVoltageCompensation(config.swerve_voltage_compensation);
+    END_RETRYING
+    START_RETRYING(NEO_DRIVE_MTR_BURN_FLASH)
+    m_motor->BurnFlash();
+    END_RETRYING
 
     m_MaxSpeed = config.maxSpeed;
     m_correction_factor = config.correction_factor;

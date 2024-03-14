@@ -1,5 +1,5 @@
 #include"NeoTurnMotor.h"
-
+#include "ratpack/CANSparkMaxDebugMacro.h"
 
 void NeoTurnMotor::Configure(SwerveTurnMotorConfig &config){
     m_pastCommandAngle = -1000000.0;
@@ -7,39 +7,72 @@ void NeoTurnMotor::Configure(SwerveTurnMotorConfig &config){
     m_turn_motor = config.turn_motor;
     m_relative_Encoder = config.relative_Encoder;
     m_PID = config.PID;
-    bool succesful = false;
-    int num_retries = 0;
-    rev::REVLibError error;
-    
-    while (!succesful && num_retries <= 5)
+
+    START_RETRYING(NEO_TURN_MTR_RESTORE_FACTORY_DEFAULT)
+    m_turn_motor->RestoreFactoryDefaults();
+    END_RETRYING
+    START_RETRYING(NEO_TURN_MTR_SET_CAN_TIMEOUT)
+    m_turn_motor->SetCANTimeout(50);
+    END_RETRYING
+
     {
-        num_retries++;
-        error = m_turn_motor->RestoreFactoryDefaults();
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_turn_motor->SetCANTimeout(50);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_turn_motor->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_PID->SetP(config.p);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_PID->SetI(config.i);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_PID->SetD(config.d);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_PID->SetFF(config.ff);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_relative_Encoder->SetPositionConversionFactor(config.ratio);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_turn_motor->SetSmartCurrentLimit(config.turn_motor_current_limit);
-        if (error != rev::REVLibError::kOk) continue;
-        SetInverted(config.inverted);
-        if (m_turn_motor->GetInverted() != config.inverted) continue;
-        error = m_turn_motor->EnableVoltageCompensation(config.swerve_voltage_compensation);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_turn_motor->BurnFlash();
-        if (error != rev::REVLibError::kOk) continue;
-        succesful = true;
+        bool successful = false;
+        int retries = 0;
+
+        while (!successful && retries <= 50)
+        {
+            retries++;
+            m_turn_motor->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+
+            if (m_turn_motor->GetIdleMode() == rev::CANSparkMax::IdleMode::kBrake)
+            {
+                successful = true;
+            }
+        }
     }
+
+    START_RETRYING(NEO_TURN_PID_SETP)
+    m_PID->SetP(config.p);
+    END_RETRYING
+    START_RETRYING(NEO_TURN_PID_SETI)
+    m_PID->SetI(config.i);
+    END_RETRYING
+    START_RETRYING(NEO_TURN_PID_SETD)
+    m_PID->SetD(config.d);
+    END_RETRYING
+    START_RETRYING(NEO_TURN_PID_SETFF)
+    m_PID->SetFF(config.ff);
+    END_RETRYING
+    START_RETRYING(NEO_TURN_REL_ENC_SET_POSITION_CONVERSION_FACTOR)
+    m_relative_Encoder->SetPositionConversionFactor(config.ratio);
+    END_RETRYING
+    START_RETRYING(NEO_TURN_MTR_SET_SMART_CURRENT_LIMIT)
+    m_turn_motor->SetSmartCurrentLimit(config.turn_motor_current_limit);
+    END_RETRYING
+
+    {
+        bool successful = false;
+        int retries = 0;
+
+        while (!successful && retries <= 50)
+        {
+            retries++;
+            SetInverted(config.inverted);
+
+            if (GetInverted() == config.inverted)
+            {
+                successful = true;
+            }
+        }
+    }
+
+    START_RETRYING(NEO_TURN_MTR_ENABLE_VOLTAGE_COMPENSATION)
+    m_turn_motor->EnableVoltageCompensation(config.swerve_voltage_compensation);
+    END_RETRYING
+    START_RETRYING(NEO_TURN_MTR_BURN_FLASH)
+    m_turn_motor->BurnFlash();
+    END_RETRYING
+
 };    
 
 void NeoTurnMotor::SetRotation(frc::Rotation2d deg){

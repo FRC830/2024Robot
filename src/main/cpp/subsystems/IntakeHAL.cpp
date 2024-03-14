@@ -1,96 +1,180 @@
 #include "subsystems/IntakeHAL.h"
-
+#include "ratpack/CANSparkMaxDebugMacro.h"
 
 IntakeHAL::IntakeHAL(){
-    bool successfulConfig = false;
-    int numRetries = 0;
-    rev::REVLibError error;
 
-    while (!successfulConfig && numRetries <= 5)
+    START_RETRYING(LFT_ACT_MTR_RESTORE_FACTORY_DEFAULT)
+    m_LFTActMotor.RestoreFactoryDefaults();
+    END_RETRYING
+    START_RETRYING(LFT_PVT_MTR_RESTORE_FACTORY_DEFAULT)
+    m_LFTPvtMotor.RestoreFactoryDefaults();
+    END_RETRYING
+    START_RETRYING(RGT_ACT_MTR_RESTORE_FACTORY_DEFAULT)
+    m_RGTActMotor.RestoreFactoryDefaults();
+    END_RETRYING
+    START_RETRYING(RGT_PVT_MTR_RESTORE_FACTORY_DEFAULT)
+    m_RGTPvtMotor.RestoreFactoryDefaults();
+    END_RETRYING
+
+    START_RETRYING(LFT_ACT_MTR_SET_CAN_TIMEOUT)
+    m_LFTActMotor.SetCANTimeout(50);
+    END_RETRYING
+    START_RETRYING(LFT_PVT_MTR_SET_CAN_TIMEOUT)
+    m_LFTPvtMotor.SetCANTimeout(50);
+    END_RETRYING
+    START_RETRYING(RGT_ACT_MTR_SET_CAN_TIMEOUT)
+    m_RGTActMotor.SetCANTimeout(50);
+    END_RETRYING
+    START_RETRYING(RGT_PVT_MTR_SET_CAN_TIMEOUT)
+    m_RGTPvtMotor.SetCANTimeout(50);
+    END_RETRYING
+
     {
-        numRetries++;
+        bool successful = false;
+        int retries = 0;
 
+        while (!successful && retries <= 10)
+        {
+            retries++;
+            m_RGTActMotor.SetInverted(INVERT_INTAKE_ACT);
 
-        error = m_LFTActMotor.RestoreFactoryDefaults();
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_LFTPvtMotor.RestoreFactoryDefaults();
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_RGTActMotor.RestoreFactoryDefaults();
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_RGTPvtMotor.RestoreFactoryDefaults();
-        if (error != rev::REVLibError::kOk) continue;
-
-        error = m_LFTActMotor.SetCANTimeout(50);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_LFTPvtMotor.SetCANTimeout(50);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_RGTActMotor.SetCANTimeout(50);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_RGTPvtMotor.SetCANTimeout(50);
-        if (error != rev::REVLibError::kOk) continue;
-
-        m_RGTActMotor.SetInverted(INVERT_INTAKE_ACT);
-        if (m_RGTActMotor.GetInverted() != INVERT_INTAKE_ACT) continue;
-
-        error = m_LFTActMotor.Follow(m_RGTActMotor, true);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_RGTPvtMotor.Follow(m_LFTPvtMotor, false);
-        if (error != rev::REVLibError::kOk) continue;
-
-        error = m_LFTActMotor.EnableVoltageCompensation(VOLT_COMP);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_LFTPvtMotor.EnableVoltageCompensation(VOLT_COMP);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_RGTActMotor.EnableVoltageCompensation(VOLT_COMP);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_RGTPvtMotor.EnableVoltageCompensation(VOLT_COMP);
-        if (error != rev::REVLibError::kOk) continue;
-
-        error = m_LFTPvtPID.SetP(INTAKE_P);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_LFTPvtPID.SetI(INTAKE_I);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_LFTPvtPID.SetD(INTAKE_D);
-        if (error != rev::REVLibError::kOk) continue;
-        
-        error = m_LFTActMotor.SetSmartCurrentLimit(INTAKE_ACT_CURRENT_LIMIT);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_LFTPvtMotor.SetSmartCurrentLimit(INTAKE_PVT_CURRENT_LIMIT);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_RGTActMotor.SetSmartCurrentLimit(INTAKE_ACT_CURRENT_LIMIT);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_RGTPvtMotor.SetSmartCurrentLimit(INTAKE_PVT_CURRENT_LIMIT);
-        if (error != rev::REVLibError::kOk) continue;
-
-        error = m_LFTPvtPID.SetFeedbackDevice(m_LFTPvtAbsEncoder);
-        if (error != rev::REVLibError::kOk) continue;
-
-        error = m_LFTPvtMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_RGTPvtMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
-        if (error != rev::REVLibError::kOk) continue;
-        
-        error = m_LFTPvtAbsEncoder.SetInverted(LFT_PVT_ABS_ENC_INVERTED);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_LFTPvtAbsEncoder.SetPositionConversionFactor(LFT_PVT_ABS_ENC_CONVERSION_FACTOR);
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_LFTPvtAbsEncoder.SetZeroOffset(INTAKE_ZERO_OFFSET);
-        if (error != rev::REVLibError::kOk) continue;
-
-        m_LFTPvtMotor.SetInverted(LFT_PVT_MTR_INVERTED);
-        if (m_LFTPvtMotor.GetInverted() != LFT_PVT_MTR_INVERTED) continue;
-    
-        error = m_LFTActMotor.BurnFlash();
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_LFTPvtMotor.BurnFlash();
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_RGTActMotor.BurnFlash();
-        if (error != rev::REVLibError::kOk) continue;
-        error = m_RGTPvtMotor.BurnFlash();
-        if (error != rev::REVLibError::kOk) continue;
-
-        successfulConfig = true;
+            if (m_RGTActMotor.GetInverted() == INVERT_INTAKE_ACT)
+            {
+                successful = true;
+            }
+        }
     }
+
+    START_RETRYING(LFT_ACT_MTR_FOLLOW)
+    m_LFTActMotor.Follow(m_RGTActMotor, true);
+    END_RETRYING
+    START_RETRYING(RGT_PVT_MTR_FOLLOW)
+    
+    m_RGTPvtMotor.Follow(m_LFTPvtMotor, false);
+    END_RETRYING
+    START_RETRYING(LFT_ACT_MTR_ENABLE_VOLTAGE_COMPENSATION)
+    m_LFTActMotor.EnableVoltageCompensation(VOLT_COMP);
+    END_RETRYING
+    START_RETRYING(LFT_PVT_MTR_ENABLE_VOLTAGE_COMPENSATION)
+    m_LFTPvtMotor.EnableVoltageCompensation(VOLT_COMP);
+    END_RETRYING
+    START_RETRYING(RGT_ACT_MTR_ENABLE_VOLTAGE_COMPENSATION)
+    m_RGTActMotor.EnableVoltageCompensation(VOLT_COMP);
+    END_RETRYING
+    START_RETRYING(RGT_PVT_MTR_ENABLE_VOLTAGE_COMPENSATION)
+    m_RGTPvtMotor.EnableVoltageCompensation(VOLT_COMP);
+    END_RETRYING
+
+    START_RETRYING(LFT_PVT_PID_SETP)
+    m_LFTPvtPID.SetP(INTAKE_P);
+    END_RETRYING
+    START_RETRYING(LFT_PVT_PID_SETI)
+    m_LFTPvtPID.SetI(INTAKE_I);
+    END_RETRYING
+    START_RETRYING(LFT_PVT_PID_SETD)
+    m_LFTPvtPID.SetD(INTAKE_D);
+    END_RETRYING
+    
+    START_RETRYING(LFT_ACT_MTR_SET_SMART_CURRENT_LIMIT)
+    m_LFTActMotor.SetSmartCurrentLimit(INTAKE_ACT_CURRENT_LIMIT);
+    END_RETRYING
+    START_RETRYING(LFT_PVT_MTR_SET_SMART_CURRENT_LIMIT)
+    m_LFTPvtMotor.SetSmartCurrentLimit(INTAKE_PVT_CURRENT_LIMIT);
+    END_RETRYING
+    START_RETRYING(RGT_ACT_MTR_SET_SMART_CURRENT_LIMIT)
+    m_RGTActMotor.SetSmartCurrentLimit(INTAKE_ACT_CURRENT_LIMIT);
+    END_RETRYING
+    START_RETRYING(RGT_PVT_MTR_SET_SMART_CURRENT_LIMIT)
+    m_RGTPvtMotor.SetSmartCurrentLimit(INTAKE_PVT_CURRENT_LIMIT);
+    END_RETRYING
+
+    START_RETRYING(LFT_PVT_PID_SET_FEEDBACK_DEVICE)
+    m_LFTPvtPID.SetFeedbackDevice(m_LFTPvtAbsEncoder);
+    END_RETRYING
+
+    {
+        bool successful = false;
+        int retries = 0;
+
+        while (!successful && retries <= 10)
+        {
+            retries++;
+            m_LFTPvtMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+
+            if (m_LFTPvtMotor.GetIdleMode() == rev::CANSparkMax::IdleMode::kBrake)
+            {
+                successful = true;
+            }
+        }
+    }
+
+    {
+        bool successful = false;
+        int retries = 0;
+
+        while (!successful && retries <= 10)
+        {
+            retries++;
+            m_RGTPvtMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+
+            if (m_RGTPvtMotor.GetIdleMode() == rev::CANSparkMax::IdleMode::kBrake)
+            {
+                successful = true;
+            }
+        }
+    }
+    
+    {
+        bool successful = false;
+        int retries = 0;
+
+        while (!successful && retries <= 10)
+        {
+            retries++;
+            m_LFTPvtAbsEncoder.SetInverted(LFT_PVT_ABS_ENC_INVERTED);
+
+            if (m_LFTPvtAbsEncoder.GetInverted() == LFT_PVT_ABS_ENC_INVERTED)
+            {
+                successful = true;
+            }
+        }
+    }
+
+    START_RETRYING(LFT_PVT_ABS_ENC_SET_POSITION_CONVERSION_FACTOR)
+    m_LFTPvtAbsEncoder.SetPositionConversionFactor(LFT_PVT_ABS_ENC_CONVERSION_FACTOR);
+    END_RETRYING
+    START_RETRYING(LFT_PVT_ABS_ENC_SET_ZERO_OFFSET)
+    m_LFTPvtAbsEncoder.SetZeroOffset(INTAKE_ZERO_OFFSET);
+    END_RETRYING
+
+    {
+        bool successful = false;
+        int retries = 0;
+
+        while (!successful && retries <= 10)
+        {
+            retries++;
+            m_LFTPvtMotor.SetInverted(LFT_PVT_MTR_INVERTED);
+
+            if (m_LFTPvtMotor.GetInverted() == LFT_PVT_MTR_INVERTED)
+            {
+                successful = true;
+            }
+        }
+    }
+
+    START_RETRYING(LFT_ACT_MTR_BURN_FLASH)
+    m_LFTActMotor.BurnFlash();
+    END_RETRYING
+    START_RETRYING(LFT_PVT_MTR_BURN_FLASH)
+    m_LFTPvtMotor.BurnFlash();
+    END_RETRYING
+    START_RETRYING(RGT_ACT_MTR_BURN_FLASH)
+    m_RGTActMotor.BurnFlash();
+    END_RETRYING
+    START_RETRYING(RGT_PVT_MTR_BURN_FLASH)
+    m_RGTPvtMotor.BurnFlash();
+    END_RETRYING
 
 
     auto inst = nt::NetworkTableInstance::GetDefault();
