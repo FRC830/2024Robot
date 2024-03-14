@@ -3,37 +3,53 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.5049491320356694,
-        "y": 3.2482076160081075
+        "x": 3.664277252218627,
+        "y": 6.0055285504973055
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.011604527025848,
-        "y": 3.937537849630406
+        "x": 4.562495435423436,
+        "y": 6.412860052183209
       },
       "isLocked": false,
-      "linkedName": "Sub"
+      "linkedName": "TopShootPos"
     },
     {
       "anchor": {
-        "x": 8.036539916496203,
-        "y": 7.128357032514777
+        "x": 5.742712350564652,
+        "y": 6.527748424453591
       },
       "prevControl": {
-        "x": 5.41499614923564,
-        "y": 6.3763604140177215
+        "x": 5.263081461312067,
+        "y": 6.634333066509721
+      },
+      "nextControl": {
+        "x": 6.7767077009981,
+        "y": 6.297971679912826
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.026801723828832,
+        "y": 5.472864279061892
+      },
+      "prevControl": {
+        "x": 6.78391842381287,
+        "y": 5.451975484103641
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Note1"
+      "linkedName": "Note2"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Intake",
-      "waypointRelativePos": 0.5,
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.35,
       "command": {
         "type": "parallel",
         "data": {
@@ -41,7 +57,7 @@
             {
               "type": "named",
               "data": {
-                "name": "SmartIntakeCommand"
+                "name": "VisionShoot"
               }
             }
           ]
@@ -61,9 +77,9 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "BLUEPATH",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 10.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

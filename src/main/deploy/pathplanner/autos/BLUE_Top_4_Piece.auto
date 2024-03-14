@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.18,
-      "y": 5.55
+      "x": 0.5868225259582199,
+      "y": 6.456421738466253
     },
-    "rotation": 0
+    "rotation": 60.0
   },
   "command": {
     "type": "sequential",
@@ -33,81 +33,54 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Sub_TopNote"
+            "pathName": "BLUE_3_Piece_Path_1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionShoot"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "TopNote_Sub"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "SubShoot"
-                }
-              }
-            ]
+            "pathName": "BLUE_3_Piece_Path_2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Sub_Note1"
+            "pathName": "BLUE_3_Piece_Path_3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionShoot"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Note1_Sub"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "SubShoot"
-                }
-              }
-            ]
+            "pathName": "BLUE_3_Piece_Path_4"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Sub_Note2"
+            "pathName": "BLUE_3_Piece_Path_5"
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Note2_Sub"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "SubShoot"
-                }
-              }
-            ]
+            "name": "VisionShoot"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "BLUEAUTON",
   "choreoAuto": false
 }

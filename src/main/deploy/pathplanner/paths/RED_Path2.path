@@ -3,45 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.664277252218627,
-        "y": 6.0055285504973055
+        "x": 2.8078366589303156,
+        "y": 3.0288752689464666
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.562495435423436,
-        "y": 6.412860052183209
+        "x": 4.572939832902567,
+        "y": 2.078435098346024
       },
       "isLocked": false,
-      "linkedName": "TopShootPos"
+      "linkedName": "BottomShootPos"
     },
     {
       "anchor": {
-        "x": 5.742712350564652,
-        "y": 6.527748424453591
+        "x": 7.977907247481162,
+        "y": 1.2188049746469864
       },
       "prevControl": {
-        "x": 5.263081461312067,
-        "y": 6.634333066509721
-      },
-      "nextControl": {
-        "x": 6.7767077009981,
-        "y": 6.297971679912826
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 8.026801723828832,
-        "y": 5.472864279061892
-      },
-      "prevControl": {
-        "x": 6.78391842381287,
-        "y": 5.451975484103641
+        "x": 6.244137265946287,
+        "y": 1.2188049746469864
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Note2"
+      "linkedName": "RedNote5"
     }
   ],
   "rotationTargets": [],
@@ -59,9 +43,9 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "REDPATH",
   "previewStartingState": {
-    "rotation": 10.0,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

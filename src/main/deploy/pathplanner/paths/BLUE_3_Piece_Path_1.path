@@ -3,37 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.5049491320356694,
-        "y": 3.2482076160081075
+        "x": 0.5868225259582199,
+        "y": 6.456421738466253
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.040275561461933,
-        "y": 4.731312058049185
+        "x": 1.5545089614352265,
+        "y": 6.5486372194118445
       },
       "isLocked": false,
-      "linkedName": "Sub"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.026801723828832,
-        "y": 5.472864279061892
+        "x": 2.849614248846819,
+        "y": 6.642636796723976
       },
       "prevControl": {
-        "x": 6.9092511935571554,
-        "y": 6.19352770512679
+        "x": 2.014062450516759,
+        "y": 6.569526014370095
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Note2"
+      "linkedName": "Top_Note"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Intake",
-      "waypointRelativePos": 0.5,
+      "name": "SmartIntakeCommand",
+      "waypointRelativePos": 0,
       "command": {
         "type": "parallel",
         "data": {
@@ -57,13 +57,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 25.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "BLUEPATH",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 60.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

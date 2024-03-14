@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.5868225259582199,
-      "y": 6.456421738466253
+      "x": 0.48918041856440025,
+      "y": 4.731312058043963
     },
-    "rotation": 60.0
+    "rotation": -60.0
   },
   "command": {
     "type": "sequential",
@@ -14,36 +14,30 @@
         {
           "type": "path",
           "data": {
-            "pathName": "3_Piece_Path_1"
+            "pathName": "RED_Path1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "3_Piece_Path_2"
+            "pathName": "RED_Path5"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "3_Piece_Path_3"
+            "pathName": "RED_Path2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "3_Piece_Path_4"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "3_Piece_Path_5"
+            "pathName": "RED_Path3"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "REDAUTON",
   "choreoAuto": false
 }

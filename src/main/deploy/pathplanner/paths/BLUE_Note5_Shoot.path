@@ -4,31 +4,15 @@
     {
       "anchor": {
         "x": 7.9882578085766855,
-        "y": 2.5170997924693057
+        "y": 0.9504401706004426
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.223154634604435,
-        "y": 2.454433407594551
+        "x": 5.7740455430020265,
+        "y": 1.033995350433449
       },
       "isLocked": false,
-      "linkedName": "Note4"
-    },
-    {
-      "anchor": {
-        "x": 5.5429632487763705,
-        "y": 1.6149649602098184
-      },
-      "prevControl": {
-        "x": 5.99337789006367,
-        "y": 1.5979928143062396
-      },
-      "nextControl": {
-        "x": 5.01230600835305,
-        "y": 1.6349607402837398
-      },
-      "isLocked": false,
-      "linkedName": null
+      "linkedName": "Note5"
     },
     {
       "anchor": {
@@ -36,8 +20,8 @@
         "y": 3.0288752689464666
       },
       "prevControl": {
-        "x": 4.750494590047705,
-        "y": 1.4413268521193536
+        "x": 4.656495012735573,
+        "y": 1.5562152243897376
       },
       "nextControl": null,
       "isLocked": false,
@@ -59,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "BLUEPATH",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

@@ -3,29 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.602628408103792,
-        "y": 5.545975061415772
+        "x": 2.609393106826927,
+        "y": 4.1046482092964185
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6026284081037918,
-        "y": 5.545975061415772
+        "x": 2.6198375043060524,
+        "y": 1.838213956326132
       },
       "isLocked": false,
-      "linkedName": "Middle_Note"
+      "linkedName": "Bottom_Note"
     },
     {
       "anchor": {
-        "x": 2.5049491320356694,
-        "y": 3.2482076160081075
+        "x": 5.042937719463226,
+        "y": 1.5666596218688629
       },
       "prevControl": {
-        "x": 3.5049491320356703,
-        "y": 3.2482076160081075
+        "x": 4.016202897582513,
+        "y": 1.7584672259564698
+      },
+      "nextControl": {
+        "x": 5.99337789006367,
+        "y": 1.389104864723724
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.9882578085766855,
+        "y": 2.5170997924693057
+      },
+      "prevControl": {
+        "x": 6.442486981666077,
+        "y": 2.5484329849066834
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Sub"
+      "linkedName": "Note4"
     }
   ],
   "rotationTargets": [],
@@ -43,7 +59,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "BLUEPATH",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0
