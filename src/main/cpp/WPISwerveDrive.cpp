@@ -101,7 +101,23 @@ void WPISwerveDrive::Drive(frc::ChassisSpeeds speed) {
 
 }
 void WPISwerveDrive::Drive(std::vector<frc::SwerveModuleState> &state) {
-    if (!m_ebrake) {
+
+    if (!m_ebrake)
+    {
+        bool lockSwerveModules = true;
+        for (int i = 0; i < state.size(); i++)
+        {
+            lockSwerveModules = lockSwerveModules && (std::fabs(double(state[i].speed) < 0.01));
+        }
+
+        if (lockSwerveModules)
+        {
+            state[0].angle = frc::Rotation2d(units::degree_t(315.0));
+            state[1].angle = frc::Rotation2d(units::degree_t(45.0));
+            state[2].angle = frc::Rotation2d(units::degree_t(45.0));
+            state[3].angle = frc::Rotation2d(units::degree_t(315.0));
+        }
+
         for(int i = 0; i < state.size(); i++){
             m_modules[i]->SetState(state[i]);
         }
@@ -114,7 +130,6 @@ void WPISwerveDrive::Drive(std::vector<frc::SwerveModuleState> &state) {
     // frc::SmartDashboard::PutNumber("")
 
     // frc::SmartDashboard::PutData("Rotation2d", )
-
     
 
     m_estimator->UpdateWithTime(frc::Timer::GetFPGATimestamp(), m_gyro->GetRawHeading(), {m_modules[0]->GetPosition(), m_modules[1]->GetPosition(), m_modules[2]->GetPosition(), m_modules[3]->GetPosition()});
