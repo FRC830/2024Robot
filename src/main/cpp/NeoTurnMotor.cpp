@@ -29,6 +29,15 @@ void NeoTurnMotor::Configure(SwerveTurnMotorConfig &config){
                 successful = true;
             }
         }
+
+        if (successful)
+        {
+            std::cout << "Configured NEO_TURN_MTR_SET_IDLE_MODE in " << retries << " retries" << std::endl;
+        }
+        else
+        {
+            std::cout << "Failed to configure NEO_TURN_MTR_SET_IDLE_MODE" << std::endl;
+        }
     }
 
     START_RETRYING(NEO_TURN_PID_SETP)
@@ -63,6 +72,15 @@ void NeoTurnMotor::Configure(SwerveTurnMotorConfig &config){
             {
                 successful = true;
             }
+        }
+
+        if (successful)
+        {
+            std::cout << "Configured NEO_TURN_MTR_SET_INVERTED in " << retries << " retries" << std::endl;
+        }
+        else
+        {
+            std::cout << "Failed to configure NEO_TURN_MTR_SET_INVERTED" << std::endl;
         }
     }
 

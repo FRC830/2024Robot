@@ -3,29 +3,29 @@
 
 IntakeHAL::IntakeHAL(){
 
-    START_RETRYING(LFT_ACT_MTR_RESTORE_FACTORY_DEFAULT)
+    START_RETRYING(INTAKE_LFT_ACT_MTR_RESTORE_FACTORY_DEFAULT)
     m_LFTActMotor.RestoreFactoryDefaults();
     END_RETRYING
-    START_RETRYING(LFT_PVT_MTR_RESTORE_FACTORY_DEFAULT)
+    START_RETRYING(INTAKE_LFT_PVT_MTR_RESTORE_FACTORY_DEFAULT)
     m_LFTPvtMotor.RestoreFactoryDefaults();
     END_RETRYING
-    START_RETRYING(RGT_ACT_MTR_RESTORE_FACTORY_DEFAULT)
+    START_RETRYING(INTAKE_RGT_ACT_MTR_RESTORE_FACTORY_DEFAULT)
     m_RGTActMotor.RestoreFactoryDefaults();
     END_RETRYING
-    START_RETRYING(RGT_PVT_MTR_RESTORE_FACTORY_DEFAULT)
+    START_RETRYING(INTAKE_RGT_PVT_MTR_RESTORE_FACTORY_DEFAULT)
     m_RGTPvtMotor.RestoreFactoryDefaults();
     END_RETRYING
 
-    START_RETRYING(LFT_ACT_MTR_SET_CAN_TIMEOUT)
+    START_RETRYING(INTAKE_LFT_ACT_MTR_SET_CAN_TIMEOUT)
     m_LFTActMotor.SetCANTimeout(50);
     END_RETRYING
-    START_RETRYING(LFT_PVT_MTR_SET_CAN_TIMEOUT)
+    START_RETRYING(INTAKE_LFT_PVT_MTR_SET_CAN_TIMEOUT)
     m_LFTPvtMotor.SetCANTimeout(50);
     END_RETRYING
-    START_RETRYING(RGT_ACT_MTR_SET_CAN_TIMEOUT)
+    START_RETRYING(INTAKE_RGT_ACT_MTR_SET_CAN_TIMEOUT)
     m_RGTActMotor.SetCANTimeout(50);
     END_RETRYING
-    START_RETRYING(RGT_PVT_MTR_SET_CAN_TIMEOUT)
+    START_RETRYING(INTAKE_RGT_PVT_MTR_SET_CAN_TIMEOUT)
     m_RGTPvtMotor.SetCANTimeout(50);
     END_RETRYING
 
@@ -33,7 +33,7 @@ IntakeHAL::IntakeHAL(){
         bool successful = false;
         int retries = 0;
 
-        while (!successful && retries <= 10)
+        while (!successful && retries <= 50)
         {
             retries++;
             m_RGTActMotor.SetInverted(INVERT_INTAKE_ACT);
@@ -43,52 +43,60 @@ IntakeHAL::IntakeHAL(){
                 successful = true;
             }
         }
+
+        if (successful)
+        {
+            std::cout << "Configured INTAKE_RGT_ACT_MTR_SET_INVERTED in " << retries << " retries" << std::endl;
+        }
+        else
+        {
+            std::cout << "Failed to configure INTAKE_RGT_ACT_MTR_SET_INVERTED" << std::endl;
+        }
     }
 
-    START_RETRYING(LFT_ACT_MTR_FOLLOW)
+    START_RETRYING(INTAKE_LFT_ACT_MTR_FOLLOW)
     m_LFTActMotor.Follow(m_RGTActMotor, true);
     END_RETRYING
-    START_RETRYING(RGT_PVT_MTR_FOLLOW)
-    
+    START_RETRYING(INTAKE_RGT_PVT_MTR_FOLLOW)
     m_RGTPvtMotor.Follow(m_LFTPvtMotor, false);
     END_RETRYING
-    START_RETRYING(LFT_ACT_MTR_ENABLE_VOLTAGE_COMPENSATION)
+    START_RETRYING(INTAKE_LFT_ACT_MTR_ENABLE_VOLTAGE_COMPENSATION)
     m_LFTActMotor.EnableVoltageCompensation(VOLT_COMP);
     END_RETRYING
-    START_RETRYING(LFT_PVT_MTR_ENABLE_VOLTAGE_COMPENSATION)
+    START_RETRYING(INTAKE_LFT_PVT_MTR_ENABLE_VOLTAGE_COMPENSATION)
     m_LFTPvtMotor.EnableVoltageCompensation(VOLT_COMP);
     END_RETRYING
-    START_RETRYING(RGT_ACT_MTR_ENABLE_VOLTAGE_COMPENSATION)
+    START_RETRYING(INTAKE_RGT_ACT_MTR_ENABLE_VOLTAGE_COMPENSATION)
     m_RGTActMotor.EnableVoltageCompensation(VOLT_COMP);
     END_RETRYING
-    START_RETRYING(RGT_PVT_MTR_ENABLE_VOLTAGE_COMPENSATION)
+    START_RETRYING(INTAKE_RGT_PVT_MTR_ENABLE_VOLTAGE_COMPENSATION)
     m_RGTPvtMotor.EnableVoltageCompensation(VOLT_COMP);
     END_RETRYING
 
-    START_RETRYING(LFT_PVT_PID_SETP)
+    START_RETRYING(INTAKE_LFT_PVT_PID_SETP)
     m_LFTPvtPID.SetP(INTAKE_P);
     END_RETRYING
-    START_RETRYING(LFT_PVT_PID_SETI)
+    START_RETRYING(INTAKE_LFT_PVT_PID_SETI)
     m_LFTPvtPID.SetI(INTAKE_I);
     END_RETRYING
-    START_RETRYING(LFT_PVT_PID_SETD)
+    START_RETRYING(INTAKE_LFT_PVT_PID_SETD)
     m_LFTPvtPID.SetD(INTAKE_D);
     END_RETRYING
     
-    START_RETRYING(LFT_ACT_MTR_SET_SMART_CURRENT_LIMIT)
+    START_RETRYING(INTAKE_LFT_ACT_MTR_SET_SMART_CURRENT_LIMIT)
     m_LFTActMotor.SetSmartCurrentLimit(INTAKE_ACT_CURRENT_LIMIT);
     END_RETRYING
-    START_RETRYING(LFT_PVT_MTR_SET_SMART_CURRENT_LIMIT)
+    START_RETRYING(INTAKE_LFT_PVT_MTR_SET_SMART_CURRENT_LIMIT)
     m_LFTPvtMotor.SetSmartCurrentLimit(INTAKE_PVT_CURRENT_LIMIT);
     END_RETRYING
-    START_RETRYING(RGT_ACT_MTR_SET_SMART_CURRENT_LIMIT)
+    START_RETRYING(INTAKE_RGT_ACT_MTR_SET_SMART_CURRENT_LIMIT)
     m_RGTActMotor.SetSmartCurrentLimit(INTAKE_ACT_CURRENT_LIMIT);
     END_RETRYING
-    START_RETRYING(RGT_PVT_MTR_SET_SMART_CURRENT_LIMIT)
+    START_RETRYING(INTAKE_RGT_PVT_MTR_SET_SMART_CURRENT_LIMIT)
     m_RGTPvtMotor.SetSmartCurrentLimit(INTAKE_PVT_CURRENT_LIMIT);
     END_RETRYING
 
-    START_RETRYING(LFT_PVT_PID_SET_FEEDBACK_DEVICE)
+    START_RETRYING(INTAKE_LFT_PVT_PID_SET_FEEDBACK_DEVICE)
     m_LFTPvtPID.SetFeedbackDevice(m_LFTPvtAbsEncoder);
     END_RETRYING
 
@@ -96,7 +104,7 @@ IntakeHAL::IntakeHAL(){
         bool successful = false;
         int retries = 0;
 
-        while (!successful && retries <= 10)
+        while (!successful && retries <= 50)
         {
             retries++;
             m_LFTPvtMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
@@ -106,13 +114,22 @@ IntakeHAL::IntakeHAL(){
                 successful = true;
             }
         }
+
+        if (successful)
+        {
+            std::cout << "Configured INTAKE_LFT_PVT_MTR_SET_IDLE_MODE in " << retries << " retries" << std::endl;
+        }
+        else
+        {
+            std::cout << "Failed to configure INTAKE_LFT_PVT_MTR_SET_IDLE_MODE" << std::endl;
+        }
     }
 
     {
         bool successful = false;
         int retries = 0;
 
-        while (!successful && retries <= 10)
+        while (!successful && retries <= 50)
         {
             retries++;
             m_RGTPvtMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
@@ -122,13 +139,22 @@ IntakeHAL::IntakeHAL(){
                 successful = true;
             }
         }
+
+        if (successful)
+        {
+            std::cout << "Configured INTAKE_RGT_PVT_MTR_SET_IDLE_MODE in " << retries << " retries" << std::endl;
+        }
+        else
+        {
+            std::cout << "Failed to configure INTAKE_RGT_PVT_MTR_SET_IDLE_MODE" << std::endl;
+        }
     }
     
     {
         bool successful = false;
         int retries = 0;
 
-        while (!successful && retries <= 10)
+        while (!successful && retries <= 50)
         {
             retries++;
             m_LFTPvtAbsEncoder.SetInverted(LFT_PVT_ABS_ENC_INVERTED);
@@ -138,12 +164,21 @@ IntakeHAL::IntakeHAL(){
                 successful = true;
             }
         }
+
+        if (successful)
+        {
+            std::cout << "Configured INTAKE_LFT_PVT_ABS_ENC_SET_INVERTED in " << retries << " retries" << std::endl;
+        }
+        else
+        {
+            std::cout << "Failed to configure INTAKE_LFT_PVT_ABS_ENC_SET_INVERTED" << std::endl;
+        }
     }
 
-    START_RETRYING(LFT_PVT_ABS_ENC_SET_POSITION_CONVERSION_FACTOR)
+    START_RETRYING(INTAKE_LFT_PVT_ABS_ENC_SET_POSITION_CONVERSION_FACTOR)
     m_LFTPvtAbsEncoder.SetPositionConversionFactor(LFT_PVT_ABS_ENC_CONVERSION_FACTOR);
     END_RETRYING
-    START_RETRYING(LFT_PVT_ABS_ENC_SET_ZERO_OFFSET)
+    START_RETRYING(INTAKE_LFT_PVT_ABS_ENC_SET_ZERO_OFFSET)
     m_LFTPvtAbsEncoder.SetZeroOffset(INTAKE_ZERO_OFFSET);
     END_RETRYING
 
@@ -151,7 +186,7 @@ IntakeHAL::IntakeHAL(){
         bool successful = false;
         int retries = 0;
 
-        while (!successful && retries <= 10)
+        while (!successful && retries <= 50)
         {
             retries++;
             m_LFTPvtMotor.SetInverted(LFT_PVT_MTR_INVERTED);
@@ -161,18 +196,27 @@ IntakeHAL::IntakeHAL(){
                 successful = true;
             }
         }
+
+        if (successful)
+        {
+            std::cout << "Configured INTAKE_LFT_PVT_MTR in " << retries << " retries" << std::endl;
+        }
+        else
+        {
+            std::cout << "Failed to configure INTAKE_LFT_PVT_MTR" << std::endl;
+        }
     }
 
-    START_RETRYING(LFT_ACT_MTR_BURN_FLASH)
+    START_RETRYING(INTAKE_LFT_ACT_MTR_BURN_FLASH)
     m_LFTActMotor.BurnFlash();
     END_RETRYING
-    START_RETRYING(LFT_PVT_MTR_BURN_FLASH)
+    START_RETRYING(INTAKE_LFT_PVT_MTR_BURN_FLASH)
     m_LFTPvtMotor.BurnFlash();
     END_RETRYING
-    START_RETRYING(RGT_ACT_MTR_BURN_FLASH)
+    START_RETRYING(INTAKE_RGT_ACT_MTR_BURN_FLASH)
     m_RGTActMotor.BurnFlash();
     END_RETRYING
-    START_RETRYING(RGT_PVT_MTR_BURN_FLASH)
+    START_RETRYING(INTAKE_RGT_PVT_MTR_BURN_FLASH)
     m_RGTPvtMotor.BurnFlash();
     END_RETRYING
 

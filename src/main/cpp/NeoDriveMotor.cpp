@@ -46,6 +46,15 @@ void NeoDriveMotor::Configure(SwerveDriveMotorConfig &config){
                 successful = true;
             }
         }
+
+        if (successful)
+        {
+            std::cout << "Configured NEO_DRIVE_MTR_SET_IDLE_MODE in " << retries << " retries" << std::endl;
+        }
+        else
+        {
+            std::cout << "Failed to configure NEO_DRIVE_MTR_SET_IDLE_MODE" << std::endl;
+        }
     }
 
     START_RETRYING(NEO_DRIVE_MTR_SET_SMART_CURRENT_LIMIT)

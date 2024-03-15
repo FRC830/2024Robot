@@ -7,35 +7,35 @@
 LauncherHAL::LauncherHAL()
 {
 
-    START_RETRYING(PVT_MTR_RESTORE_FACOTRY_DEFAULT)
+    START_RETRYING(LAUNCHER_PVT_MTR_RESTORE_FACOTRY_DEFAULT)
     m_PvtMotor.RestoreFactoryDefaults();
     END_RETRYING
-    START_RETRYING(IND_MTR_RESTORE_FACOTRY_DEFAULT)
+    START_RETRYING(LAUNCHER_IND_MTR_RESTORE_FACOTRY_DEFAULT)
     m_IndMotor.RestoreFactoryDefaults();
     END_RETRYING
 
-    START_RETRYING(PVT_MTR_SET_CAN_TIMEOUT)
+    START_RETRYING(LAUNCHER_PVT_MTR_SET_CAN_TIMEOUT)
     m_PvtMotor.SetCANTimeout(50);
     END_RETRYING
-    START_RETRYING(IND_MTR_RESTORE_FACOTRY_DEFAULT)
+    START_RETRYING(LAUNCHER_IND_MTR_RESTORE_FACOTRY_DEFAULT)
     m_IndMotor.SetCANTimeout(50);
     END_RETRYING
 
-    START_RETRYING(PVT_MTR_ENABLE_VOLTAGE_COMPENSATION)
+    START_RETRYING(LAUNCHER_PVT_MTR_ENABLE_VOLTAGE_COMPENSATION)
     m_PvtMotor.EnableVoltageCompensation(VOLT_COMP);
     END_RETRYING
-    START_RETRYING(IND_MTR_ENABLE_VOLTAGE_COMPENSATION)
+    START_RETRYING(LAUNCHER_IND_MTR_ENABLE_VOLTAGE_COMPENSATION)
     m_IndMotor.EnableVoltageCompensation(VOLT_COMP);
     END_RETRYING
     
-    START_RETRYING(PVT_MTR_SET_SMART_CURRENT_LIMIT)
+    START_RETRYING(LAUNCHER_PVT_MTR_SET_SMART_CURRENT_LIMIT)
     m_PvtMotor.SetSmartCurrentLimit(LAUNCHER_PVT_CURRENT_LIMIT);
     END_RETRYING
-    START_RETRYING(IND_MTR_SET_SMART_CURRENT_LIMIT)
+    START_RETRYING(LAUNCHER_IND_MTR_SET_SMART_CURRENT_LIMIT)
     m_IndMotor.SetSmartCurrentLimit(LAUNCHER_IND_CURRENT_LIMIT);
     END_RETRYING
 
-    START_RETRYING(PVT_MTR_SET_IDLE_MODE)
+    START_RETRYING(LAUNCHER_PVT_MTR_SET_IDLE_MODE)
     m_PvtMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
     END_RETRYING
     
@@ -43,7 +43,7 @@ LauncherHAL::LauncherHAL()
         bool successful = false;
         int retries = 0;
 
-        while (!successful && retries <= 10)
+        while (!successful && retries <= 50)
         {
             retries++;
             m_PvtMotor.SetInverted(true);
@@ -52,30 +52,39 @@ LauncherHAL::LauncherHAL()
                 successful = true;
             }
         }
+
+        if (successful)
+        {
+            std::cout << "Configured LAUNCHER_PVT_MTR_SET_INVERTED in " << retries << " retries" << std::endl; 
+        }
+        else
+        {
+            std::cout << "Failed to configure LAUNCHER_PVT_MTR_SET_INVERTED in " << retries << " retries" << std::endl; 
+        }
     }
 
-    START_RETRYING(PVT_MTR_BURN_FLASH)
+    START_RETRYING(LAUNCHER_PVT_MTR_BURN_FLASH)
     m_PvtMotor.BurnFlash();
     END_RETRYING
-    START_RETRYING(IND_MTR_BURN_FLASH)
+    START_RETRYING(LAUNCHER_IND_MTR_BURN_FLASH)
     m_IndMotor.BurnFlash();
     END_RETRYING
 
-    START_RETRYING(PVT_PID_SET_POSITION_PID_WRAPPING_ENABLED)
+    START_RETRYING(LAUNCHER_PVT_PID_SET_POSITION_PID_WRAPPING_ENABLED)
     m_PvtPID.SetPositionPIDWrappingEnabled(false);
     END_RETRYING
 
-    START_RETRYING(PVT_PID_SETP)
+    START_RETRYING(LAUNCHER_PVT_PID_SETP)
     m_PvtPID.SetP(PVT_P);
     END_RETRYING
-    START_RETRYING(PVT_PID_SETI)
+    START_RETRYING(LAUNCHER_PVT_PID_SETI)
     m_PvtPID.SetI(PVT_I);
     END_RETRYING
-    START_RETRYING(PVT_PID_SETD)
+    START_RETRYING(LAUNCHER_PVT_PID_SETD)
     m_PvtPID.SetD(PVT_D);
     END_RETRYING
 
-    START_RETRYING(PVT_PID_SET_FEEDBACK_DEVICE)
+    START_RETRYING(LAUNCHER_PVT_PID_SET_FEEDBACK_DEVICE)
     m_PvtPID.SetFeedbackDevice(m_PvtAbsEncoder);
     END_RETRYING
 
@@ -83,7 +92,7 @@ LauncherHAL::LauncherHAL()
         bool successful = false;
         int retries = 0;
 
-        while (!successful && retries <= 10)
+        while (!successful && retries <= 50)
         {
             retries++;
             m_PvtAbsEncoder.SetInverted(true);
@@ -92,6 +101,15 @@ LauncherHAL::LauncherHAL()
             {
                 successful = true;
             }
+        }
+
+        if (successful)
+        {
+            std::cout << "Configured LAUNCHER_PVT_ABS_ENC_SET_INVERTED in " << retries << " retries" << std::endl;
+        }
+        else
+        {
+            std::cout << "Failed to configure LAUNCHER_PVT_ABS_ENC_SET_INVERTED in " << retries << " retries" << std::endl;
         }
     }
 
@@ -102,7 +120,7 @@ LauncherHAL::LauncherHAL()
     m_PvtAbsEncoder.SetZeroOffset(LAUNCHER_ZERO_OFFSET);
     END_RETRYING
 
-    std::cout << "Flashing complete" << std::endl;
+    std::cout << "Launcher flashing complete" << std::endl;
 
 
     ctre::phoenix6::configs::TalonFXConfiguration configs{};
