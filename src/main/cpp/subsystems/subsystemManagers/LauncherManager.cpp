@@ -7,6 +7,7 @@ void LauncherManager::ResetLauncher()
     m_goToSubPos = false;
     m_visionResetProfiledMoveState = false;
 }
+
 void LauncherManager::HandleInput(LauncherInput &launcherInput, LauncherOutput &launcherOutput, IntakeInput &intakeInput, IntakeOutput &intakeOutput)
 {
 

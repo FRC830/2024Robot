@@ -44,6 +44,6 @@ class LauncherHAL
         double m_ProfileStartPos; 
         double m_indexerSpeed;
         int m_profileState = 0;
-
+        double m_currentAngle;
         void SetAngle(double angle);
 };

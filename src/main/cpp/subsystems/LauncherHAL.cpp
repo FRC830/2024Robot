@@ -118,6 +118,7 @@ LauncherHAL::LauncherHAL()
     m_FlywheelTop.GetConfigurator().Apply(configs);
     m_FlywheelBottom.GetConfigurator().Apply(configs);
 
+    m_currentAngle = -100.0;
 }
 
 void LauncherHAL::SetFlywheelSpeed(double speed)
@@ -172,6 +173,12 @@ void LauncherHAL::SetAngle(double angle)
 
 void LauncherHAL::ProfiledMoveToAngle(double angle)
 {
+    if (std::fabs(m_currentAngle - angle) >= 1e-8)
+    {
+        m_profileState = 0;
+        m_currentAngle = angle;
+    }
+
     switch(m_profileState)
     {
      case 0: 
@@ -234,5 +241,5 @@ double LauncherHAL::GetFlywheelSpeed()
 
 void LauncherHAL::ResetProfiledMoveState()
 {
-    m_profileState = 0;
+    // m_profileState = 0;
 }
