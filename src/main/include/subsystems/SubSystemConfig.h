@@ -36,7 +36,7 @@ const int INTAKE_ACT_CURRENT_LIMIT = 40;
 
 const double INTAKE_MAX_VEL = 60.0;
 const double INTAKE_ACCEL = 30.0;
-const double INTAKE_ZERO_OFFSET = 299.92;
+const double INTAKE_ZERO_OFFSET = 223.694;
 
 const bool LFT_PVT_ABS_ENC_INVERTED = false;
 const double LFT_PVT_ABS_ENC_CONVERSION_FACTOR = 360.0;
