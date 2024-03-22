@@ -79,7 +79,9 @@ const double DOWN_MAX_ACC = 200.0;
 const double MAX_JERK = 1250.0;
 
 const double SUB_ANGLE = 55.0;
+const double HOARDE_ANG = 40.0;
 const double STOW_ANGLE = 10.0;
 const double SUB_SPEED = 150.0;
+const double HOARDE_SPD = 70.0;
 const double INDEXER_SPEED = 1.0;
 const double INDEXER_SLOW_SPEED = 0.15;
