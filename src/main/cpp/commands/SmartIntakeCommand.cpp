@@ -8,7 +8,11 @@ SmartIntakeCommand::SmartIntakeCommand(RobotControlData &controlData)
 
 void SmartIntakeCommand::Initialize()
 {
-    m_controlData.smartIntakeInput.smartIntake = true;
+    if (!m_controlData.smartIntakeOutput.smartIntakeFlag)
+    {
+        m_controlData.smartIntakeInput.smartIntake = true;
+    }
+    
     m_state = 0;
 }
 

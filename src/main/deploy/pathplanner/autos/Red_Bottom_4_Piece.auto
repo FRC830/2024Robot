@@ -12,6 +12,25 @@
     "data": {
       "commands": [
         {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeDown"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "SubShoot"
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "RED_Path1"
@@ -24,6 +43,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "VisionShoot"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "RED_Path2"
@@ -33,6 +58,12 @@
           "type": "path",
           "data": {
             "pathName": "RED_Path3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionShoot"
           }
         }
       ]

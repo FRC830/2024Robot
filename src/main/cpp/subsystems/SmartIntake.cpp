@@ -255,4 +255,6 @@ void SmartIntake::HandleInput(RobotControlData& input){
     m_prevSmartIntake = input.smartIntakeInput.smartIntake;
     m_prevSmartOutTake = input.smartIntakeInput.smartOutTake;
     m_prevSwitchMode = input.smartIntakeInput.switchMode;
+    input.smartIntakeOutput.smartIntakeFlag = m_SmartIntakeFlag;
+    input.smartIntakeOutput.smartOuttakeFlag = m_SmartOutTakeFlag;
 }

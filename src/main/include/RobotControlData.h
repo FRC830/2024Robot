@@ -29,6 +29,11 @@ struct AutoAimOutput{
     double robotRotSpeed;
 };
 
+struct SmartIntakeOutput{
+    bool smartIntakeFlag;
+    bool smartOuttakeFlag;
+};
+
 struct RobotControlData {
     IntakeInput intakeInput;
     IntakeOutput intakeOutput;
@@ -36,6 +41,7 @@ struct RobotControlData {
     LauncherOutput launcherOutput;
     SwerveInput swerveInput;
     SmartIntakeInput smartIntakeInput;
+    SmartIntakeOutput smartIntakeOutput;
     AutoAimInput autoAimInput;
     AutoAimOutput autoAimOutput;
 };

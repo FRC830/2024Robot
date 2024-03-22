@@ -12,9 +12,40 @@
     "data": {
       "commands": [
         {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeDown"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "SubShoot"
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "RED_3_Piece_Path_1"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionShoot"
           }
         },
         {
@@ -30,6 +61,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "VisionShoot"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "RED_3_Piece_Path_4"
@@ -39,6 +76,12 @@
           "type": "path",
           "data": {
             "pathName": "RED_3_Piece_Path_5"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionShoot"
           }
         }
       ]
