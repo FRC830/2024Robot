@@ -134,7 +134,18 @@ LauncherHAL::LauncherHAL()
     m_FlywheelBottom.SetControl(m_FlywheelTopFollower);
     
     m_FlywheelTop.GetConfigurator().Apply(configs);
-    m_FlywheelBottom.GetConfigurator().Apply(configs);
+
+    {
+        bool successful = false;
+        int retries = 0;
+
+        while (!successful || retries <= 10)
+        {
+            retries++;
+            auto status = m_FlywheelBottom.GetConfigurator().Apply(configs);
+            successful = status == ctre::phoenix::StatusCode::OK;
+        }
+    }
 
     m_currentAngle = -100.0;
 }

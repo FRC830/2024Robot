@@ -211,7 +211,7 @@ void SmartIntake::HandleInput(RobotControlData& input){
         }
         case 3:
         {
-            if (m_timer.Get() > units::second_t(0.035))
+            if (m_timer.Get() > units::second_t(0.025))
             {
                 m_SmartOutTakeFlag = false;
                 m_OutTakeState = 0;
