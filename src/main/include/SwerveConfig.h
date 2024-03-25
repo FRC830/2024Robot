@@ -39,7 +39,7 @@ rev::SparkPIDController fl_drive_pid = fl_drive_mtr.GetPIDController();
 // --------------------Absolute Encoder-----------------------
 const int FR_ABS_ENC_PORT = 12;
 const bool FR_ABS_ENC_INVERTED = false;
-const frc::Rotation2d FR_ZERO_HEADING{units::degree_t{77.9f}};
+const frc::Rotation2d FR_ZERO_HEADING{units::degree_t{92.94f}};
 
 ctre::phoenix6::hardware::CANcoder fr_abs_enc{FR_ABS_ENC_PORT};
 

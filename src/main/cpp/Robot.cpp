@@ -58,8 +58,8 @@ void Robot::RobotInit() {
   
   frc::CameraServer::StartAutomaticCapture();
 
-  m_cvSink = frc::CameraServer::GetVideo();
-  m_cvSource = frc::CameraServer::PutVideo("Camera", 640, 480);
+  // m_cvSink = frc::CameraServer::GetVideo();
+  // m_cvSource = frc::CameraServer::PutVideo("Camera", 640, 480);
 }
 
 /**

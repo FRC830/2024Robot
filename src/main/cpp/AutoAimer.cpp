@@ -3,10 +3,11 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 AutoAimer::AutoAimer()
+
 {
     m_lookup.emplace_back(VisionSetPoint{59.34, 50.0, 75.0, -51.9});
     m_lookup.emplace_back(VisionSetPoint{107.4769, 30, 130.0, -89.5});
-    m_lookup.emplace_back(VisionSetPoint{155.16, 22.3, 175.0, -104.5});
+    m_lookup.emplace_back(VisionSetPoint{155.16, 21.3, 130.0, -89.5});
     m_lookup.emplace_back(VisionSetPoint{172.71, 20.25, 130.3, -89.5}); 
     m_lookup.emplace_back(VisionSetPoint{200.58, 20.5, 250, -106.5});
 
