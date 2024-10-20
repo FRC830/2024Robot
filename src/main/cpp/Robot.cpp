@@ -19,7 +19,6 @@ void Robot::updateDashBoardValues() {
   frc::SmartDashboard::PutNumber("Measured Launcher Angle", _robot_control_data.launcherOutput.launcherAngle);
 
 };
-
 void Robot::RobotInit() {
   // m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   // m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
