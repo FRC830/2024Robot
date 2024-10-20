@@ -5,6 +5,7 @@ void LauncherManager::ResetLauncher()
 {
     m_goToStowPos = false;
     m_goToSubPos = false;
+    m_goToHoardePos = false;
     m_visionResetProfiledMoveState = false;
 }
 
@@ -19,6 +20,7 @@ void LauncherManager::HandleInput(LauncherInput &launcherInput, LauncherOutput &
             m_visionResetProfiledMoveState = true;
             m_goToStowPos = false;
             m_goToSubPos = false;
+            m_goToHoardePos = false;
         }
 
         m_launcher.SetFlywheelSpeed(launcherInput.visionSpeedSetpoint);
@@ -37,13 +39,23 @@ void LauncherManager::HandleInput(LauncherInput &launcherInput, LauncherOutput &
         if(launcherInput.goToStowPos){
             m_goToStowPos = true;
             m_goToSubPos = false;
+            m_goToHoardePos = false;
             m_launcher.ResetProfiledMoveState();
         }
         else if (launcherInput.goToSubPos) {
             m_goToStowPos = false;
             m_goToSubPos = true;
+            m_goToHoardePos = false;
 
             m_launcher.ResetProfiledMoveState();
+        } else if (launcherInput.goToHoardePos) {
+
+            m_goToHoardePos = true; 
+            m_goToStowPos = false;
+            m_goToSubPos = false;
+
+            m_launcher.ResetProfiledMoveState();
+
         }
 
         if (m_goToStowPos)
@@ -63,6 +75,12 @@ void LauncherManager::HandleInput(LauncherInput &launcherInput, LauncherOutput &
         {
             m_launcher.ProfiledMoveToAngle(SUB_ANGLE);
             m_launcher.SetFlywheelSpeed(SUB_SPEED);
+        }
+        if (m_goToHoardePos) {
+
+            m_launcher.ProfiledMoveToAngle(HOARDE_ANG);
+            m_launcher.SetFlywheelSpeed(HOARDE_SPD);
+
         }
     }
 

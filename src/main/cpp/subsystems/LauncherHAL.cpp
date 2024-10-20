@@ -134,7 +134,18 @@ LauncherHAL::LauncherHAL()
     m_FlywheelBottom.SetControl(m_FlywheelTopFollower);
     
     m_FlywheelTop.GetConfigurator().Apply(configs);
-    m_FlywheelBottom.GetConfigurator().Apply(configs);
+
+    {
+        bool successful = false;
+        int retries = 0;
+
+        while (!successful || retries <= 10)
+        {
+            retries++;
+            auto status = m_FlywheelBottom.GetConfigurator().Apply(configs);
+            successful = status == ctre::phoenix::StatusCode::OK;
+        }
+    }
 
     m_currentAngle = -100.0;
 }
@@ -175,6 +186,7 @@ void LauncherHAL::SetIndexerSpeed(double speed)
     m_IndMotor.Set(m_indexerSpeed);
 }
 
+
 void LauncherHAL::SetAngle(double angle)
 {
     if (angle > MAX_PIVOT_ANGLE)
@@ -191,19 +203,15 @@ void LauncherHAL::SetAngle(double angle)
 
 void LauncherHAL::ProfiledMoveToAngle(double angle)
 {
-    if (std::fabs(m_currentAngle - angle) >= 1e-8)
-    {
-        m_profileState = 0;
-        m_currentAngle = angle;
-    }
-
     switch(m_profileState)
     {
      case 0: 
         {
             m_ProfileStartPos = GetAngle();
 
-            m_Timer.Restart();
+            m_Timer.Stop();
+            m_Timer.Reset();
+            m_Timer.Start();
 
             m_profileState++;
 
@@ -259,5 +267,5 @@ double LauncherHAL::GetFlywheelSpeed()
 
 void LauncherHAL::ResetProfiledMoveState()
 {
-    // m_profileState = 0;
+    m_profileState = 0;
 }

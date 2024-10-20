@@ -39,7 +39,7 @@ rev::SparkPIDController fl_drive_pid = fl_drive_mtr.GetPIDController();
 // --------------------Absolute Encoder-----------------------
 const int FR_ABS_ENC_PORT = 12;
 const bool FR_ABS_ENC_INVERTED = false;
-const frc::Rotation2d FR_ZERO_HEADING{units::degree_t{77.9f}};
+const frc::Rotation2d FR_ZERO_HEADING{units::degree_t{92.94f}};
 
 ctre::phoenix6::hardware::CANcoder fr_abs_enc{FR_ABS_ENC_PORT};
 
@@ -154,7 +154,7 @@ const double MAX_DRIVE_SPEED_FPS = 18.0;
 const double MAX_ANGULAR_VELOCITY_DEGPS = 540.0;
 const double CONTROLLER_DEADZONE = 0.1;
 const int TURN_MOTOR_CURRENT_LIMIT = 20;
-const int DRIVE_MOTOR_CURRENT_LIMIT = 55;
+const int DRIVE_MOTOR_CURRENT_LIMIT = 30;
 const double SWERVE_VOLTAGE_COMPENSATION = 10.5;
 const bool IS_DRIVE_IN_COAST = false;
 const bool IS_ROBOT_ORIENTED_DRIVE = false;

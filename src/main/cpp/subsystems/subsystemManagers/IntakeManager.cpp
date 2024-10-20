@@ -2,8 +2,9 @@
 
 namespace
 {
-    const double NORMAL_INTAKE_SPEED = 0.80;
-    const double AMP_POS = 19.361;
+    const double NORMAL_INTAKE_SPEED = 0.95;
+    const double OUTAKE_SPEED = 0.7;
+    const double AMP_POS = 25.361;
     const double GROUND_POS = 129.000;
     const double STOW_POS = 68.144;
     const double PSEUDO_STOW_POS = 104.671;
@@ -23,7 +24,7 @@ void IntakeManager::HandleInput(IntakeInput &input, IntakeOutput &output)
 {
     if (input.runIntakeOutSlow)
     {
-        m_intake.RunIntake(-0.1);
+        m_intake.RunIntake(-0.15);
     }
     else if (input.runIntakeIn && !input.runIntakeOut)
     {
@@ -31,7 +32,7 @@ void IntakeManager::HandleInput(IntakeInput &input, IntakeOutput &output)
     }
     else if (input.runIntakeOut && !input.runIntakeIn)
     {
-        m_intake.RunIntake(-NORMAL_INTAKE_SPEED);
+        m_intake.RunIntake(-OUTAKE_SPEED);
     } 
     else 
     {

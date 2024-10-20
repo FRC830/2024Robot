@@ -38,6 +38,7 @@
 #include "commands/SubShoot.h"
 #include "commands/VisionShoot.h"
 #include "commands/IntakeDown.h"
+#include "cameraserver/CameraServer.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -85,4 +86,8 @@ class Robot : public frc::TimedRobot {
   frc::SendableChooser<std::string> m_auto_chooser;
 
   AutoAimer m_autoAim = AutoAimer();
-}; 
+
+  cs::CvSink m_cvSink;
+
+  cs::CvSource m_cvSource;
+};
