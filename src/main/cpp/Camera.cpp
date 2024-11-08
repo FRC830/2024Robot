@@ -2,7 +2,7 @@
 #include <photon/PhotonCamera.h>
 #include <Camera.h>
 
-
+/*
 int Camera::id()
 {
     return target.GetFiducialId();
@@ -21,3 +21,4 @@ Camera::Camera(std::string name)
     result = camera.GetLatestResult();
     target = result.GetBestTarget();
 }
+*/
