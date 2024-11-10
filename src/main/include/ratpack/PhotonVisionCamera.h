@@ -1,7 +1,12 @@
 #include <string>
 #include <photon/PhotonCamera.h>
 
-class Camera
+struct posAndTime {
+    frc::Transform3d position;
+    double timestamp;
+};
+
+class PhotonVisionCamera
 {
     private:
     /*
@@ -14,10 +19,10 @@ class Camera
        photon::PhotonPipelineResult result;
        photon::PhotonTrackedTarget target;
 
+
     public:
         int id();
         //double ambiguity();
-        double yaw();
-        double pitch();
         Camera(std::string name);
+        posAndTime position();
 };

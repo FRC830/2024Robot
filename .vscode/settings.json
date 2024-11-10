@@ -109,5 +109,6 @@
     "xutility": "cpp",
     "xstddef": "cpp",
     "charconv": "cpp"
-  }
+  },
+  "C_Cpp.errorSquiggles": "enabled"
 }
