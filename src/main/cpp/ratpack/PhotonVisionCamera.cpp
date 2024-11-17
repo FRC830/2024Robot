@@ -1,31 +1,33 @@
+#include "ratpack/PhotonVisionCamera.h"
+
 #include <string>
-#include <photon/PhotonCamera.h>
-#include <PhotonVisionCamera.h>
 
 
-int PhotonVisionCamera::id()
+PhotonVisionCamera::PhotonVisionCamera(std::string name, frc::Transform3d robotToCamera)
+    : robotToCam(robotToCamera)
 {
-    return target.GetFiducialId();
+    camera = std::make_shared<photon::PhotonCamera>(name);
+    poseEstimator = std::make_shared<photon::PhotonPoseEstimator>(aprilTagFieldLayout,
+                                                                  photon::PoseStrategy::MULTI_TAG_PNP_ON_COPROCESSOR,
+                                                                  camera,
+                                                                  robotToCamera);
+
+    poseEstimator->SetMultiTagFallbackStrategy(photon::PoseStrategy::LOWEST_AMBIGUITY);
 }
+PosAndTime PhotonVisionCamera::GetPose()
+{
+    PosAndTime estimatedPosition;
+    estimatedPosition.isValid = false;
 
-PhotonVisionCamera::PhotonVisionCamera(std::string name)
-{
-    camera = photon::PhotonCamera{name};
-    result = camera.GetLatestResult();
-    target = result.GetBestTarget();
-}
-PhotonVisionCamera::position()
-{
-    result = camera.getLatestResult();
-    auto visionEst = vision.GetEstimatedGlobalPose();
-    auto est = visionEst.value();
-    if (result.MultiTagResult().result.isPresent) 
+    auto result = poseEstimator->Update();
+
+    if (result.has_value())
     {
-        frc::Transform3d fieldToCamera = result.MultiTagResult().result.best;
+        auto value = result.value();
+        estimatedPosition.isValid = true;
+        estimatedPosition.position = value.estimatedPose;
+        estimatedPosition.timestamp = value.timestamp;
     }
-    posAndTime thing;
-    thing.position = fieldToCamera
-    thing.timestamp = est.timestamp;
 
-    return thing;
+    return estimatedPosition;
 }

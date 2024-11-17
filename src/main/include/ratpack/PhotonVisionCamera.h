@@ -1,28 +1,26 @@
 #include <string>
 #include <photon/PhotonCamera.h>
+#include <photon/PhotonPoseEstimator.h>
+#include <frc/geometry/Transform3d.h>
+#include <frc/apriltag/AprilTagFieldLayout.h>
+#include <frc/geometry/Pose3d.h>
+#include <memory>
 
-struct posAndTime {
+struct PosAndTime {
     frc::Transform3d position;
     double timestamp;
+    bool isValid;
 };
 
 class PhotonVisionCamera
 {
     private:
-    /*
-        double yaw = target.GetYaw();
-        double pitch = target.GetPitch();
-        int targetID = target.GetFiducialId();
-        double poseAmbiguity = target.GetPoseAmbiguity();
-        */
-       photon::PhotonCamera camera;
-       photon::PhotonPipelineResult result;
-       photon::PhotonTrackedTarget target;
-
+       std::shared_ptr<photon::PhotonCamera> camera;
+       frc::AprilTagFieldLayout aprilTagFieldLayout = frc::LoadAprilTagLayoutField(frc::AprilTagField::k2024Crescendo);
+       frc::Transform3d robotToCam;
+       std::shared_ptr<photon::PhotonPoseEstimator> poseEstimator;
 
     public:
-        int id();
-        //double ambiguity();
-        Camera(std::string name);
-        posAndTime position();
+        PhotonVisionCamera(std::string name, frc::Transform3d robotToCamera);
+        PosAndTime GetPose();
 };
