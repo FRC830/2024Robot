@@ -39,6 +39,30 @@ void IntakeManager::HandleInput(IntakeInput &input, IntakeOutput &output)
         m_intake.RunIntake(0.0);
     }
 
+ 
+
+    
+    // std::vector<bool> inputs = {false, false, false, false, false, true};
+    // std::vector<bool> ouputs(inputs.size(), false);
+
+    // for (int i = 0; i < inputs.size() + 1; i ++) {
+    //     if (inputs[i] == true) {
+    //         int counts = std::count(ouputs.begin(), ouputs.end(), true);
+    //         if (counts == 0) {
+    //             ouputs.at(i) = true;
+    //             break;
+    //         }
+                
+                
+    //     }
+    // }
+    
+    // for (bool i: ouputs) {
+    //     std::cout << i << ' ';
+    // }
+    
+
+
     if (input.manualMove > 0.001)
     {
         m_intake.ManualMovePivot(input.manualMove);
