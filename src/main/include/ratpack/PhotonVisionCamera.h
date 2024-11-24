@@ -22,5 +22,5 @@ class PhotonVisionCamera
 
     public:
         PhotonVisionCamera(std::string name, frc::Transform3d robotToCamera);
-        PosAndTime GetPose();
+        std::optional<photon::EstimatedRobotPose> GetPose();
 };

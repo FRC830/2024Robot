@@ -14,20 +14,10 @@ PhotonVisionCamera::PhotonVisionCamera(std::string name, frc::Transform3d robotT
 
     poseEstimator->SetMultiTagFallbackStrategy(photon::PoseStrategy::LOWEST_AMBIGUITY);
 }
-PosAndTime PhotonVisionCamera::GetPose()
+std::optional<photon::EstimatedRobotPose> PhotonVisionCamera::GetPose()
 {
-    PosAndTime estimatedPosition;
-    estimatedPosition.isValid = false;
 
     auto result = poseEstimator->Update();
+    return result;
 
-    if (result.has_value())
-    {
-        auto value = result.value();
-        estimatedPosition.isValid = true;
-        estimatedPosition.position = value.estimatedPose;
-        estimatedPosition.timestamp = value.timestamp;
-    }
-
-    return estimatedPosition;
 }
